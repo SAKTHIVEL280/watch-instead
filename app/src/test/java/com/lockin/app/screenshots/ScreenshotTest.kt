@@ -5,10 +5,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
@@ -104,6 +107,27 @@ class ScreenshotTest {
             InterventionState(false, "Instagram", listOf(video, video.copy(id = 2)), secondsLeft = 3, totalSeconds = 5),
             {}, {}, {}, {},
         )
+    }
+    @Test fun settingsAmber() {
+        val viewModel = SettingsViewModel(settings, links)
+        val appearance = Appearance(ThemeMode.LIGHT, dynamicColor = false, accent = Accent.AMBER)
+        settings.appearance.value = appearance
+        shot("settings_amber", appearance) { SettingsScreen({}, {}, {}, {}, viewModel) }
+    }
+    @Test fun pureBlack() {
+        val viewModel = SettingsViewModel(settings, links)
+        val appearance = Appearance(ThemeMode.DARK, dynamicColor = false, accent = Accent.ROSE, pureBlack = true)
+        settings.appearance.value = appearance
+        shot("settings_pure_black", appearance) { SettingsScreen({}, {}, {}, {}, viewModel) }
+    }
+    @Test fun interventionLargeFont() = shot("intervention_large_font", light) {
+        val density = LocalDensity.current
+        CompositionLocalProvider(LocalDensity provides Density(density.density, fontScale = 2f)) {
+            InterventionScreen(
+                InterventionState(false, "Instagram", listOf(video, video.copy(id = 2)), secondsLeft = 3, totalSeconds = 5),
+                {}, {}, {}, {},
+            )
+        }
     }
     @Test fun launcherIcon() = shot("launcher_icon", light) {
         Image(
