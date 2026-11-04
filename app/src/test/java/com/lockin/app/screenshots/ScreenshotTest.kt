@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -24,6 +25,8 @@ import com.lockin.app.domain.ParsedLink
 import com.lockin.app.domain.Platform
 import com.lockin.app.domain.SavedLink
 import com.lockin.app.domain.ThemeMode
+import com.lockin.app.feature.capture.CaptureForm
+import com.lockin.app.feature.capture.CaptureState
 import com.lockin.app.feature.capture.CaptureViewModel
 import com.lockin.app.feature.library.LibraryScreen
 import com.lockin.app.feature.library.LibraryViewModel
@@ -127,6 +130,9 @@ class ScreenshotTest {
                 {}, {}, {}, {},
             )
         }
+    }
+    @Test fun captureForm() = shot("capture_form", light) {
+        Surface { CaptureForm(CaptureState(category = Category.CONSISTENCY), {}, {}, {}, {}) }
     }
     @Test fun launcherIcon() = shot("launcher_icon", light) {
         Box(Modifier.size(216.dp).clip(CircleShape)) {

@@ -2,6 +2,7 @@ package com.lockin.app.feature.capture
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -13,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -30,7 +32,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lockin.app.R
-import com.lockin.app.core.ui.ConnectedChoice
 import com.lockin.app.core.ui.labelRes
 import com.lockin.app.domain.Category
 
@@ -101,12 +102,16 @@ fun CaptureForm(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Next),
             modifier = Modifier.fillMaxWidth(),
         )
-        ConnectedChoice(
-            options = Category.entries,
-            selected = state.category,
-            onSelect = onCategoryChange,
-            label = { stringResource(it.labelRes) },
-        )
+        // Wraps instead of a connected row: five labels do not fit one line on a phone.
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Category.entries.forEach { category ->
+                FilterChip(
+                    selected = category == state.category,
+                    onClick = { onCategoryChange(category) },
+                    label = { Text(stringResource(category.labelRes)) },
+                )
+            }
+        }
         OutlinedTextField(
             value = state.note,
             onValueChange = onNoteChange,

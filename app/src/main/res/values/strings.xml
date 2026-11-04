@@ -12,6 +12,8 @@
     <string name="action_undo">Undo</string>
     <string name="category_motivation">Motivation</string>
     <string name="category_education">Education</string>
+    <string name="category_consistency">Consistency</string>
+    <string name="category_productivity">Productivity</string>
     <string name="category_other">Other</string>
 
     <!-- Capture -->

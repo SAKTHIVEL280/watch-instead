@@ -53,6 +53,8 @@ val Category.labelRes: Int
     get() = when (this) {
         Category.MOTIVATION -> R.string.category_motivation
         Category.EDUCATION -> R.string.category_education
+        Category.CONSISTENCY -> R.string.category_consistency
+        Category.PRODUCTIVITY -> R.string.category_productivity
         Category.OTHER -> R.string.category_other
     }
 

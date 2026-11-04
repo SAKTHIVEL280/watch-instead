@@ -1,6 +1,6 @@
 package com.lockin.app.domain
 
-enum class Category { MOTIVATION, EDUCATION, OTHER }
+enum class Category { MOTIVATION, EDUCATION, CONSISTENCY, PRODUCTIVITY, OTHER }
 
 enum class Platform { YOUTUBE, INSTAGRAM, TIKTOK, X, OTHER }
 
