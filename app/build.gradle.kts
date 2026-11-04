@@ -115,6 +115,7 @@ dependencies {
     testImplementation(platform(libs.compose.bom))
     testImplementation(libs.compose.ui.test.junit4)
     testImplementation(libs.robolectric)
+    testImplementation(libs.glance.testing)
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.roborazzi)
     testImplementation(libs.roborazzi.compose)

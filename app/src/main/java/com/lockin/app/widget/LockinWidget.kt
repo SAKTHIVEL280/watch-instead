@@ -54,7 +54,7 @@ interface WidgetEntryPoint {
     fun clock(): Clock
 }
 
-private data class WidgetData(val next: SavedLink?, val queued: Int, val streak: Int)
+internal data class WidgetData(val next: SavedLink?, val queued: Int, val streak: Int)
 
 class LockinWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Responsive(setOf(SMALL, WIDE))
@@ -84,7 +84,7 @@ class LockinWidget : GlanceAppWidget() {
 }
 
 @Composable
-private fun WidgetContent(data: WidgetData) {
+internal fun WidgetContent(data: WidgetData) {
     val context = LocalContext.current
     val resources = context.resources
     val colors = GlanceTheme.colors
