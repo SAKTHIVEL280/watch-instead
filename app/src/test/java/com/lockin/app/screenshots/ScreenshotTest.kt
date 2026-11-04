@@ -1,14 +1,13 @@
 package com.lockin.app.screenshots
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Density
@@ -130,10 +129,17 @@ class ScreenshotTest {
         }
     }
     @Test fun launcherIcon() = shot("launcher_icon", light) {
-        Image(
-            painterResource(R.drawable.ic_launcher_foreground), null,
-            Modifier.size(216.dp).clip(CircleShape).background(Color(0xFF4F46C8)),
-        )
+        Box(Modifier.size(216.dp).clip(CircleShape)) {
+            Image(painterResource(R.drawable.ic_launcher_background), null, Modifier.size(216.dp))
+            Image(painterResource(R.drawable.ic_launcher_foreground), null, Modifier.size(216.dp))
+        }
+    }
+    @Config(qualifiers = "night")
+    @Test fun launcherIconNight() = shot("launcher_icon_night", light) {
+        Box(Modifier.size(216.dp).clip(CircleShape)) {
+            Image(painterResource(R.drawable.ic_launcher_background), null, Modifier.size(216.dp))
+            Image(painterResource(R.drawable.ic_launcher_foreground), null, Modifier.size(216.dp))
+        }
     }
     @Test fun interventionEmpty() = shot("intervention_empty", dark) {
         InterventionScreen(InterventionState(false, "TikTok"), {}, {}, {}, {})
