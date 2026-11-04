@@ -10,11 +10,14 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.lockin.app.feature.focus.FocusSchedulesScreen
 import com.lockin.app.feature.guardedapps.GuardedAppsScreen
 import com.lockin.app.feature.library.LibraryScreen
+import com.lockin.app.feature.messages.MessagesScreen
 import com.lockin.app.feature.settings.LicensesScreen
 import com.lockin.app.feature.settings.PrivacyScreen
 import com.lockin.app.feature.settings.SettingsScreen
+import com.lockin.app.feature.stats.StatsScreen
 import kotlinx.serialization.Serializable
 
 @Serializable private data object LibraryRoute
@@ -22,6 +25,9 @@ import kotlinx.serialization.Serializable
 @Serializable private data object GuardedAppsRoute
 @Serializable private data object PrivacyRoute
 @Serializable private data object LicensesRoute
+@Serializable private data object StatsRoute
+@Serializable private data object FocusRoute
+@Serializable private data object MessagesRoute
 
 private val spatialSpring = spring<IntOffset>(dampingRatio = 0.8f, stiffness = 380f)
 private val fadeSpec = spring<Float>(stiffness = 700f)
@@ -42,6 +48,7 @@ fun LockinNavHost() {
             LibraryScreen(
                 onOpenSettings = { navController.navigate(SettingsRoute) },
                 onChooseApps = { navController.navigate(GuardedAppsRoute) },
+                onOpenStats = { navController.navigate(StatsRoute) },
             )
         }
         composable<SettingsRoute> {
@@ -50,10 +57,15 @@ fun LockinNavHost() {
                 onGuardedApps = { navController.navigate(GuardedAppsRoute) },
                 onPrivacy = { navController.navigate(PrivacyRoute) },
                 onLicenses = { navController.navigate(LicensesRoute) },
+                onFocusSchedules = { navController.navigate(FocusRoute) },
+                onMessages = { navController.navigate(MessagesRoute) },
             )
         }
         composable<GuardedAppsRoute> { GuardedAppsScreen(onBack = back) }
         composable<PrivacyRoute> { PrivacyScreen(onBack = back) }
         composable<LicensesRoute> { LicensesScreen(onBack = back) }
+        composable<StatsRoute> { StatsScreen(onBack = back) }
+        composable<FocusRoute> { FocusSchedulesScreen(onBack = back) }
+        composable<MessagesRoute> { MessagesScreen(onBack = back) }
     }
 }

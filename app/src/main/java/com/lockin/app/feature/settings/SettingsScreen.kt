@@ -22,19 +22,14 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -58,6 +53,7 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lockin.app.BuildConfig
 import com.lockin.app.R
+import com.lockin.app.core.ui.SubScreen
 import com.lockin.app.core.ui.ConnectedChoice
 import com.lockin.app.core.theme.isDark
 import com.lockin.app.core.theme.supportsDynamicColor
@@ -70,30 +66,14 @@ import com.lockin.app.domain.GuardSettings
 import com.lockin.app.domain.ThemeMode
 import com.lockin.app.intervention.GuardStatus
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun SubScreen(title: String, onBack: () -> Unit, content: @Composable (androidx.compose.foundation.layout.PaddingValues) -> Unit) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(title) },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, stringResource(R.string.action_back))
-                    }
-                },
-            )
-        },
-        content = content,
-    )
-}
-
 @Composable
 fun SettingsScreen(
     onBack: () -> Unit,
     onGuardedApps: () -> Unit,
     onPrivacy: () -> Unit,
     onLicenses: () -> Unit,
+    onFocusSchedules: () -> Unit,
+    onMessages: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel(),
     backupViewModel: BackupViewModel = hiltViewModel(),
 ) {
@@ -103,6 +83,7 @@ fun SettingsScreen(
     val backup = rememberBackupActions(backupViewModel)
     var guardEnabled by remember { mutableStateOf(true) }
     var confirmClear by rememberSaveable { mutableStateOf(false) }
+    var confirmClearStats by rememberSaveable { mutableStateOf(false) }
     LifecycleResumeEffect(Unit) {
         guardEnabled = GuardStatus.isEnabled(context)
         onPauseOrDispose { }
@@ -137,6 +118,28 @@ fun SettingsScreen(
                     Text(pluralStringResource(R.plurals.settings_guarded_count, count, count))
                 },
                 modifier = Modifier.clickable(onClick = onGuardedApps),
+            )
+            ListItem(
+                headlineContent = { Text(stringResource(R.string.focus_title)) },
+                supportingContent = {
+                    val count = settings.focusSchedules.size
+                    Text(pluralStringResource(R.plurals.settings_schedule_count, count, count))
+                },
+                modifier = Modifier.clickable(onClick = onFocusSchedules),
+            )
+            ListItem(
+                headlineContent = { Text(stringResource(R.string.messages_title)) },
+                supportingContent = {
+                    val count = settings.personalMessages.size
+                    Text(pluralStringResource(R.plurals.settings_message_count, count, count))
+                },
+                modifier = Modifier.clickable(onClick = onMessages),
+            )
+            SwitchRow(
+                title = stringResource(R.string.settings_ask_why),
+                body = stringResource(R.string.settings_ask_why_body),
+                checked = settings.askWhy,
+                onChange = viewModel::setAskWhy,
             )
             ChoiceSetting(
                 title = stringResource(R.string.settings_cooldown),
@@ -182,6 +185,10 @@ fun SettingsScreen(
                 modifier = Modifier.clickable { confirmClear = true },
             )
             ListItem(
+                headlineContent = { Text(stringResource(R.string.settings_clear_stats)) },
+                modifier = Modifier.clickable { confirmClearStats = true },
+            )
+            ListItem(
                 headlineContent = { Text(stringResource(R.string.settings_privacy)) },
                 modifier = Modifier.clickable(onClick = onPrivacy),
             )
@@ -196,20 +203,26 @@ fun SettingsScreen(
     }
 
     if (confirmClear) {
-        AlertDialog(
-            onDismissRequest = { confirmClear = false },
-            text = { Text(stringResource(R.string.settings_clear_watched_confirm)) },
-            confirmButton = {
-                TextButton(onClick = {
-                    confirmClear = false
-                    viewModel.clearWatched()
-                }) { Text(stringResource(R.string.settings_clear)) }
-            },
-            dismissButton = {
-                TextButton(onClick = { confirmClear = false }) { Text(stringResource(R.string.action_cancel)) }
-            },
-        )
+        ConfirmDialog(stringResource(R.string.settings_clear_watched_confirm), { confirmClear = false }, viewModel::clearWatched)
     }
+    if (confirmClearStats) {
+        ConfirmDialog(stringResource(R.string.settings_clear_stats_confirm), { confirmClearStats = false }, viewModel::clearStats)
+    }
+}
+
+@Composable
+private fun ConfirmDialog(message: String, onDismiss: () -> Unit, onConfirm: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        text = { Text(message) },
+        confirmButton = {
+            TextButton(onClick = {
+                onDismiss()
+                onConfirm()
+            }) { Text(stringResource(R.string.settings_clear)) }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
+    )
 }
 
 @Composable

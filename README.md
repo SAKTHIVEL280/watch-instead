@@ -19,6 +19,12 @@ No account, no ads, no analytics. Your data stays on your phone.
 - Cooldown from 5 to 60 minutes, or none at all
 - Categories: Motivation, Education, Consistency, Productivity, Other
 - Material You design with dynamic colour, light and dark themes, accents and pure black
+- Edit saved videos, including notes, links and categories
+- Your stats: streaks, times you stopped and why you open apps
+- A "Why are you here?" question on the prompt
+- Personal messages in your own words
+- Focus schedules that get stricter during study or work hours
+- A home screen widget with your streak and next video
 - Export and import backups
 
 ## Install

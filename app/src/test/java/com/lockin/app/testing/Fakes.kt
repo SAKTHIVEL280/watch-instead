@@ -2,11 +2,16 @@ package com.lockin.app.testing
 
 import com.lockin.app.data.LinkRepository
 import com.lockin.app.data.SaveResult
+import com.lockin.app.data.StatsRepository
 import com.lockin.app.data.settings.SettingsRepository
 import com.lockin.app.domain.Accent
 import com.lockin.app.domain.Appearance
 import com.lockin.app.domain.Category
+import com.lockin.app.domain.FocusSchedule
 import com.lockin.app.domain.GuardSettings
+import com.lockin.app.domain.OpenReason
+import com.lockin.app.domain.PromptEvent
+import com.lockin.app.domain.PromptOutcome
 import com.lockin.app.domain.ParsedLink
 import com.lockin.app.domain.QueueSelector
 import com.lockin.app.domain.SavedLink
@@ -26,6 +31,16 @@ class FakeLinkRepository : LinkRepository {
         return SaveResult.SAVED
     }
 
+    override suspend fun find(id: Long) = links.value.firstOrNull { it.id == id }
+    override suspend fun edit(id: Long, link: ParsedLink, category: Category, note: String): SaveResult {
+        if (links.value.any { it.url == link.url && it.id != id }) return SaveResult.DUPLICATE
+        links.update { all ->
+            all.map {
+                if (it.id == id) it.copy(url = link.url, platform = link.platform, category = category, note = note.trim()) else it
+            }
+        }
+        return SaveResult.SAVED
+    }
     override suspend fun restore(link: SavedLink) = links.update { it + link }
     override suspend fun importLink(link: SavedLink): Boolean {
         if (links.value.any { it.url == link.url }) return false
@@ -40,6 +55,18 @@ class FakeLinkRepository : LinkRepository {
     override suspend fun delete(id: Long) = links.update { all -> all.filterNot { it.id == id } }
     override suspend fun clearWatched() = links.update { all -> all.filter { it.watchedAt == null } }
     override suspend fun refreshMissingMetadata() = Unit
+}
+
+class FakeStatsRepository : StatsRepository {
+    override val events = MutableStateFlow<List<PromptEvent>>(emptyList())
+    override suspend fun record(packageName: String, outcome: PromptOutcome, reason: OpenReason?) =
+        events.update { it + PromptEvent(it.size.toLong(), packageName, outcome, reason) }
+    override suspend fun importEvent(event: PromptEvent): Boolean {
+        if (events.value.any { it.timestamp == event.timestamp && it.packageName == event.packageName }) return false
+        events.update { it + event }
+        return true
+    }
+    override suspend fun clear() { events.value = emptyList() }
 }
 
 class FakeSettingsRepository : SettingsRepository {
@@ -60,6 +87,9 @@ class FakeSettingsRepository : SettingsRepository {
         settings.update { it.copy(guardedPackages = packages) }
     override suspend fun setCooldownMinutes(minutes: Int) = settings.update { it.copy(cooldownMinutes = minutes) }
     override suspend fun setSkipDelaySeconds(seconds: Int) = settings.update { it.copy(skipDelaySeconds = seconds) }
+    override suspend fun setAskWhy(enabled: Boolean) = settings.update { it.copy(askWhy = enabled) }
+    override suspend fun setPersonalMessages(messages: Set<String>) = settings.update { it.copy(personalMessages = messages) }
+    override suspend fun setFocusSchedules(schedules: List<FocusSchedule>) = settings.update { it.copy(focusSchedules = schedules) }
     override suspend fun grantCooldownPass() { cooldownPasses++ }
     override suspend fun endSession() = settings.update { it.copy(sessionOpen = false) }
     override suspend fun grantPass(millis: Long) = Unit

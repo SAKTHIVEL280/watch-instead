@@ -3,6 +3,7 @@ package com.lockin.app.feature.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lockin.app.data.LinkRepository
+import com.lockin.app.data.StatsRepository
 import com.lockin.app.data.settings.SettingsRepository
 import com.lockin.app.domain.Accent
 import com.lockin.app.domain.Appearance
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 class SettingsViewModel @Inject constructor(
     private val settings: SettingsRepository,
     private val links: LinkRepository,
+    private val stats: StatsRepository,
 ) : ViewModel() {
     val state = settings.settings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), GuardSettings())
 
@@ -31,6 +33,8 @@ class SettingsViewModel @Inject constructor(
     fun setCooldown(minutes: Int) = launch { settings.setCooldownMinutes(minutes) }
     fun setSkipDelay(seconds: Int) = launch { settings.setSkipDelaySeconds(seconds) }
     fun clearWatched() = launch { links.clearWatched() }
+    fun clearStats() = launch { stats.clear() }
+    fun setAskWhy(enabled: Boolean) = launch { settings.setAskWhy(enabled) }
 
     private fun launch(block: suspend () -> Unit) {
         viewModelScope.launch { block() }

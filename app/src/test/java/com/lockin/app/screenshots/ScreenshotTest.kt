@@ -18,7 +18,19 @@ import androidx.compose.ui.test.onRoot
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.lockin.app.R
 import com.lockin.app.core.theme.LockinTheme
+import androidx.test.core.app.ApplicationProvider
+import com.lockin.app.data.apps.InstalledAppsRepository
 import com.lockin.app.domain.Accent
+import com.lockin.app.domain.FocusSchedule
+import com.lockin.app.domain.OpenReason
+import com.lockin.app.domain.PromptEvent
+import com.lockin.app.domain.PromptOutcome
+import com.lockin.app.feature.focus.FocusSchedulesScreen
+import com.lockin.app.feature.focus.FocusViewModel
+import com.lockin.app.feature.messages.MessagesScreen
+import com.lockin.app.feature.messages.MessagesViewModel
+import com.lockin.app.feature.stats.StatsScreen
+import com.lockin.app.feature.stats.StatsViewModel
 import com.lockin.app.domain.Appearance
 import com.lockin.app.domain.Category
 import com.lockin.app.domain.ParsedLink
@@ -40,6 +52,7 @@ import com.lockin.app.intervention.InterventionScreen
 import com.lockin.app.intervention.InterventionState
 import com.lockin.app.testing.FakeLinkRepository
 import com.lockin.app.testing.FakeSettingsRepository
+import com.lockin.app.testing.FakeStatsRepository
 import com.lockin.app.testing.MainDispatcherRule
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
@@ -61,6 +74,7 @@ class ScreenshotTest {
     private val dark = Appearance(ThemeMode.DARK, dynamicColor = false, accent = Accent.TEAL)
     private val links = FakeLinkRepository()
     private val settings = FakeSettingsRepository()
+    private val stats = FakeStatsRepository()
     private val video = SavedLink(
         1, "https://www.youtube.com/watch?v=a", Platform.YOUTUBE, Category.MOTIVATION,
         note = "Rewatch before exams", title = "How to stop wasting your mornings", createdAt = 1,
@@ -80,21 +94,21 @@ class ScreenshotTest {
     }
 
     private fun capture() = CaptureViewModel(links)
-    private fun backup() = BackupViewModel(BackupRepository(links, settings))
+    private fun backup() = BackupViewModel(BackupRepository(links, settings, stats))
 
     private fun library(name: String, appearance: Appearance) {
         seed()
         val viewModel = LibraryViewModel(links, settings)
         val capture = capture()
-        shot(name, appearance) { LibraryScreen({}, {}, viewModel, capture) }
+        shot(name, appearance) { LibraryScreen({}, {}, {}, viewModel, capture) }
     }
 
     @Test fun library() = library("library", light)
     @Test fun libraryDark() = library("library_dark", dark)
     @Test fun settingsLight() {
-        val viewModel = SettingsViewModel(settings, links)
+        val viewModel = SettingsViewModel(settings, links, stats)
         val backup = backup()
-        shot("settings", light.copy(accent = Accent.ROSE)) { SettingsScreen({}, {}, {}, {}, viewModel, backup) }
+        shot("settings", light.copy(accent = Accent.ROSE)) { SettingsScreen({}, {}, {}, {}, {}, {}, viewModel, backup) }
     }
     @Test fun onboardingWelcome() {
         val viewModel = OnboardingViewModel(links, settings)
@@ -117,18 +131,18 @@ class ScreenshotTest {
         )
     }
     @Test fun settingsAmber() {
-        val viewModel = SettingsViewModel(settings, links)
+        val viewModel = SettingsViewModel(settings, links, stats)
         val appearance = Appearance(ThemeMode.LIGHT, dynamicColor = false, accent = Accent.AMBER)
         settings.appearance.value = appearance
         val backup = backup()
-        shot("settings_amber", appearance) { SettingsScreen({}, {}, {}, {}, viewModel, backup) }
+        shot("settings_amber", appearance) { SettingsScreen({}, {}, {}, {}, {}, {}, viewModel, backup) }
     }
     @Test fun pureBlack() {
-        val viewModel = SettingsViewModel(settings, links)
+        val viewModel = SettingsViewModel(settings, links, stats)
         val appearance = Appearance(ThemeMode.DARK, dynamicColor = false, accent = Accent.ROSE, pureBlack = true)
         settings.appearance.value = appearance
         val backup = backup()
-        shot("settings_pure_black", appearance) { SettingsScreen({}, {}, {}, {}, viewModel, backup) }
+        shot("settings_pure_black", appearance) { SettingsScreen({}, {}, {}, {}, {}, {}, viewModel, backup) }
     }
     @Test fun interventionLargeFont() = shot("intervention_large_font", light) {
         val density = LocalDensity.current
@@ -141,6 +155,41 @@ class ScreenshotTest {
     }
     @Test fun captureForm() = shot("capture_form", light) {
         Surface { CaptureForm(CaptureState(category = Category.CONSISTENCY), {}, {}, {}, {}) }
+    }
+    @Test fun interventionFull() = shot("intervention_full", light) {
+        InterventionScreen(
+            InterventionState(
+                false, "Instagram", listOf(video, video.copy(id = 2)), secondsLeft = 28, totalSeconds = 30,
+                personalMessage = "Exams in 12 days. You've got this.", focusName = "Study",
+                askWhy = true, reason = OpenReason.BORED,
+            ),
+            {}, {}, {}, {},
+        )
+    }
+    @Test fun statsScreen() {
+        val now = System.currentTimeMillis()
+        val day = 86_400_000L
+        stats.events.value = listOf(0L, 1L, 1L, 2L, 3L, 3L, 3L, 6L).mapIndexed { index, ago ->
+            val outcome = if (index == 7) PromptOutcome.CONTINUED else PromptOutcome.WENT_HOME
+            PromptEvent(now - ago * day - index, if (index % 3 == 0) "tiktok" else "insta", outcome, OpenReason.entries[index % 4])
+        }
+        val viewModel = StatsViewModel(
+            stats, links, InstalledAppsRepository(ApplicationProvider.getApplicationContext()), { now },
+        )
+        shot("stats", dark) { StatsScreen({}, viewModel) }
+    }
+    @Test fun focusScreen() {
+        runBlocking { settings.setFocusSchedules(listOf(FocusSchedule("a", "Study", setOf(1, 2, 3, 4, 5), 540, 1020), FocusSchedule("b", "Sleep", setOf(1, 2, 3, 4, 5, 6, 7), 1380, 360, false))) }
+        val viewModel = FocusViewModel(settings)
+        shot("focus", light) { FocusSchedulesScreen({}, viewModel) }
+    }
+    @Test fun messagesScreen() {
+        runBlocking { settings.setPersonalMessages(setOf("Exams in 12 days.", "Your future self is watching.")) }
+        val viewModel = MessagesViewModel(settings)
+        shot("messages", light) { MessagesScreen({}, viewModel) }
+    }
+    @Test fun editForm() = shot("capture_edit", light) {
+        Surface { CaptureForm(CaptureState(input = video.url, note = "Fixed note", editingId = 1), {}, {}, {}, {}) }
     }
     @Test fun launcherIcon() = shot("launcher_icon", light) {
         Box(Modifier.size(216.dp).clip(CircleShape)) {

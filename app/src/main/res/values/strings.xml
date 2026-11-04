@@ -3,7 +3,7 @@
     <string name="app_name">Lockin</string>
     <string name="share_target_label">Save to Lockin</string>
     <string name="accessibility_service_label">Lockin app guard</string>
-    <string name="accessibility_service_description">Detects when you open an app you chose to guard, so Lockin can show one of your saved videos. Lockin only sees which guarded app opened and, if you set no cooldown, when you return to your home screen. It never reads your screen, messages or passwords.</string>
+    <string name="accessibility_service_description">Detects when you open an app you chose to guard, so Lockin can show one of your saved videos. Lockin only sees which guarded app opened and, if you set no cooldown or a focus schedule, when you return to your home screen. It never reads your screen, messages or passwords.</string>
 
     <!-- Common -->
     <string name="action_back">Back</string>
@@ -20,7 +20,9 @@
     <string name="capture_title">Save for later</string>
     <string name="capture_link_label">Video link</string>
     <string name="capture_note_label">Why does this matter? (optional)</string>
+    <string name="capture_edit_title">Edit video</string>
     <string name="capture_save">Save</string>
+    <string name="capture_save_changes">Save changes</string>
     <string name="capture_no_link">No link found. Paste a full link starting with https://</string>
     <string name="capture_duplicate">You already saved this one</string>
     <string name="capture_saved">Saved. Lockin will bring it back at the right moment.</string>
@@ -42,6 +44,7 @@
     <string name="library_mark_watched">Mark as watched</string>
     <string name="library_mark_unwatched">Move back to queue</string>
     <string name="library_delete">Delete</string>
+    <string name="library_edit">Edit</string>
     <string name="library_more_actions">More actions</string>
     <string name="banner_service_off_title">Protection is off</string>
     <string name="banner_service_off_body">Turn on the Lockin app guard so your videos can appear.</string>
@@ -101,6 +104,18 @@
     <string name="backup_import_failed">This file is not a Lockin backup</string>
     <string name="backup_imported">Added %1$d videos, skipped %2$d already saved or invalid</string>
     <string name="onboarding_restore">Restore from a backup</string>
+    <string name="settings_ask_why">Ask why I\'m here</string>
+    <string name="settings_ask_why_body">Show a one-tap question on the prompt</string>
+    <plurals name="settings_schedule_count">
+        <item quantity="one">%d schedule</item>
+        <item quantity="other">%d schedules</item>
+    </plurals>
+    <plurals name="settings_message_count">
+        <item quantity="one">%d message</item>
+        <item quantity="other">%d messages</item>
+    </plurals>
+    <string name="settings_clear_stats">Clear stats</string>
+    <string name="settings_clear_stats_confirm">Delete your streak and all stats? This cannot be undone.</string>
     <string name="settings_clear_watched">Clear watched links</string>
     <string name="settings_clear_watched_confirm">Delete every watched link? This cannot be undone.</string>
     <string name="settings_clear">Clear</string>
@@ -109,7 +124,63 @@
     <string name="settings_version">Version %s</string>
 
     <!-- Privacy -->
-    <string name="privacy_body">Lockin has no accounts, ads or analytics, and we run no servers.\n\nYour saved links, notes and settings stay on this device and are not included in cloud backups. Uninstalling Lockin deletes them. If you export a backup, you choose where the file goes, and it is not encrypted, so keep it somewhere you trust.\n\nThe accessibility service detects when an app on your guarded list comes to the foreground, so Lockin can show a saved video. If you set the cooldown to None, it also detects when you return to your home screen, so it knows when to prompt again. It does not read screen content, typed text, messages or passwords. This information is used only on your device and is never collected or shared.\n\nWhen you save a link, Lockin requests its title and thumbnail. For YouTube and TikTok links the request goes to that service\'s public embed endpoint, and for other links it goes to the linked website. Thumbnails are then loaded from the address that service provides. These services receive the link and your IP address, as with any web request.\n\nOpening a saved video hands it to the matching app or your browser, whose own privacy terms apply.</string>
+    <string name="privacy_body">Lockin has no accounts, ads or analytics, and we run no servers.\n\nYour saved links, notes and settings stay on this device and are not included in cloud backups. Uninstalling Lockin deletes them. If you export a backup, you choose where the file goes, and it is not encrypted, so keep it somewhere you trust.\n\nThe accessibility service detects when an app on your guarded list comes to the foreground, so Lockin can show a saved video. If you set the cooldown to None or add a focus schedule, it also detects when you return to your home screen, so it knows when to prompt again. It does not read screen content, typed text, messages or passwords. Lockin keeps a history of its prompts on your device (which guarded app, when, what you chose and any reason you tapped) to show your stats. This history is used only on your device and is never collected or shared. You can clear it in Settings, and it is included in backups you export.\n\nWhen you save a link, Lockin requests its title and thumbnail. For YouTube and TikTok links the request goes to that service\'s public embed endpoint, and for other links it goes to the linked website. Thumbnails are then loaded from the address that service provides. These services receive the link and your IP address, as with any web request.\n\nOpening a saved video hands it to the matching app or your browser, whose own privacy terms apply.</string>
+
+    <!-- Stats -->
+    <string name="stats_title">Your stats</string>
+    <string name="stats_empty_title">Your stats start here</string>
+    <string name="stats_empty_body">Open a guarded app, or watch a saved video, and your progress will appear here.</string>
+    <plurals name="stats_streak_days">
+        <item quantity="one">day streak</item>
+        <item quantity="other">day streak</item>
+    </plurals>
+    <string name="stats_best_streak">Best: %d</string>
+    <string name="stats_resisted">Times you stopped</string>
+    <string name="stats_watched">Videos watched</string>
+    <string name="stats_continued">Continued anyway</string>
+    <string name="stats_chart_title">Times you stopped, last 7 days</string>
+    <string name="stats_reasons">Why you opened apps this week</string>
+    <string name="stats_apps">Most opened this week</string>
+    <string name="reason_bored">Bored</string>
+    <string name="reason_habit">Habit</string>
+    <string name="reason_stressed">Stressed</string>
+    <string name="reason_need_something">Need something</string>
+
+    <!-- Focus schedules -->
+    <string name="focus_title">Focus schedules</string>
+    <string name="focus_add">Add schedule</string>
+    <string name="focus_empty_title">No focus hours yet</string>
+    <string name="focus_empty_body">Set the hours you want to study or work. Lockin gets stricter during them.</string>
+    <string name="focus_explainer">During these hours, every new open is prompted and \"Continue anyway\" takes at least 30 seconds.</string>
+    <string name="focus_editor_title">Focus schedule</string>
+    <string name="focus_name_label">Name, like Study or Work</string>
+    <string name="focus_from">From %s</string>
+    <string name="focus_to">To %s</string>
+    <string name="focus_overnight">This runs overnight and ends the next morning.</string>
+
+    <!-- Personal messages -->
+    <string name="messages_title">Personal messages</string>
+    <string name="messages_add">Add message</string>
+    <string name="messages_empty_title">Write to your future self</string>
+    <string name="messages_empty_body">One of these appears on the prompt each time, in your own words.</string>
+    <string name="messages_dialog_title">Your message</string>
+    <string name="messages_placeholder">Exams in 12 days. You\'ve got this.</string>
+
+    <!-- Widget -->
+    <string name="widget_label">Lockin</string>
+    <string name="widget_description">Your streak and next saved video</string>
+    <string name="widget_empty">Save a video to get started</string>
+    <string name="widget_next_untitled">Your next saved video</string>
+    <plurals name="widget_streak">
+        <item quantity="one">%d day streak</item>
+        <item quantity="other">%d day streak</item>
+    </plurals>
+    <plurals name="widget_queue">
+        <item quantity="one">%d to watch</item>
+        <item quantity="other">%d to watch</item>
+    </plurals>
+    <string name="widget_preview_streak">5 day streak</string>
+    <string name="widget_preview_title">Your next saved video</string>
 
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Save it now.\nActually watch it.</string>
@@ -124,7 +195,7 @@
     <string name="onboarding_apps_needed">Choose at least one app to continue</string>
     <string name="onboarding_permission_title">How Lockin uses Accessibility</string>
     <string name="onboarding_permission_body">Android needs you to turn on Lockin\'s accessibility service.</string>
-    <string name="onboarding_disclosure_what">What it accesses: only which app is opening, and only for the apps you chose. If you set no cooldown, it also notices when you return to your home screen.</string>
+    <string name="onboarding_disclosure_what">What it accesses: only which app is opening, and only for the apps you chose. If you set no cooldown or a focus schedule, it also notices when you return to your home screen.</string>
     <string name="onboarding_disclosure_why">Why: so Lockin can show a saved video the moment you open one.</string>
     <string name="onboarding_disclosure_never">What it never does: read your screen, messages, typing or passwords.</string>
     <string name="onboarding_disclosure_local">Your data: this stays on your device and is never collected or shared.</string>
@@ -142,6 +213,8 @@
     <string name="intervention_subtitle">You saved this for a reason.</string>
     <string name="intervention_watch">Watch now</string>
     <string name="intervention_next">Show another</string>
+    <string name="intervention_why">Why are you here?</string>
+    <string name="intervention_focus">Focus hours: %s</string>
     <string name="intervention_home">Go home</string>
     <string name="intervention_continue">Continue anyway</string>
     <string name="intervention_continue_in">Continue anyway (%d)</string>

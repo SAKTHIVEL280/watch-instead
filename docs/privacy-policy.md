@@ -13,10 +13,15 @@ somewhere you trust.
 
 ## Accessibility service
 Lockin uses Android's AccessibilityService API to detect when an app on your guarded list comes to
-the foreground, so it can show one of your saved videos. If you set the cooldown to None, it also detects when you
+the foreground, so it can show one of your saved videos. If you set the cooldown to None or add a focus schedule, it also detects when you
 return to your home screen, so it knows when to prompt again. It does not read screen content, typed
 text, messages or passwords. This information is used only on your device and is never collected
 or shared. The service is optional and can be turned off at any time in Android settings.
+
+## Stats
+Lockin keeps a history of its prompts on your device: which guarded app, when, what you chose and
+any reason you tapped. It powers your stats, is never collected or shared, can be cleared in
+Settings, and is included in backups you export.
 
 ## Network requests
 When you save a link, Lockin requests its title and thumbnail. For YouTube and TikTok links the

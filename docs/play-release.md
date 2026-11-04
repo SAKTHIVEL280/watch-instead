@@ -5,7 +5,7 @@ Play reviews AccessibilityService use by hand. The app sets `isAccessibilityTool
 must pass the prominent disclosure and permission declaration requirements.
 
 - Declared purpose: detect when a user-selected app opens, to show the user's saved videos instead.
-- With no cooldown set, the service also observes the launcher to detect when a session ends.
+- With no cooldown or a focus schedule set, the service also observes the launcher to detect when a session ends.
 - Provide a short video of: the disclosure screen, enabling the service, and a prompt appearing.
 - The in-app disclosure is the Permission step of onboarding. It must stay before the system settings screen.
 - Check the current Play policy wording before submitting, because it changes.
