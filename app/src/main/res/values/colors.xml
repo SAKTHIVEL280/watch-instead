@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="brand_primary">#4F46C8</color>
-    <color name="icon_bg_start">#6C63E8</color>
-    <color name="icon_bg_end">#2E2596</color>
-    <color name="icon_glow">#C5C0FF</color>
-    <color name="icon_glyph_start">#FFFFFF</color>
-    <color name="icon_glyph_end">#D6D2FF</color>
-    <color name="icon_play">#4F46C8</color>
+    <color name="icon_bg">#E3DFFF</color>
+    <color name="icon_shape">#4F46C8</color>
+    <color name="icon_glyph">#FFFFFF</color>
 </resources>

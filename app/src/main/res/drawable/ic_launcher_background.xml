@@ -1,34 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <path android:pathData="M0,0h108v108h-108z">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                android:endColor="@color/icon_bg_end"
-                android:endX="90"
-                android:endY="108"
-                android:startColor="@color/icon_bg_start"
-                android:startX="18"
-                android:startY="0"
-                android:type="linear" />
-        </aapt:attr>
-    </path>
-    <!-- Soft light from the top left -->
     <path
-        android:fillAlpha="0.3"
-        android:pathData="M0,0h108v108h-108z">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                android:centerX="36"
-                android:centerY="28"
-                android:endColor="#00000000"
-                android:gradientRadius="58"
-                android:startColor="@color/icon_glow"
-                android:type="radial" />
-        </aapt:attr>
-    </path>
+        android:fillColor="@color/icon_bg"
+        android:pathData="M0,0h108v108h-108z" />
 </vector>

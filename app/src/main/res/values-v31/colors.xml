@@ -2,10 +2,7 @@
 <!-- System palette colours, so the launcher icon and splash follow the wallpaper. -->
 <resources>
     <color name="brand_primary">@android:color/system_accent1_600</color>
-    <color name="icon_bg_start">@android:color/system_accent1_400</color>
-    <color name="icon_bg_end">@android:color/system_accent1_700</color>
-    <color name="icon_glow">@android:color/system_accent1_100</color>
-    <color name="icon_glyph_start">@android:color/system_accent1_10</color>
-    <color name="icon_glyph_end">@android:color/system_accent1_100</color>
-    <color name="icon_play">@android:color/system_accent1_600</color>
+    <color name="icon_bg">@android:color/system_accent1_100</color>
+    <color name="icon_shape">@android:color/system_accent1_600</color>
+    <color name="icon_glyph">@android:color/system_accent1_10</color>
 </resources>
