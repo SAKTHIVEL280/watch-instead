@@ -1,7 +1,13 @@
 package com.lockin.app.data.backup
 
 import com.lockin.app.domain.Category
+import com.lockin.app.domain.FocusPolicy
+import com.lockin.app.domain.FocusSchedule
+import com.lockin.app.domain.GuardSettings
 import com.lockin.app.domain.LinkParser
+import com.lockin.app.domain.OpenReason
+import com.lockin.app.domain.PromptEvent
+import com.lockin.app.domain.PromptOutcome
 import com.lockin.app.domain.SavedLink
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
@@ -20,6 +26,14 @@ data class BackupLink(
 )
 
 @Serializable
+data class BackupEvent(
+    val timestamp: Long,
+    val packageName: String,
+    val outcome: String,
+    val reason: String? = null,
+)
+
+@Serializable
 data class BackupSettings(
     val guardedPackages: Set<String> = emptySet(),
     val cooldownMinutes: Int? = null,
@@ -28,6 +42,9 @@ data class BackupSettings(
     val dynamicColor: Boolean? = null,
     val accent: String? = null,
     val pureBlack: Boolean? = null,
+    val askWhy: Boolean? = null,
+    val personalMessages: Set<String> = emptySet(),
+    val focusSchedules: List<FocusSchedule> = emptyList(),
 )
 
 @Serializable
@@ -36,11 +53,12 @@ data class BackupFile(
     val app: String = BackupCodec.APP_ID,
     val links: List<BackupLink> = emptyList(),
     val settings: BackupSettings = BackupSettings(),
+    val events: List<BackupEvent> = emptyList(),
 )
 
 /** Backups are user-editable files from outside the app, so nothing in them is trusted on import. */
 object BackupCodec {
-    const val VERSION = 1
+    const val VERSION = 2
     const val APP_ID = "lockin"
     private const val MAX_NOTE_LENGTH = 200
 
@@ -68,6 +86,9 @@ object BackupCodec {
         link.url, link.category.name, link.note, link.title, link.thumbnailUrl, link.createdAt, link.watchedAt,
     )
 
+    fun toBackup(event: PromptEvent) =
+        BackupEvent(event.timestamp, event.packageName, event.outcome.name, event.reason?.name)
+
     /** Re-parses the URL so that only http(s) links ever reach the system's link handling. */
     fun toSavedLink(link: BackupLink): SavedLink? {
         val parsed = LinkParser.parse(link.url) ?: return null
@@ -82,4 +103,22 @@ object BackupCodec {
             watchedAt = link.watchedAt,
         )
     }
+
+    fun toPromptEvent(event: BackupEvent): PromptEvent? {
+        val outcome = PromptOutcome.entries.firstOrNull { it.name == event.outcome } ?: return null
+        return PromptEvent(
+            event.timestamp,
+            event.packageName,
+            outcome,
+            OpenReason.entries.firstOrNull { it.name == event.reason },
+        )
+    }
+
+    fun sanitiseMessages(messages: Set<String>): Set<String> = messages
+        .map { it.trim().take(GuardSettings.MAX_MESSAGE_LENGTH) }
+        .filter { it.isNotEmpty() }
+        .toSet()
+
+    fun sanitiseSchedules(schedules: List<FocusSchedule>): List<FocusSchedule> =
+        schedules.filter(FocusPolicy::isValid)
 }

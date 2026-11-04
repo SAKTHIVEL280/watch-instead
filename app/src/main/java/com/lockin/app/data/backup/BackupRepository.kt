@@ -1,6 +1,7 @@
 package com.lockin.app.data.backup
 
 import com.lockin.app.data.LinkRepository
+import com.lockin.app.data.StatsRepository
 import com.lockin.app.data.settings.SettingsRepository
 import com.lockin.app.domain.Accent
 import com.lockin.app.domain.GuardSettings
@@ -15,6 +16,7 @@ data class ImportResult(val added: Int, val skipped: Int)
 class BackupRepository @Inject constructor(
     private val links: LinkRepository,
     private val settings: SettingsRepository,
+    private val stats: StatsRepository,
 ) {
     suspend fun export(): String {
         val guard = settings.settings.first()
@@ -30,7 +32,11 @@ class BackupRepository @Inject constructor(
                     dynamicColor = appearance.dynamicColor,
                     accent = appearance.accent.name,
                     pureBlack = appearance.pureBlack,
+                    askWhy = guard.askWhy,
+                    personalMessages = guard.personalMessages,
+                    focusSchedules = guard.focusSchedules,
                 ),
+                events = stats.events.first().map(BackupCodec::toBackup),
             ),
         )
     }
@@ -39,13 +45,24 @@ class BackupRepository @Inject constructor(
     suspend fun import(text: String): ImportResult? {
         val file = BackupCodec.decode(text) ?: return null
         val imported = file.links.mapNotNull(BackupCodec::toSavedLink).count { links.importLink(it) }
+        file.events.mapNotNull(BackupCodec::toPromptEvent).forEach { stats.importEvent(it) }
         apply(file.settings)
         return ImportResult(imported, file.links.size - imported)
     }
 
     private suspend fun apply(backup: BackupSettings) {
-        val guarded = settings.settings.first().guardedPackages
-        settings.setGuardedPackages(guarded + backup.guardedPackages)
+        val current = settings.settings.first()
+        settings.setGuardedPackages(current.guardedPackages + backup.guardedPackages)
+        settings.setPersonalMessages(
+            (current.personalMessages + BackupCodec.sanitiseMessages(backup.personalMessages))
+                .take(GuardSettings.MAX_MESSAGES).toSet(),
+        )
+        val knownIds = current.focusSchedules.map { it.id }
+        settings.setFocusSchedules(
+            current.focusSchedules +
+                BackupCodec.sanitiseSchedules(backup.focusSchedules).filter { it.id !in knownIds },
+        )
+        backup.askWhy?.let { settings.setAskWhy(it) }
         backup.cooldownMinutes?.takeIf { it in GuardSettings.COOLDOWN_OPTIONS }?.let { settings.setCooldownMinutes(it) }
         backup.skipDelaySeconds?.takeIf { it in GuardSettings.SKIP_DELAY_OPTIONS }?.let { settings.setSkipDelaySeconds(it) }
         ThemeMode.entries.firstOrNull { it.name == backup.themeMode }?.let { settings.setThemeMode(it) }
