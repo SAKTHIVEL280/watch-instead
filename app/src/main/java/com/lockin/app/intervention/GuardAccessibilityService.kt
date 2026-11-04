@@ -10,9 +10,12 @@ import android.view.accessibility.AccessibilityEvent
 import androidx.core.content.ContextCompat
 import com.lockin.app.data.Clock
 import com.lockin.app.data.settings.SettingsRepository
+import com.lockin.app.domain.FocusPolicy
 import com.lockin.app.domain.GuardSettings
 import com.lockin.app.domain.InterventionPolicy
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.Instant
+import java.time.ZoneId
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +26,7 @@ import kotlinx.coroutines.launch
 /**
  * Watches for guarded apps coming to the foreground.
  *
- * Events are subscribed to only for guarded packages, plus the launcher when no cooldown is set,
+ * Events are subscribed to only for guarded packages, plus the launcher when no cooldown or a focus schedule is set,
  * and window content is never requested. This is what the onboarding disclosure and the privacy
  * policy promise. Keep them in sync.
  */
@@ -58,8 +61,10 @@ class GuardAccessibilityService : AccessibilityService() {
             settingsRepository.endSession()
             settingsRepository.settings.collect { latest ->
                 settings = latest
-                val noCooldown = latest.cooldownMinutes == GuardSettings.NO_COOLDOWN
-                val wanted = if (noCooldown) latest.guardedPackages + launcherPackages else latest.guardedPackages
+                // Sessions end at the launcher, and focus hours run on sessions whatever the cooldown.
+                val usesSessions = latest.cooldownMinutes == GuardSettings.NO_COOLDOWN ||
+                    latest.focusSchedules.any { it.enabled }
+                val wanted = if (usesSessions) latest.guardedPackages + launcherPackages else latest.guardedPackages
                 val packages = if (latest.guardedPackages.isEmpty()) emptySet() else wanted
                 if (packages != subscribedPackages) subscribe(packages)
             }
@@ -90,7 +95,12 @@ class GuardAccessibilityService : AccessibilityService() {
             return
         }
         val now = clock.now()
-        if (InterventionPolicy.shouldIntervene(packageName, this.packageName, current, now, lastPromptAt)) {
+        val localNow = Instant.ofEpochMilli(now).atZone(ZoneId.systemDefault()).toLocalDateTime()
+        val focusActive = FocusPolicy.activeSchedule(current.focusSchedules, localNow) != null
+        val intervene = InterventionPolicy.shouldIntervene(
+            packageName, this.packageName, current, now, lastPromptAt, focusActive,
+        )
+        if (intervene) {
             lastPromptAt = now
             startActivity(InterventionActivity.intent(this, packageName))
         }
