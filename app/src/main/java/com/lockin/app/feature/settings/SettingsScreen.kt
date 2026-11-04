@@ -63,6 +63,8 @@ import com.lockin.app.core.theme.isDark
 import com.lockin.app.core.theme.supportsDynamicColor
 import com.lockin.app.core.theme.swatch
 import com.lockin.app.domain.Accent
+import com.lockin.app.feature.backup.BackupViewModel
+import com.lockin.app.feature.backup.rememberBackupActions
 import com.lockin.app.domain.Appearance
 import com.lockin.app.domain.GuardSettings
 import com.lockin.app.domain.ThemeMode
@@ -93,10 +95,12 @@ fun SettingsScreen(
     onPrivacy: () -> Unit,
     onLicenses: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel(),
+    backupViewModel: BackupViewModel = hiltViewModel(),
 ) {
     val settings by viewModel.state.collectAsStateWithLifecycle()
     val appearance by viewModel.appearance.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val backup = rememberBackupActions(backupViewModel)
     var guardEnabled by remember { mutableStateOf(true) }
     var confirmClear by rememberSaveable { mutableStateOf(false) }
     LifecycleResumeEffect(Unit) {
@@ -163,6 +167,16 @@ fun SettingsScreen(
                 label = { stringResource(R.string.settings_skip_delay_value, it) },
             )
             SectionHeader(stringResource(R.string.settings_section_about))
+            ListItem(
+                headlineContent = { Text(stringResource(R.string.settings_export)) },
+                supportingContent = { Text(stringResource(R.string.settings_export_body)) },
+                modifier = Modifier.clickable(onClick = backup.export),
+            )
+            ListItem(
+                headlineContent = { Text(stringResource(R.string.settings_import)) },
+                supportingContent = { Text(stringResource(R.string.settings_import_body)) },
+                modifier = Modifier.clickable(onClick = backup.import),
+            )
             ListItem(
                 headlineContent = { Text(stringResource(R.string.settings_clear_watched)) },
                 modifier = Modifier.clickable { confirmClear = true },

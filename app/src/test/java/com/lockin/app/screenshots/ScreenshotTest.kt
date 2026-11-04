@@ -25,6 +25,8 @@ import com.lockin.app.domain.ParsedLink
 import com.lockin.app.domain.Platform
 import com.lockin.app.domain.SavedLink
 import com.lockin.app.domain.ThemeMode
+import com.lockin.app.data.backup.BackupRepository
+import com.lockin.app.feature.backup.BackupViewModel
 import com.lockin.app.feature.capture.CaptureForm
 import com.lockin.app.feature.capture.CaptureState
 import com.lockin.app.feature.capture.CaptureViewModel
@@ -78,6 +80,7 @@ class ScreenshotTest {
     }
 
     private fun capture() = CaptureViewModel(links)
+    private fun backup() = BackupViewModel(BackupRepository(links, settings))
 
     private fun library(name: String, appearance: Appearance) {
         seed()
@@ -90,19 +93,22 @@ class ScreenshotTest {
     @Test fun libraryDark() = library("library_dark", dark)
     @Test fun settingsLight() {
         val viewModel = SettingsViewModel(settings, links)
-        shot("settings", light.copy(accent = Accent.ROSE)) { SettingsScreen({}, {}, {}, {}, viewModel) }
+        val backup = backup()
+        shot("settings", light.copy(accent = Accent.ROSE)) { SettingsScreen({}, {}, {}, {}, viewModel, backup) }
     }
     @Test fun onboardingWelcome() {
         val viewModel = OnboardingViewModel(links, settings)
         val capture = capture()
-        shot("onboarding_welcome", light) { OnboardingScreen(viewModel, capture) }
+        val backup = backup()
+        shot("onboarding_welcome", light) { OnboardingScreen(viewModel, capture, backup) }
     }
     @Test fun onboardingVideos() {
         seed()
         val viewModel = OnboardingViewModel(links, settings)
         viewModel.next()
         val capture = capture()
-        shot("onboarding_videos", light) { OnboardingScreen(viewModel, capture) }
+        val backup = backup()
+        shot("onboarding_videos", light) { OnboardingScreen(viewModel, capture, backup) }
     }
     @Test fun intervention() = shot("intervention", light) {
         InterventionScreen(
@@ -114,13 +120,15 @@ class ScreenshotTest {
         val viewModel = SettingsViewModel(settings, links)
         val appearance = Appearance(ThemeMode.LIGHT, dynamicColor = false, accent = Accent.AMBER)
         settings.appearance.value = appearance
-        shot("settings_amber", appearance) { SettingsScreen({}, {}, {}, {}, viewModel) }
+        val backup = backup()
+        shot("settings_amber", appearance) { SettingsScreen({}, {}, {}, {}, viewModel, backup) }
     }
     @Test fun pureBlack() {
         val viewModel = SettingsViewModel(settings, links)
         val appearance = Appearance(ThemeMode.DARK, dynamicColor = false, accent = Accent.ROSE, pureBlack = true)
         settings.appearance.value = appearance
-        shot("settings_pure_black", appearance) { SettingsScreen({}, {}, {}, {}, viewModel) }
+        val backup = backup()
+        shot("settings_pure_black", appearance) { SettingsScreen({}, {}, {}, {}, viewModel, backup) }
     }
     @Test fun interventionLargeFont() = shot("intervention_large_font", light) {
         val density = LocalDensity.current
@@ -146,6 +154,13 @@ class ScreenshotTest {
             Image(painterResource(R.drawable.ic_launcher_background), null, Modifier.size(216.dp))
             Image(painterResource(R.drawable.ic_launcher_foreground), null, Modifier.size(216.dp))
         }
+    }
+    @Test fun launcherIconThemed() = shot("launcher_icon_themed", light) {
+        Image(
+            painterResource(R.drawable.ic_launcher_monochrome), null,
+            Modifier.size(216.dp),
+            colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.ui.graphics.Color.DarkGray),
+        )
     }
     @Test fun interventionEmpty() = shot("intervention_empty", dark) {
         InterventionScreen(InterventionState(false, "TikTok"), {}, {}, {}, {})

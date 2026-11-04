@@ -27,6 +27,11 @@ class FakeLinkRepository : LinkRepository {
     }
 
     override suspend fun restore(link: SavedLink) = links.update { it + link }
+    override suspend fun importLink(link: SavedLink): Boolean {
+        if (links.value.any { it.url == link.url }) return false
+        links.update { it + link.copy(id = nextId++) }
+        return true
+    }
     override suspend fun queue() = QueueSelector.order(links.value)
     override suspend fun markShown(id: Long) = Unit
     override suspend fun setWatched(id: Long, watched: Boolean) = links.update { all ->

@@ -21,6 +21,9 @@ interface LinkRepository {
     val links: Flow<List<SavedLink>>
     suspend fun save(link: ParsedLink, category: Category, note: String): SaveResult
     suspend fun restore(link: SavedLink)
+
+    /** Returns false when the URL is already saved. */
+    suspend fun importLink(link: SavedLink): Boolean
     suspend fun queue(): List<SavedLink>
     suspend fun markShown(id: Long)
     suspend fun setWatched(id: Long, watched: Boolean)
@@ -59,6 +62,8 @@ class DefaultLinkRepository @Inject constructor(
     }
 
     override suspend fun restore(link: SavedLink) = dao.upsert(link.toEntity(clock.now()))
+
+    override suspend fun importLink(link: SavedLink) = dao.insert(link.toEntity(clock.now())) != -1L
 
     override suspend fun queue() = QueueSelector.order(dao.unwatched().map { it.toDomain() })
 

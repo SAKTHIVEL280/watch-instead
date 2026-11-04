@@ -68,6 +68,8 @@ import com.lockin.app.core.ui.MorphingBlob
 import com.lockin.app.domain.MIN_ONBOARDING_LINKS
 import com.lockin.app.domain.SUGGESTED_ONBOARDING_LINKS
 import com.lockin.app.domain.SavedLink
+import com.lockin.app.feature.backup.BackupViewModel
+import com.lockin.app.feature.backup.rememberBackupActions
 import com.lockin.app.feature.capture.CaptureSheet
 import com.lockin.app.feature.capture.CaptureViewModel
 import com.lockin.app.feature.guardedapps.GuardedAppsList
@@ -77,6 +79,7 @@ import com.lockin.app.intervention.GuardStatus
 fun OnboardingScreen(
     viewModel: OnboardingViewModel = hiltViewModel(),
     captureViewModel: CaptureViewModel = hiltViewModel(),
+    backupViewModel: BackupViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     BackHandler(enabled = state.step != OnboardingStep.WELCOME) { viewModel.back() }
@@ -106,7 +109,7 @@ fun OnboardingScreen(
             ) { step ->
                 when (step) {
                     OnboardingStep.WELCOME -> WelcomeStep(viewModel::next)
-                    OnboardingStep.VIDEOS -> VideosStep(state, viewModel::remove, viewModel::next, captureViewModel)
+                    OnboardingStep.VIDEOS -> VideosStep(state, viewModel::remove, viewModel::next, captureViewModel, backupViewModel)
                     OnboardingStep.APPS -> AppsStep(state.canContinue, viewModel::next)
                     OnboardingStep.PERMISSION -> PermissionStep(viewModel::finish)
                 }
@@ -166,7 +169,9 @@ private fun VideosStep(
     onRemove: (SavedLink) -> Unit,
     onNext: () -> Unit,
     captureViewModel: CaptureViewModel,
+    backupViewModel: BackupViewModel,
 ) {
+    val backup = rememberBackupActions(backupViewModel)
     var showCapture by rememberSaveable { mutableStateOf(false) }
     val count = state.links.size
     val progress by animateFloatAsState(
@@ -212,6 +217,9 @@ private fun VideosStep(
         ) {
             Icon(Icons.Outlined.Add, null)
             Text(stringResource(R.string.library_add), Modifier.padding(start = 8.dp))
+        }
+        TextButton(onClick = backup.import, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.onboarding_restore))
         }
         if (!state.canContinue) {
             Text(

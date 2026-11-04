@@ -10,6 +10,8 @@ Lockin has no accounts, ads or analytics, and we run no servers.
 ## Data on your device
 Your saved links, notes and settings stay on your device. They are not included in cloud backups.
 Uninstalling Lockin deletes them.
+If you export a backup, you choose where the file is saved. It is not encrypted, so keep it
+somewhere you trust.
 
 ## Accessibility service
 Lockin uses Android's AccessibilityService API to detect when an app on your guarded list comes to

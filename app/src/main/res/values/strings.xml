@@ -92,6 +92,15 @@
     <string name="settings_skip_delay">Continue delay</string>
     <string name="settings_skip_delay_body">Wait before \"Continue anyway\" becomes available</string>
     <string name="settings_skip_delay_value">%d sec</string>
+    <string name="settings_export">Export backup</string>
+    <string name="settings_export_body">Save your videos and settings to a file you choose</string>
+    <string name="settings_import">Import backup</string>
+    <string name="settings_import_body">Add videos and settings from a backup file</string>
+    <string name="backup_exported">Backup saved</string>
+    <string name="backup_export_failed">Could not save the backup</string>
+    <string name="backup_import_failed">This file is not a Lockin backup</string>
+    <string name="backup_imported">Added %1$d videos, skipped %2$d already saved or invalid</string>
+    <string name="onboarding_restore">Restore from a backup</string>
     <string name="settings_clear_watched">Clear watched links</string>
     <string name="settings_clear_watched_confirm">Delete every watched link? This cannot be undone.</string>
     <string name="settings_clear">Clear</string>
@@ -100,7 +109,7 @@
     <string name="settings_version">Version %s</string>
 
     <!-- Privacy -->
-    <string name="privacy_body">Lockin has no accounts, ads or analytics, and we run no servers.\n\nYour saved links, notes and settings stay on this device and are not included in cloud backups. Uninstalling Lockin deletes them.\n\nThe accessibility service detects when an app on your guarded list comes to the foreground, so Lockin can show a saved video. If you set the cooldown to None, it also detects when you return to your home screen, so it knows when to prompt again. It does not read screen content, typed text, messages or passwords. This information is used only on your device and is never collected or shared.\n\nWhen you save a link, Lockin requests its title and thumbnail. For YouTube and TikTok links the request goes to that service\'s public embed endpoint, and for other links it goes to the linked website. Thumbnails are then loaded from the address that service provides. These services receive the link and your IP address, as with any web request.\n\nOpening a saved video hands it to the matching app or your browser, whose own privacy terms apply.</string>
+    <string name="privacy_body">Lockin has no accounts, ads or analytics, and we run no servers.\n\nYour saved links, notes and settings stay on this device and are not included in cloud backups. Uninstalling Lockin deletes them. If you export a backup, you choose where the file goes, and it is not encrypted, so keep it somewhere you trust.\n\nThe accessibility service detects when an app on your guarded list comes to the foreground, so Lockin can show a saved video. If you set the cooldown to None, it also detects when you return to your home screen, so it knows when to prompt again. It does not read screen content, typed text, messages or passwords. This information is used only on your device and is never collected or shared.\n\nWhen you save a link, Lockin requests its title and thumbnail. For YouTube and TikTok links the request goes to that service\'s public embed endpoint, and for other links it goes to the linked website. Thumbnails are then loaded from the address that service provides. These services receive the link and your IP address, as with any web request.\n\nOpening a saved video hands it to the matching app or your browser, whose own privacy terms apply.</string>
 
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Save it now.\nActually watch it.</string>
