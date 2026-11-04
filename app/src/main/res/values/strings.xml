@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lockin</string>
+    <string name="share_target_label">Save to Lockin</string>
+    <string name="accessibility_service_label">Lockin app guard</string>
+    <string name="accessibility_service_description">Detects when you open an app you chose to guard, so Lockin can show one of your saved videos. Lockin only sees which guarded app opened. It never reads your screen, messages or passwords.</string>
+
+    <!-- Common -->
+    <string name="action_back">Back</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_continue">Continue</string>
+    <string name="action_undo">Undo</string>
+    <string name="category_motivation">Motivation</string>
+    <string name="category_education">Education</string>
+    <string name="category_other">Other</string>
+
+    <!-- Capture -->
+    <string name="capture_title">Save for later</string>
+    <string name="capture_link_label">Video link</string>
+    <string name="capture_note_label">Why does this matter? (optional)</string>
+    <string name="capture_save">Save</string>
+    <string name="capture_no_link">No link found. Paste a full link starting with https://</string>
+    <string name="capture_duplicate">You already saved this one</string>
+    <string name="capture_saved">Saved. Lockin will bring it back at the right moment.</string>
+
+    <!-- Library -->
+    <string name="library_add">Add link</string>
+    <string name="library_settings">Settings</string>
+    <string name="library_tab_queue">To watch</string>
+    <string name="library_tab_watched">Watched</string>
+    <string name="library_filter_all">All</string>
+    <string name="library_empty_queue_title">Nothing saved yet</string>
+    <string name="library_empty_queue_body">Share a video to Lockin from any app, or add a link here.</string>
+    <string name="library_empty_watched_title">Nothing watched yet</string>
+    <string name="library_empty_watched_body">Videos you finish will appear here.</string>
+    <string name="library_marked_watched">Marked as watched</string>
+    <string name="library_moved_back">Moved back to your queue</string>
+    <string name="library_deleted">Link deleted</string>
+    <string name="library_open_failed">No app can open this link</string>
+    <string name="library_mark_watched">Mark as watched</string>
+    <string name="library_mark_unwatched">Move back to queue</string>
+    <string name="library_delete">Delete</string>
+    <string name="library_more_actions">More actions</string>
+    <string name="banner_service_off_title">Protection is off</string>
+    <string name="banner_service_off_body">Turn on the Lockin app guard so your videos can appear.</string>
+    <string name="banner_turn_on">Turn on</string>
+    <string name="banner_no_apps_title">No apps are guarded</string>
+    <string name="banner_no_apps_body">Choose the apps you want Lockin to step in front of.</string>
+    <string name="banner_choose_apps">Choose apps</string>
+
+    <!-- Guarded apps -->
+    <string name="guarded_title">Guarded apps</string>
+    <string name="guarded_suggested">Common distractions</string>
+    <string name="guarded_all">All apps</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_protection">Focus</string>
+    <string name="settings_section_about">Data and about</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_body">Choose how Lockin looks</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="settings_dynamic_color">Dynamic colour</string>
+    <string name="settings_dynamic_color_body">Match the colours of your wallpaper</string>
+    <string name="settings_accent">Accent colour</string>
+    <string name="accent_indigo">Indigo</string>
+    <string name="accent_rose">Rose</string>
+    <string name="accent_teal">Teal</string>
+    <string name="accent_amber">Amber</string>
+    <string name="settings_pure_black">Pure black</string>
+    <string name="settings_pure_black_body">Use true black backgrounds in dark theme</string>
+    <string name="settings_protection">Protect guarded apps</string>
+    <string name="settings_protection_body">Show a saved video when you open a guarded app</string>
+    <string name="settings_guard_status">App guard permission</string>
+    <string name="settings_guard_on">On</string>
+    <string name="settings_guard_off">Off. Tap to turn on.</string>
+    <string name="settings_guarded_apps">Guarded apps</string>
+    <plurals name="settings_guarded_count">
+        <item quantity="one">%d app</item>
+        <item quantity="other">%d apps</item>
+    </plurals>
+    <string name="settings_cooldown">Cooldown</string>
+    <string name="settings_cooldown_body">Time before you are prompted again after continuing</string>
+    <string name="settings_cooldown_value">%d min</string>
+    <string name="settings_skip_delay">Continue delay</string>
+    <string name="settings_skip_delay_body">Wait before \"Continue anyway\" becomes available</string>
+    <string name="settings_skip_delay_value">%d sec</string>
+    <string name="settings_clear_watched">Clear watched links</string>
+    <string name="settings_clear_watched_confirm">Delete every watched link? This cannot be undone.</string>
+    <string name="settings_clear">Clear</string>
+    <string name="settings_privacy">Privacy policy</string>
+    <string name="settings_licenses">Open-source licences</string>
+    <string name="settings_version">Version %s</string>
+
+    <!-- Privacy -->
+    <string name="privacy_body">Lockin has no accounts, ads or analytics, and we run no servers.\n\nYour saved links, notes and settings stay on this device and are not included in cloud backups. Uninstalling Lockin deletes them.\n\nThe accessibility service detects when an app on your guarded list comes to the foreground, so Lockin can show a saved video. It does not read screen content, typed text, messages or passwords. This information is used only on your device and is never collected or shared.\n\nWhen you save a link, Lockin requests its title and thumbnail. For YouTube and TikTok links the request goes to that service\'s public embed endpoint, and for other links it goes to the linked website. Thumbnails are then loaded from the address that service provides. These services receive the link and your IP address, as with any web request.\n\nOpening a saved video hands it to the matching app or your browser, whose own privacy terms apply.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Save it now.\nActually watch it.</string>
+    <string name="onboarding_welcome_body">You save the videos that fire you up, then forget them and keep scrolling. Lockin brings them back the moment you open a distracting app.</string>
+    <string name="onboarding_get_started">Get started</string>
+    <string name="onboarding_videos_title">Add your first videos</string>
+    <string name="onboarding_videos_body">Add at least %1$d so Lockin has something to show you. %2$d is even better. You can paste links here, or share videos to Lockin from Instagram, TikTok or YouTube.</string>
+    <string name="onboarding_videos_progress">%1$d of %2$d videos added</string>
+    <string name="onboarding_videos_needed">Add at least %d videos to continue</string>
+    <string name="onboarding_apps_title">Which apps pull you in?</string>
+    <string name="onboarding_apps_body">Lockin will step in when you open these. You can change them later.</string>
+    <string name="onboarding_apps_needed">Choose at least one app to continue</string>
+    <string name="onboarding_permission_title">How Lockin uses Accessibility</string>
+    <string name="onboarding_permission_body">Android needs you to turn on Lockin\'s accessibility service.</string>
+    <string name="onboarding_disclosure_what">What it accesses: only which app is opening, and only for the apps you chose.</string>
+    <string name="onboarding_disclosure_why">Why: so Lockin can show a saved video the moment you open one.</string>
+    <string name="onboarding_disclosure_never">What it never does: read your screen, messages, typing or passwords.</string>
+    <string name="onboarding_disclosure_local">Your data: this stays on your device and is never collected or shared.</string>
+    <string name="onboarding_agree">Agree and open settings</string>
+    <string name="onboarding_not_now">Not now</string>
+    <string name="onboarding_permission_granted">Protection is on. You\'re locked in.</string>
+    <string name="onboarding_finish">Finish</string>
+    <string name="onboarding_help_title">Can\'t turn it on?</string>
+    <string name="onboarding_help_body">If Android says the setting is restricted (common for apps not installed from Play): open Settings, then Apps, then Lockin, tap the ⋮ menu, choose Allow restricted settings, and try again.\n\nIf protection keeps switching off, set Lockin\'s battery usage to Unrestricted in its app settings. Some phone brands stop background services aggressively.</string>
+    <string name="onboarding_step">Step %1$d of %2$d</string>
+
+    <!-- Intervention -->
+    <string name="intervention_title">Before %s…</string>
+    <string name="intervention_title_generic">Before you scroll…</string>
+    <string name="intervention_subtitle">You saved this for a reason.</string>
+    <string name="intervention_watch">Watch now</string>
+    <string name="intervention_next">Show another</string>
+    <string name="intervention_home">Go home</string>
+    <string name="intervention_continue">Continue anyway</string>
+    <string name="intervention_continue_in">Continue anyway (%d)</string>
+    <string name="intervention_empty_title">Take a breath.</string>
+    <string name="intervention_empty_body">Your queue is empty. Is this what you meant to do right now?</string>
+    <string name="intervention_open_failed">No app can open this link</string>
+</resources>
