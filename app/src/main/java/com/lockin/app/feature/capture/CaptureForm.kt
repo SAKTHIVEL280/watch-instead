@@ -91,7 +91,10 @@ fun CaptureForm(
             .padding(bottom = 24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Text(stringResource(R.string.capture_title), style = MaterialTheme.typography.headlineSmall)
+        Text(
+            stringResource(if (state.editingId == null) R.string.capture_title else R.string.capture_edit_title),
+            style = MaterialTheme.typography.headlineSmall,
+        )
         OutlinedTextField(
             value = state.input,
             onValueChange = onInputChange,
@@ -120,7 +123,7 @@ fun CaptureForm(
             modifier = Modifier.fillMaxWidth(),
         )
         Button(onClick = onSave, shapes = ButtonDefaults.shapes(), modifier = Modifier.fillMaxWidth()) {
-            Text(stringResource(R.string.capture_save))
+            Text(stringResource(if (state.editingId == null) R.string.capture_save else R.string.capture_save_changes))
         }
     }
 }

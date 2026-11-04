@@ -24,6 +24,8 @@ import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Bookmarks
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Insights
 import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Replay
 import androidx.compose.material.icons.outlined.Settings
@@ -91,6 +93,7 @@ private enum class LibraryBanner { GUARD_OFF, NO_APPS }
 fun LibraryScreen(
     onOpenSettings: () -> Unit,
     onChooseApps: () -> Unit,
+    onOpenStats: () -> Unit,
     viewModel: LibraryViewModel = hiltViewModel(),
     captureViewModel: CaptureViewModel = hiltViewModel(),
 ) {
@@ -141,6 +144,9 @@ fun LibraryScreen(
             LargeFlexibleTopAppBar(
                 title = { Text(stringResource(R.string.app_name), fontWeight = FontWeight.Bold) },
                 actions = {
+                    IconButton(onClick = onOpenStats) {
+                        Icon(Icons.Outlined.Insights, stringResource(R.string.stats_title))
+                    }
                     IconButton(onClick = onOpenSettings) {
                         Icon(Icons.Outlined.Settings, stringResource(R.string.library_settings))
                     }
@@ -231,6 +237,10 @@ fun LibraryScreen(
                                 if (!context.openLink(link.url)) scope.launch { snackbar.showSnackbar(openFailed) }
                             }
                         },
+                        onEdit = {
+                            captureViewModel.startEditing(link)
+                            showCapture = true
+                        },
                         onToggleWatched = { toggleWatched(link) },
                         onDelete = { delete(link) },
                         modifier = Modifier.animateItem(),
@@ -280,6 +290,7 @@ private fun CategoryFilters(selected: Category?, onSelect: (Category?) -> Unit) 
 private fun SwipeableLinkCard(
     link: SavedLink,
     onOpen: () -> Unit,
+    onEdit: () -> Unit,
     onToggleWatched: () -> Unit,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
@@ -308,12 +319,18 @@ private fun SwipeableLinkCard(
             scope.launch { dismissState.snapTo(SwipeToDismissBoxValue.Settled) }
         },
     ) {
-        LinkCard(link, onOpen, onToggleWatched, onDelete)
+        LinkCard(link, onOpen, onEdit, onToggleWatched, onDelete)
     }
 }
 
 @Composable
-private fun LinkCard(link: SavedLink, onOpen: () -> Unit, onToggleWatched: () -> Unit, onDelete: () -> Unit) {
+private fun LinkCard(
+    link: SavedLink,
+    onOpen: () -> Unit,
+    onEdit: () -> Unit,
+    onToggleWatched: () -> Unit,
+    onDelete: () -> Unit,
+) {
     var menuOpen by remember { mutableStateOf(false) }
     Card(
         onClick = onOpen,
@@ -350,6 +367,14 @@ private fun LinkCard(link: SavedLink, onOpen: () -> Unit, onToggleWatched: () ->
                     Icon(Icons.Outlined.MoreVert, stringResource(R.string.library_more_actions))
                 }
                 DropdownMenu(menuOpen, { menuOpen = false }) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.library_edit)) },
+                        leadingIcon = { Icon(Icons.Outlined.Edit, null) },
+                        onClick = {
+                            menuOpen = false
+                            onEdit()
+                        },
+                    )
                     DropdownMenuItem(
                         text = {
                             Text(

@@ -33,6 +33,38 @@ class CaptureViewModelTest {
         assertEquals(Category.EDUCATION, saved.category)
     }
 
+    @Test fun `editing corrects the note and category of the same video`() {
+        viewModel.onInputChange("https://example.com/a")
+        viewModel.onNoteChange("teh typo")
+        viewModel.save()
+        viewModel.reset()
+        val saved = links.links.value.single()
+
+        viewModel.startEditing(saved)
+        viewModel.onNoteChange("the fix")
+        viewModel.onCategoryChange(Category.PRODUCTIVITY)
+        viewModel.save()
+
+        assertTrue(viewModel.state.value.isSaved)
+        val edited = links.links.value.single()
+        assertEquals(saved.id, edited.id)
+        assertEquals("the fix", edited.note)
+        assertEquals(Category.PRODUCTIVITY, edited.category)
+    }
+
+    @Test fun `editing a link into another saved video is refused`() {
+        listOf("https://example.com/a", "https://example.com/b").forEach {
+            viewModel.onInputChange(it)
+            viewModel.save()
+            viewModel.reset()
+        }
+        viewModel.startEditing(links.links.value.last())
+        viewModel.onInputChange("https://example.com/a")
+        viewModel.save()
+        assertTrue(viewModel.state.value.isDuplicate)
+        assertEquals("https://example.com/b", links.links.value.last().url)
+    }
+
     @Test fun `same video saved twice reports a duplicate`() {
         repeat(2) {
             viewModel.onInputChange("https://youtu.be/abc")

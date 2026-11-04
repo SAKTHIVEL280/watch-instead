@@ -20,6 +20,10 @@ enum class SaveResult { SAVED, DUPLICATE }
 interface LinkRepository {
     val links: Flow<List<SavedLink>>
     suspend fun save(link: ParsedLink, category: Category, note: String): SaveResult
+    suspend fun find(id: Long): SavedLink?
+
+    /** Corrects a saved video. Reports DUPLICATE if the new URL belongs to a different video. */
+    suspend fun edit(id: Long, link: ParsedLink, category: Category, note: String): SaveResult
     suspend fun restore(link: SavedLink)
 
     /** Returns false when the URL is already saved. */
@@ -53,6 +57,19 @@ class DefaultLinkRepository @Inject constructor(
         if (id == -1L) return SaveResult.DUPLICATE
         // Outlives the share sheet, which finishes as soon as the save returns.
         appScope.launch { refresh(id, link) }
+        return SaveResult.SAVED
+    }
+
+    override suspend fun find(id: Long) = dao.find(id)?.toDomain()
+
+    override suspend fun edit(id: Long, link: ParsedLink, category: Category, note: String): SaveResult {
+        val owner = dao.findByUrl(link.url)
+        if (owner != null && owner.id != id) return SaveResult.DUPLICATE
+        dao.updateDetails(id, category, note.trim())
+        if (owner == null) {
+            dao.updateUrl(id, link.url, link.platform)
+            appScope.launch { refresh(id, link) }
+        }
         return SaveResult.SAVED
     }
 

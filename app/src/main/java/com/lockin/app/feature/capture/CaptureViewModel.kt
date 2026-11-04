@@ -6,6 +6,7 @@ import com.lockin.app.data.LinkRepository
 import com.lockin.app.data.SaveResult
 import com.lockin.app.domain.Category
 import com.lockin.app.domain.LinkParser
+import com.lockin.app.domain.SavedLink
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +21,7 @@ data class CaptureState(
     val showInvalid: Boolean = false,
     val isDuplicate: Boolean = false,
     val isSaved: Boolean = false,
+    val editingId: Long? = null,
 )
 
 @HiltViewModel
@@ -39,6 +41,15 @@ class CaptureViewModel @Inject constructor(private val links: LinkRepository) : 
         _state.value = CaptureState()
     }
 
+    fun startEditing(link: SavedLink) {
+        _state.value = CaptureState(
+            input = link.url,
+            note = link.note,
+            category = link.category,
+            editingId = link.id,
+        )
+    }
+
     fun save() {
         val current = _state.value
         if (current.isSaved) return
@@ -48,7 +59,13 @@ class CaptureViewModel @Inject constructor(private val links: LinkRepository) : 
             return
         }
         viewModelScope.launch {
-            when (links.save(parsed, current.category, current.note)) {
+            val editingId = current.editingId
+            val result = if (editingId == null) {
+                links.save(parsed, current.category, current.note)
+            } else {
+                links.edit(editingId, parsed, current.category, current.note)
+            }
+            when (result) {
                 SaveResult.SAVED -> _state.update { it.copy(isSaved = true) }
                 SaveResult.DUPLICATE -> _state.update { it.copy(isDuplicate = true) }
             }
