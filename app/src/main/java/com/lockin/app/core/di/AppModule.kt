@@ -9,8 +9,12 @@ import androidx.room.Room
 import com.lockin.app.data.ApplicationScope
 import com.lockin.app.data.Clock
 import com.lockin.app.data.DefaultLinkRepository
+import com.lockin.app.data.DefaultStatsRepository
 import com.lockin.app.data.LinkRepository
+import com.lockin.app.data.StatsRepository
 import com.lockin.app.data.local.LockinDatabase
+import com.lockin.app.data.local.MIGRATION_1_2
+import com.lockin.app.data.local.PromptEventDao
 import com.lockin.app.data.local.SavedLinkDao
 import com.lockin.app.data.metadata.HttpMetadataFetcher
 import com.lockin.app.data.metadata.MetadataFetcher
@@ -32,6 +36,7 @@ import okhttp3.OkHttpClient
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class BindingsModule {
+    @Binds abstract fun statsRepository(impl: DefaultStatsRepository): StatsRepository
     @Binds abstract fun linkRepository(impl: DefaultLinkRepository): LinkRepository
     @Binds abstract fun settingsRepository(impl: DataStoreSettingsRepository): SettingsRepository
     @Binds abstract fun metadataFetcher(impl: HttpMetadataFetcher): MetadataFetcher
@@ -42,10 +47,15 @@ abstract class BindingsModule {
 object AppModule {
     @Provides @Singleton
     fun database(@ApplicationContext context: Context): LockinDatabase =
-        Room.databaseBuilder(context, LockinDatabase::class.java, "lockin.db").build()
+        Room.databaseBuilder(context, LockinDatabase::class.java, "lockin.db")
+            .addMigrations(MIGRATION_1_2)
+            .build()
 
     @Provides
     fun savedLinkDao(database: LockinDatabase): SavedLinkDao = database.savedLinkDao()
+
+    @Provides
+    fun promptEventDao(database: LockinDatabase): PromptEventDao = database.promptEventDao()
 
     @Provides @Singleton
     fun dataStore(@ApplicationContext context: Context): DataStore<Preferences> =

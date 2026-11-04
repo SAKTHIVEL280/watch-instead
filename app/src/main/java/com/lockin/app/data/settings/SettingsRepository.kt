@@ -11,13 +11,20 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.lockin.app.data.Clock
 import com.lockin.app.domain.Accent
 import com.lockin.app.domain.Appearance
+import com.lockin.app.domain.FocusPolicy
+import com.lockin.app.domain.FocusSchedule
 import com.lockin.app.domain.GuardSettings
 import com.lockin.app.domain.ThemeMode
+import java.time.Instant
+import java.time.ZoneId
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 interface SettingsRepository {
     val settings: Flow<GuardSettings>
@@ -32,6 +39,9 @@ interface SettingsRepository {
     suspend fun setGuardedPackages(packages: Set<String>)
     suspend fun setCooldownMinutes(minutes: Int)
     suspend fun setSkipDelaySeconds(seconds: Int)
+    suspend fun setAskWhy(enabled: Boolean)
+    suspend fun setPersonalMessages(messages: Set<String>)
+    suspend fun setFocusSchedules(schedules: List<FocusSchedule>)
 
     /**
      * Lets guarded apps open without a prompt for the configured cooldown. With no cooldown this
@@ -50,6 +60,8 @@ class DataStoreSettingsRepository @Inject constructor(
     private val store: DataStore<Preferences>,
     private val clock: Clock,
 ) : SettingsRepository {
+    private val json = Json { ignoreUnknownKeys = true }
+
     override val settings = store.data.map { prefs ->
         GuardSettings(
             protectionEnabled = prefs[PROTECTION] ?: true,
@@ -58,6 +70,9 @@ class DataStoreSettingsRepository @Inject constructor(
             skipDelaySeconds = prefs[SKIP_DELAY] ?: GuardSettings.DEFAULT_SKIP_DELAY_SECONDS,
             passUntil = prefs[PASS_UNTIL] ?: 0,
             sessionOpen = prefs[SESSION_OPEN] ?: false,
+            focusSchedules = decodeSchedules(prefs[FOCUS_SCHEDULES]),
+            personalMessages = prefs[PERSONAL_MESSAGES].orEmpty(),
+            askWhy = prefs[ASK_WHY] ?: true,
         )
     }.distinctUntilChanged()
 
@@ -82,11 +97,17 @@ class DataStoreSettingsRepository @Inject constructor(
     override suspend fun setGuardedPackages(packages: Set<String>) = set(GUARDED, packages)
     override suspend fun setCooldownMinutes(minutes: Int) = set(COOLDOWN, minutes)
     override suspend fun setSkipDelaySeconds(seconds: Int) = set(SKIP_DELAY, seconds)
+    override suspend fun setAskWhy(enabled: Boolean) = set(ASK_WHY, enabled)
+    override suspend fun setPersonalMessages(messages: Set<String>) = set(PERSONAL_MESSAGES, messages)
+    override suspend fun setFocusSchedules(schedules: List<FocusSchedule>) =
+        set(FOCUS_SCHEDULES, json.encodeToString(schedules))
 
     override suspend fun grantCooldownPass() {
         store.edit { prefs ->
             val minutes = prefs[COOLDOWN] ?: GuardSettings.DEFAULT_COOLDOWN_MINUTES
-            if (minutes == GuardSettings.NO_COOLDOWN) {
+            val now = Instant.ofEpochMilli(clock.now()).atZone(ZoneId.systemDefault()).toLocalDateTime()
+            val focusActive = FocusPolicy.activeSchedule(decodeSchedules(prefs[FOCUS_SCHEDULES]), now) != null
+            if (focusActive || minutes == GuardSettings.NO_COOLDOWN) {
                 prefs[SESSION_OPEN] = true
             } else {
                 extendPass(prefs, minutes * 60_000L)
@@ -108,6 +129,17 @@ class DataStoreSettingsRepository @Inject constructor(
         store.edit { it[key] = value }
     }
 
+    private fun decodeSchedules(text: String?): List<FocusSchedule> {
+        if (text == null) return emptyList()
+        return try {
+            json.decodeFromString(text)
+        } catch (_: SerializationException) {
+            emptyList()
+        } catch (_: IllegalArgumentException) {
+            emptyList()
+        }
+    }
+
     private inline fun <reified T : Enum<T>> enumOrDefault(name: String?, default: T): T =
         enumValues<T>().firstOrNull { it.name == name } ?: default
 
@@ -123,5 +155,8 @@ class DataStoreSettingsRepository @Inject constructor(
         val SKIP_DELAY = intPreferencesKey("skip_delay_seconds")
         val PASS_UNTIL = longPreferencesKey("pass_until")
         val SESSION_OPEN = booleanPreferencesKey("session_open")
+        val FOCUS_SCHEDULES = stringPreferencesKey("focus_schedules")
+        val PERSONAL_MESSAGES = stringSetPreferencesKey("personal_messages")
+        val ASK_WHY = booleanPreferencesKey("ask_why")
     }
 }
