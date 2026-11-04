@@ -69,3 +69,6 @@ Without `keystore.properties`, `assembleRelease` produces an unsigned APK.
 ## Screenshots
 `./gradlew testDebugUnitTest` renders key screens and the icon to `app/build/screenshots`, so visual
 changes can be reviewed without a device.
+
+## License
+Lockin is released under the [GNU General Public License v3.0](LICENSE).
