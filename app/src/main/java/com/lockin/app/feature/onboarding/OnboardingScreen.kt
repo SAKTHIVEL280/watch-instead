@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
@@ -132,7 +133,7 @@ private fun PrimaryButton(text: String, enabled: Boolean = true, onClick: () -> 
         onClick = onClick,
         enabled = enabled,
         shapes = ButtonDefaults.shapes(),
-        modifier = Modifier.fillMaxWidth().height(ButtonDefaults.MediumContainerHeight),
+        modifier = Modifier.fillMaxWidth().heightIn(min = ButtonDefaults.MediumContainerHeight),
         contentPadding = ButtonDefaults.contentPaddingFor(ButtonDefaults.MediumContainerHeight),
     ) {
         Text(text)

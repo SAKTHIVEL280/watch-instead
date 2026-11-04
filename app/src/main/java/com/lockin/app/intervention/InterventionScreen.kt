@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -141,7 +140,7 @@ private fun InterventionContent(
                 Button(
                     onClick = { onWatch(current) },
                     shapes = ButtonDefaults.shapes(),
-                    modifier = Modifier.fillMaxWidth().height(ButtonDefaults.MediumContainerHeight),
+                    modifier = Modifier.fillMaxWidth().heightIn(min = ButtonDefaults.MediumContainerHeight),
                     contentPadding = ButtonDefaults.contentPaddingFor(ButtonDefaults.MediumContainerHeight),
                 ) {
                     Text(stringResource(R.string.intervention_watch))
