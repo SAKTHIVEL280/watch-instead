@@ -50,6 +50,7 @@ import coil3.request.crossfade
 import androidx.compose.ui.layout.ContentScale
 import com.lockin.app.R
 import com.lockin.app.domain.Category
+import com.lockin.app.domain.OpenReason
 import com.lockin.app.domain.Platform
 
 @get:StringRes
@@ -60,6 +61,15 @@ val Category.labelRes: Int
         Category.CONSISTENCY -> R.string.category_consistency
         Category.PRODUCTIVITY -> R.string.category_productivity
         Category.OTHER -> R.string.category_other
+    }
+
+@get:StringRes
+val OpenReason.labelRes: Int
+    get() = when (this) {
+        OpenReason.BORED -> R.string.reason_bored
+        OpenReason.HABIT -> R.string.reason_habit
+        OpenReason.STRESSED -> R.string.reason_stressed
+        OpenReason.NEED_SOMETHING -> R.string.reason_need_something
     }
 
 val Platform.icon: ImageVector
