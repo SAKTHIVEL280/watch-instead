@@ -13,7 +13,8 @@ Uninstalling Lockin deletes them.
 
 ## Accessibility service
 Lockin uses Android's AccessibilityService API to detect when an app on your guarded list comes to
-the foreground, so it can show one of your saved videos. It does not read screen content, typed
+the foreground, so it can show one of your saved videos. If you set the cooldown to None, it also detects when you
+return to your home screen, so it knows when to prompt again. It does not read screen content, typed
 text, messages or passwords. This information is used only on your device and is never collected
 or shared. The service is optional and can be turned off at any time in Android settings.
 

@@ -3,7 +3,7 @@
     <string name="app_name">Lockin</string>
     <string name="share_target_label">Save to Lockin</string>
     <string name="accessibility_service_label">Lockin app guard</string>
-    <string name="accessibility_service_description">Detects when you open an app you chose to guard, so Lockin can show one of your saved videos. Lockin only sees which guarded app opened. It never reads your screen, messages or passwords.</string>
+    <string name="accessibility_service_description">Detects when you open an app you chose to guard, so Lockin can show one of your saved videos. Lockin only sees which guarded app opened and, if you set no cooldown, when you return to your home screen. It never reads your screen, messages or passwords.</string>
 
     <!-- Common -->
     <string name="action_back">Back</string>
@@ -86,7 +86,9 @@
     </plurals>
     <string name="settings_cooldown">Cooldown</string>
     <string name="settings_cooldown_body">Time before you are prompted again after continuing</string>
-    <string name="settings_cooldown_value">%d min</string>
+    <string name="settings_cooldown_none">None</string>
+    <string name="settings_cooldown_none_body">Prompt every time you come back from the home screen or unlock your phone</string>
+    <string name="settings_cooldown_value">%dm</string>
     <string name="settings_skip_delay">Continue delay</string>
     <string name="settings_skip_delay_body">Wait before \"Continue anyway\" becomes available</string>
     <string name="settings_skip_delay_value">%d sec</string>
@@ -98,7 +100,7 @@
     <string name="settings_version">Version %s</string>
 
     <!-- Privacy -->
-    <string name="privacy_body">Lockin has no accounts, ads or analytics, and we run no servers.\n\nYour saved links, notes and settings stay on this device and are not included in cloud backups. Uninstalling Lockin deletes them.\n\nThe accessibility service detects when an app on your guarded list comes to the foreground, so Lockin can show a saved video. It does not read screen content, typed text, messages or passwords. This information is used only on your device and is never collected or shared.\n\nWhen you save a link, Lockin requests its title and thumbnail. For YouTube and TikTok links the request goes to that service\'s public embed endpoint, and for other links it goes to the linked website. Thumbnails are then loaded from the address that service provides. These services receive the link and your IP address, as with any web request.\n\nOpening a saved video hands it to the matching app or your browser, whose own privacy terms apply.</string>
+    <string name="privacy_body">Lockin has no accounts, ads or analytics, and we run no servers.\n\nYour saved links, notes and settings stay on this device and are not included in cloud backups. Uninstalling Lockin deletes them.\n\nThe accessibility service detects when an app on your guarded list comes to the foreground, so Lockin can show a saved video. If you set the cooldown to None, it also detects when you return to your home screen, so it knows when to prompt again. It does not read screen content, typed text, messages or passwords. This information is used only on your device and is never collected or shared.\n\nWhen you save a link, Lockin requests its title and thumbnail. For YouTube and TikTok links the request goes to that service\'s public embed endpoint, and for other links it goes to the linked website. Thumbnails are then loaded from the address that service provides. These services receive the link and your IP address, as with any web request.\n\nOpening a saved video hands it to the matching app or your browser, whose own privacy terms apply.</string>
 
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Save it now.\nActually watch it.</string>
@@ -113,7 +115,7 @@
     <string name="onboarding_apps_needed">Choose at least one app to continue</string>
     <string name="onboarding_permission_title">How Lockin uses Accessibility</string>
     <string name="onboarding_permission_body">Android needs you to turn on Lockin\'s accessibility service.</string>
-    <string name="onboarding_disclosure_what">What it accesses: only which app is opening, and only for the apps you chose.</string>
+    <string name="onboarding_disclosure_what">What it accesses: only which app is opening, and only for the apps you chose. If you set no cooldown, it also notices when you return to your home screen.</string>
     <string name="onboarding_disclosure_why">Why: so Lockin can show a saved video the moment you open one.</string>
     <string name="onboarding_disclosure_never">What it never does: read your screen, messages, typing or passwords.</string>
     <string name="onboarding_disclosure_local">Your data: this stays on your device and is never collected or shared.</string>

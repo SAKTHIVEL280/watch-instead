@@ -136,11 +136,23 @@ fun SettingsScreen(
             )
             ChoiceSetting(
                 title = stringResource(R.string.settings_cooldown),
-                body = stringResource(R.string.settings_cooldown_body),
+                body = stringResource(
+                    if (settings.cooldownMinutes == GuardSettings.NO_COOLDOWN) {
+                        R.string.settings_cooldown_none_body
+                    } else {
+                        R.string.settings_cooldown_body
+                    },
+                ),
                 options = GuardSettings.COOLDOWN_OPTIONS,
                 selected = settings.cooldownMinutes,
                 onSelect = viewModel::setCooldown,
-                label = { stringResource(R.string.settings_cooldown_value, it) },
+                label = {
+                    if (it == GuardSettings.NO_COOLDOWN) {
+                        stringResource(R.string.settings_cooldown_none)
+                    } else {
+                        stringResource(R.string.settings_cooldown_value, it)
+                    }
+                },
             )
             ChoiceSetting(
                 title = stringResource(R.string.settings_skip_delay),
