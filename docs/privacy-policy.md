@@ -1,9 +1,7 @@
 # Lockin privacy policy
 
-Replace the contact placeholder and effective date before publishing.
-
-**Effective date:** [DATE]  
-**Contact:** [YOUR EMAIL]
+**Effective date:** 5 November 2026  
+**Contact:** [GitHub issues](https://github.com/SAKTHIVEL280/lockin/issues)
 
 Lockin has no accounts, ads or analytics, and we run no servers.
 
