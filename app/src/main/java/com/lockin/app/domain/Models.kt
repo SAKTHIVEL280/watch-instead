@@ -25,11 +25,13 @@ data class GuardSettings(
     val cooldownMinutes: Int = DEFAULT_COOLDOWN_MINUTES,
     val skipDelaySeconds: Int = DEFAULT_SKIP_DELAY_SECONDS,
     val passUntil: Long = 0,
+    val sessionOpen: Boolean = false,
 ) {
     companion object {
         const val DEFAULT_COOLDOWN_MINUTES = 15
         const val DEFAULT_SKIP_DELAY_SECONDS = 5
-        val COOLDOWN_OPTIONS = listOf(5, 15, 30, 60)
+        const val NO_COOLDOWN = 0
+        val COOLDOWN_OPTIONS = listOf(NO_COOLDOWN, 5, 15, 30, 60)
         val SKIP_DELAY_OPTIONS = listOf(3, 5, 10, 20)
     }
 }

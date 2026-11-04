@@ -32,6 +32,15 @@ class InterventionPolicyTest {
     @Test fun `pass implausibly far ahead is ignored`() =
         assertTrue(decide(settings = settings.copy(passUntil = now + 24 * 60 * 60 * 1000L)))
 
+    @Test fun `no cooldown lets the user through once then prompts after the session ends`() {
+        val noCooldown = settings.copy(cooldownMinutes = GuardSettings.NO_COOLDOWN)
+        assertTrue(decide(settings = noCooldown))
+        assertFalse(decide(settings = noCooldown.copy(sessionOpen = true)))
+    }
+
+    @Test fun `stale session is ignored once a cooldown is set`() =
+        assertTrue(decide(settings = settings.copy(sessionOpen = true)))
+
     @Test fun `event bursts only prompt once`() {
         assertFalse(decide(lastPromptAt = now - 100))
         assertTrue(decide(lastPromptAt = now - InterventionPolicy.DEBOUNCE_MILLIS))

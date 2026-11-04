@@ -19,6 +19,8 @@ object InterventionPolicy {
         if (packageName == ownPackage || packageName !in settings.guardedPackages) return false
         val debounced = now >= lastPromptAt && now - lastPromptAt < DEBOUNCE_MILLIS
         if (debounced) return false
+        // Without a cooldown the user is still let through once, or the prompt would reopen forever.
+        if (settings.cooldownMinutes == GuardSettings.NO_COOLDOWN && settings.sessionOpen) return false
         val passActive = settings.passUntil > now && settings.passUntil - now <= MAX_PASS_MILLIS
         return !passActive
     }

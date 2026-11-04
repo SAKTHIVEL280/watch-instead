@@ -33,8 +33,13 @@ interface SettingsRepository {
     suspend fun setCooldownMinutes(minutes: Int)
     suspend fun setSkipDelaySeconds(seconds: Int)
 
-    /** Lets guarded apps open without a prompt for the configured cooldown. */
+    /**
+     * Lets guarded apps open without a prompt for the configured cooldown. With no cooldown this
+     * lasts until [endSession], when the user leaves for the home screen or locks the phone.
+     */
     suspend fun grantCooldownPass()
+
+    suspend fun endSession()
 
     /** Suppresses prompts for [millis], never shortening a pass that is already running. */
     suspend fun grantPass(millis: Long)
@@ -52,6 +57,7 @@ class DataStoreSettingsRepository @Inject constructor(
             cooldownMinutes = prefs[COOLDOWN] ?: GuardSettings.DEFAULT_COOLDOWN_MINUTES,
             skipDelaySeconds = prefs[SKIP_DELAY] ?: GuardSettings.DEFAULT_SKIP_DELAY_SECONDS,
             passUntil = prefs[PASS_UNTIL] ?: 0,
+            sessionOpen = prefs[SESSION_OPEN] ?: false,
         )
     }.distinctUntilChanged()
 
@@ -80,9 +86,15 @@ class DataStoreSettingsRepository @Inject constructor(
     override suspend fun grantCooldownPass() {
         store.edit { prefs ->
             val minutes = prefs[COOLDOWN] ?: GuardSettings.DEFAULT_COOLDOWN_MINUTES
-            extendPass(prefs, minutes * 60_000L)
+            if (minutes == GuardSettings.NO_COOLDOWN) {
+                prefs[SESSION_OPEN] = true
+            } else {
+                extendPass(prefs, minutes * 60_000L)
+            }
         }
     }
+
+    override suspend fun endSession() = set(SESSION_OPEN, false)
 
     override suspend fun grantPass(millis: Long) {
         store.edit { prefs -> extendPass(prefs, millis) }
@@ -110,5 +122,6 @@ class DataStoreSettingsRepository @Inject constructor(
         val COOLDOWN = intPreferencesKey("cooldown_minutes")
         val SKIP_DELAY = intPreferencesKey("skip_delay_seconds")
         val PASS_UNTIL = longPreferencesKey("pass_until")
+        val SESSION_OPEN = booleanPreferencesKey("session_open")
     }
 }

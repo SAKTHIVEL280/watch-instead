@@ -56,5 +56,6 @@ class FakeSettingsRepository : SettingsRepository {
     override suspend fun setCooldownMinutes(minutes: Int) = settings.update { it.copy(cooldownMinutes = minutes) }
     override suspend fun setSkipDelaySeconds(seconds: Int) = settings.update { it.copy(skipDelaySeconds = seconds) }
     override suspend fun grantCooldownPass() { cooldownPasses++ }
+    override suspend fun endSession() = settings.update { it.copy(sessionOpen = false) }
     override suspend fun grantPass(millis: Long) = Unit
 }
