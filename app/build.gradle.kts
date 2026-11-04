@@ -23,8 +23,8 @@ android {
         applicationId = "com.lockin.app"
         minSdk = 26
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -93,6 +93,9 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
 
+    implementation(libs.glance.appwidget)
+    implementation(libs.glance.material3)
+
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
@@ -112,6 +115,7 @@ dependencies {
     testImplementation(platform(libs.compose.bom))
     testImplementation(libs.compose.ui.test.junit4)
     testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core)
     testImplementation(libs.roborazzi)
     testImplementation(libs.roborazzi.compose)
 
