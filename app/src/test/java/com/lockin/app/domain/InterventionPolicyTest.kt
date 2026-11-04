@@ -41,6 +41,24 @@ class InterventionPolicyTest {
     @Test fun `stale session is ignored once a cooldown is set`() =
         assertTrue(decide(settings = settings.copy(sessionOpen = true)))
 
+    @Test fun `focus hours prompt on a new open but keep an open session alive`() {
+        val open = settings.copy(sessionOpen = true)
+        assertFalse(InterventionPolicy.shouldIntervene("insta", "lockin", open, now, 0, focusActive = true))
+        assertTrue(InterventionPolicy.shouldIntervene("insta", "lockin", settings, now, 0, focusActive = true))
+    }
+
+    @Test fun `a cooldown from before focus hours or None cannot skip the prompt`() {
+        val running = settings.copy(passUntil = now + 30 * 60_000)
+        assertFalse(decide(settings = running))
+        assertTrue(InterventionPolicy.shouldIntervene("insta", "lockin", running, now, 0, focusActive = true))
+        assertTrue(decide(settings = running.copy(cooldownMinutes = GuardSettings.NO_COOLDOWN)))
+    }
+
+    @Test fun `go home grace still works when every open prompts`() {
+        val grace = settings.copy(passUntil = now + InterventionPolicy.GO_HOME_GRACE_MILLIS)
+        assertFalse(InterventionPolicy.shouldIntervene("insta", "lockin", grace, now, 0, focusActive = true))
+    }
+
     @Test fun `event bursts only prompt once`() {
         assertFalse(decide(lastPromptAt = now - 100))
         assertTrue(decide(lastPromptAt = now - InterventionPolicy.DEBOUNCE_MILLIS))
