@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand_primary">@android:color/system_accent1_800</color>
+    <color name="icon_bg_start">@android:color/system_accent1_600</color>
+    <color name="icon_bg_end">@android:color/system_accent1_900</color>
+    <color name="icon_glow">@android:color/system_accent1_300</color>
+    <color name="icon_glyph_start">@android:color/system_accent1_50</color>
+    <color name="icon_glyph_end">@android:color/system_accent1_200</color>
+    <color name="icon_play">@android:color/system_accent1_800</color>
+</resources>

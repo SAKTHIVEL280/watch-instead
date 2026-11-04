@@ -1,18 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Padlock shackle -->
+    <!-- Contact shadow -->
     <path
-        android:pathData="M42,50V42a12,12 0,0 1,24 0v8"
-        android:strokeWidth="6"
-        android:strokeColor="#FFFFFF"
-        android:strokeLineCap="round" />
-    <!-- Padlock body with a play symbol cut out -->
+        android:fillAlpha="0.18"
+        android:fillColor="#000000"
+        android:pathData="M40,49h28a7,7 0,0 1,7 7v17a7,7 0,0 1,-7 7h-28a7,7 0,0 1,-7 -7v-17a7,7 0,0 1,7 -7z" />
+    <!-- Shackle -->
     <path
-        android:fillColor="#FFFFFF"
-        android:fillType="evenOdd"
-        android:pathData="M40,48h28a6,6 0,0 1,6 6v18a6,6 0,0 1,-6 6h-28a6,6 0,0 1,-6 -6v-18a6,6 0,0 1,6 -6zM49,55v16l14,-8z" />
+        android:pathData="M42,48V40a12,12 0,0 1,24 0v8"
+        android:strokeWidth="6.5"
+        android:strokeLineCap="round">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:endColor="@color/icon_glyph_end"
+                android:endX="54"
+                android:endY="48"
+                android:startColor="@color/icon_glyph_start"
+                android:startX="54"
+                android:startY="28"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+    <!-- Body -->
+    <path android:pathData="M40,46h28a7,7 0,0 1,7 7v17a7,7 0,0 1,-7 7h-28a7,7 0,0 1,-7 -7v-17a7,7 0,0 1,7 -7z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endColor="@color/icon_glyph_end"
+                android:endX="66"
+                android:endY="77"
+                android:startColor="@color/icon_glyph_start"
+                android:startX="42"
+                android:startY="46"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+    <!-- Rounded play symbol -->
+    <path
+        android:fillColor="@color/icon_play"
+        android:pathData="M50.5,55.5v12l10,-6z"
+        android:strokeColor="@color/icon_play"
+        android:strokeLineJoin="round"
+        android:strokeWidth="3" />
 </vector>
