@@ -3,11 +3,20 @@ package com.lockin.app.intervention
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lockin.app.data.ApplicationScope
+import com.lockin.app.data.Clock
 import com.lockin.app.data.LinkRepository
+import com.lockin.app.data.StatsRepository
 import com.lockin.app.data.apps.InstalledAppsRepository
 import com.lockin.app.data.settings.SettingsRepository
+import com.lockin.app.domain.FocusPolicy
+import com.lockin.app.domain.GuardSettings
+import com.lockin.app.domain.InterventionPolicy
+import com.lockin.app.domain.OpenReason
+import com.lockin.app.domain.PromptOutcome
 import com.lockin.app.domain.SavedLink
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.Instant
+import java.time.ZoneId
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -25,6 +34,10 @@ data class InterventionState(
     val index: Int = 0,
     val secondsLeft: Int = 0,
     val totalSeconds: Int = 0,
+    val personalMessage: String? = null,
+    val focusName: String? = null,
+    val askWhy: Boolean = false,
+    val reason: OpenReason? = null,
 ) {
     val current: SavedLink? get() = queue.getOrNull(index)
 }
@@ -34,20 +47,31 @@ class InterventionViewModel @Inject constructor(
     private val links: LinkRepository,
     private val settings: SettingsRepository,
     private val apps: InstalledAppsRepository,
+    private val stats: StatsRepository,
+    private val clock: Clock,
     @ApplicationScope private val appScope: CoroutineScope,
 ) : ViewModel() {
     private val _state = MutableStateFlow(InterventionState())
     val state: StateFlow<InterventionState> = _state
     private var job: Job? = null
     private var guardedPackage: String? = null
+    private var recorded = false
 
     /** Safe to call repeatedly: late events for the app already on screen must not reset the timer. */
     fun start(packageName: String?) {
         if (packageName == guardedPackage && job != null) return
         guardedPackage = packageName
+        recorded = false
         job?.cancel()
         job = viewModelScope.launch {
-            val delaySeconds = settings.settings.first().skipDelaySeconds
+            val guard = settings.settings.first()
+            val now = Instant.ofEpochMilli(clock.now()).atZone(ZoneId.systemDefault()).toLocalDateTime()
+            val focus = FocusPolicy.activeSchedule(guard.focusSchedules, now)
+            val delaySeconds = if (focus == null) {
+                guard.skipDelaySeconds
+            } else {
+                maxOf(guard.skipDelaySeconds, GuardSettings.FOCUS_SKIP_DELAY_SECONDS)
+            }
             val queue = links.queue()
             _state.value = InterventionState(
                 isLoading = false,
@@ -55,6 +79,9 @@ class InterventionViewModel @Inject constructor(
                 queue = queue,
                 secondsLeft = delaySeconds,
                 totalSeconds = delaySeconds,
+                personalMessage = guard.personalMessages.randomOrNull(),
+                focusName = focus?.name,
+                askWhy = guard.askWhy,
             )
             queue.firstOrNull()?.let { links.markShown(it.id) }
             repeat(delaySeconds) {
@@ -62,6 +89,20 @@ class InterventionViewModel @Inject constructor(
                 _state.update { it.copy(secondsLeft = it.secondsLeft - 1) }
             }
         }
+    }
+
+    /** Tapping the selected reason again clears it. */
+    fun selectReason(reason: OpenReason) {
+        _state.update { it.copy(reason = reason.takeIf { _ -> reason != it.reason }) }
+    }
+
+    /** Called once per prompt, however it ends. Outlives the activity, which is about to finish. */
+    fun record(outcome: PromptOutcome) {
+        val packageName = guardedPackage ?: return
+        if (recorded) return
+        recorded = true
+        val reason = _state.value.reason
+        appScope.launch { stats.record(packageName, outcome, reason) }
     }
 
     fun showNext() {
@@ -82,10 +123,5 @@ class InterventionViewModel @Inject constructor(
         appScope.launch { links.setWatched(link.id, true) }
     }
 
-    /** Covers the moment the guarded app can resurface while the launcher animates in. */
-    suspend fun passForGoingHome() = settings.grantPass(GO_HOME_GRACE_MILLIS)
-
-    private companion object {
-        const val GO_HOME_GRACE_MILLIS = 3_000L
-    }
+    suspend fun passForGoingHome() = settings.grantPass(InterventionPolicy.GO_HOME_GRACE_MILLIS)
 }

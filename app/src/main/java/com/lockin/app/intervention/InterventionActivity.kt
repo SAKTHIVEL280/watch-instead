@@ -15,6 +15,7 @@ import com.lockin.app.core.theme.setLockinContent
 import com.lockin.app.data.settings.SettingsRepository
 import javax.inject.Inject
 import com.lockin.app.core.ui.openLink
+import com.lockin.app.domain.PromptOutcome
 import com.lockin.app.domain.SavedLink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,6 +39,7 @@ class InterventionActivity : ComponentActivity() {
                 onNext = viewModel::showNext,
                 onGoHome = ::goHome,
                 onContinue = ::continueToApp,
+                onSelectReason = viewModel::selectReason,
             )
         }
     }
@@ -53,6 +55,7 @@ class InterventionActivity : ComponentActivity() {
             viewModel.passForWatching()
             if (openLink(link.url)) {
                 viewModel.markWatched(link)
+                viewModel.record(PromptOutcome.WATCHED)
                 finish()
             } else {
                 Toast.makeText(this@InterventionActivity, R.string.intervention_open_failed, Toast.LENGTH_SHORT).show()
@@ -61,6 +64,7 @@ class InterventionActivity : ComponentActivity() {
     }
 
     private fun goHome() {
+        viewModel.record(PromptOutcome.WENT_HOME)
         lifecycleScope.launch {
             viewModel.passForGoingHome()
             startActivity(
@@ -71,6 +75,7 @@ class InterventionActivity : ComponentActivity() {
     }
 
     private fun continueToApp() {
+        viewModel.record(PromptOutcome.CONTINUED)
         lifecycleScope.launch {
             viewModel.passForContinue()
             finish()
