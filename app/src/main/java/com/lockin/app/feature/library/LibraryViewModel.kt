@@ -9,9 +9,11 @@ import com.lockin.app.domain.QueueSelector
 import com.lockin.app.domain.SavedLink
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -45,7 +47,8 @@ class LibraryViewModel @Inject constructor(
             noAppsGuarded = guard.guardedPackages.isEmpty(),
             isLoading = false,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), LibraryState())
+    }.flowOn(Dispatchers.Default)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), LibraryState())
 
     init {
         viewModelScope.launch { links.refreshMissingMetadata() }

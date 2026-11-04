@@ -30,11 +30,13 @@ import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
@@ -42,7 +44,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil3.compose.SubcomposeAsyncImage
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import androidx.compose.ui.layout.ContentScale
 import com.lockin.app.R
 import com.lockin.app.domain.Category
@@ -98,39 +102,36 @@ fun <T> ConnectedChoice(
     }
 }
 
-/** Video thumbnail, falling back to a platform glyph when none is available or it fails to load. */
+/**
+ * Video thumbnail drawn over a platform glyph, which shows through until the image loads or if it
+ * fails. AsyncImage rather than the subcomposing variant, which is too costly for list items.
+ */
 @Composable
 fun LinkThumbnail(url: String?, platform: Platform, modifier: Modifier = Modifier) {
-    val fallback: @Composable () -> Unit = {
-        Box(
-            Modifier.fillMaxWidthAndHeight().background(MaterialTheme.colorScheme.secondaryContainer),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                platform.icon,
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(0.4f),
-                tint = MaterialTheme.colorScheme.onSecondaryContainer,
-            )
-        }
+    val context = LocalContext.current
+    val request = remember(url) {
+        url?.let { ImageRequest.Builder(context).data(it).crossfade(true).build() }
     }
-    Box(modifier.clip(MaterialTheme.shapes.medium)) {
-        if (url == null) {
-            fallback()
-        } else {
-            SubcomposeAsyncImage(
-                model = url,
+    Box(
+        modifier.clip(MaterialTheme.shapes.medium).background(MaterialTheme.colorScheme.secondaryContainer),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            platform.icon,
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(0.4f),
+            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+        )
+        if (request != null) {
+            AsyncImage(
+                model = request,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidthAndHeight(),
-                loading = { fallback() },
-                error = { fallback() },
+                modifier = Modifier.fillMaxSize(),
             )
         }
     }
 }
-
-private fun Modifier.fillMaxWidthAndHeight() = this.fillMaxSize()
 
 @Composable
 fun StatusBanner(title: String, body: String, action: String, onAction: () -> Unit, modifier: Modifier = Modifier) {

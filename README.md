@@ -26,8 +26,11 @@ Requires JDK 17 and the Android SDK (`compileSdk` 37).
 ```sh
 ./gradlew lint testDebugUnitTest assembleDebug   # checks and debug APK
 ./gradlew connectedDebugAndroidTest              # needs a device or emulator
+./gradlew assemblePreview                        # optimised, installable test build
 ./gradlew assembleRelease bundleRelease          # release build
 ```
+
+Judge performance on the `preview` build: debug builds run Compose far slower.
 
 ## Release
 1. Change `applicationId` and `namespace` to a package ID you own. This cannot change after publishing.

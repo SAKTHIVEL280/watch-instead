@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -63,7 +64,7 @@ fun GuardedAppsList(
         Box(modifier.fillMaxSize(), Alignment.Center) { LoadingIndicator() }
         return
     }
-    val (suggested, others) = state.apps.partition { it.isSuggested }
+    val (suggested, others) = remember(state.apps) { state.apps.partition { it.isSuggested } }
     LazyColumn(modifier.fillMaxSize(), contentPadding = contentPadding) {
         if (suggested.isNotEmpty()) item { SectionHeader(stringResource(R.string.guarded_suggested)) }
         items(suggested, key = { it.packageName }) { app ->

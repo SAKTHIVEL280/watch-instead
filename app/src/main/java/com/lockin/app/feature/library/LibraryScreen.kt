@@ -223,7 +223,7 @@ fun LibraryScreen(
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
-                else -> items(state.links, key = { it.id }) { link ->
+                else -> items(state.links, key = { it.id }, contentType = { "link" }) { link ->
                     SwipeableLinkCard(
                         link = link,
                         onOpen = {
