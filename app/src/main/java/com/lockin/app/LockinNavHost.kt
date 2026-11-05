@@ -49,6 +49,8 @@ fun LockinNavHost() {
                 onOpenSettings = { navController.navigate(SettingsRoute) },
                 onChooseApps = { navController.navigate(GuardedAppsRoute) },
                 onOpenStats = { navController.navigate(StatsRoute) },
+                onOpenFocus = { navController.navigate(FocusRoute) },
+                onOpenMessages = { navController.navigate(MessagesRoute) },
             )
         }
         composable<SettingsRoute> {
@@ -57,8 +59,6 @@ fun LockinNavHost() {
                 onGuardedApps = { navController.navigate(GuardedAppsRoute) },
                 onPrivacy = { navController.navigate(PrivacyRoute) },
                 onLicenses = { navController.navigate(LicensesRoute) },
-                onFocusSchedules = { navController.navigate(FocusRoute) },
-                onMessages = { navController.navigate(MessagesRoute) },
             )
         }
         composable<GuardedAppsRoute> { GuardedAppsScreen(onBack = back) }

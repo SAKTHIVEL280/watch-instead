@@ -24,6 +24,8 @@ data class LibraryState(
     val filter: Category? = null,
     val links: List<SavedLink> = emptyList(),
     val noAppsGuarded: Boolean = false,
+    val scheduleCount: Int = 0,
+    val messageCount: Int = 0,
     val isLoading: Boolean = true,
 )
 
@@ -45,6 +47,8 @@ class LibraryViewModel @Inject constructor(
             filter = filter,
             links = inTab.filter { filter == null || it.category == filter },
             noAppsGuarded = guard.guardedPackages.isEmpty(),
+            scheduleCount = guard.focusSchedules.size,
+            messageCount = guard.personalMessages.size,
             isLoading = false,
         )
     }.flowOn(Dispatchers.Default)

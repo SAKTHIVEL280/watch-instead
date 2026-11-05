@@ -72,8 +72,6 @@ fun SettingsScreen(
     onGuardedApps: () -> Unit,
     onPrivacy: () -> Unit,
     onLicenses: () -> Unit,
-    onFocusSchedules: () -> Unit,
-    onMessages: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel(),
     backupViewModel: BackupViewModel = hiltViewModel(),
 ) {
@@ -118,22 +116,6 @@ fun SettingsScreen(
                     Text(pluralStringResource(R.plurals.settings_guarded_count, count, count))
                 },
                 modifier = Modifier.clickable(onClick = onGuardedApps),
-            )
-            ListItem(
-                headlineContent = { Text(stringResource(R.string.focus_title)) },
-                supportingContent = {
-                    val count = settings.focusSchedules.size
-                    Text(pluralStringResource(R.plurals.settings_schedule_count, count, count))
-                },
-                modifier = Modifier.clickable(onClick = onFocusSchedules),
-            )
-            ListItem(
-                headlineContent = { Text(stringResource(R.string.messages_title)) },
-                supportingContent = {
-                    val count = settings.personalMessages.size
-                    Text(pluralStringResource(R.plurals.settings_message_count, count, count))
-                },
-                modifier = Modifier.clickable(onClick = onMessages),
             )
             SwitchRow(
                 title = stringResource(R.string.settings_ask_why),

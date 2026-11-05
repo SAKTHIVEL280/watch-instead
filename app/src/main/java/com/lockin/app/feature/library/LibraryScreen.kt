@@ -24,10 +24,12 @@ import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Bookmarks
+import androidx.compose.material.icons.outlined.ChatBubbleOutline
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Insights
 import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Replay
+import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -49,6 +51,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -65,6 +68,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -88,12 +93,71 @@ import kotlinx.coroutines.launch
 
 private enum class LibraryBanner { GUARD_OFF, NO_APPS }
 
+@Composable
+private fun Shortcuts(scheduleCount: Int, messageCount: Int, onFocus: () -> Unit, onMessages: () -> Unit) {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Shortcut(
+            icon = Icons.Outlined.Schedule,
+            title = stringResource(R.string.library_focus),
+            count = scheduleCount,
+            countLabel = pluralStringResource(R.plurals.settings_schedule_count, scheduleCount, scheduleCount),
+            onClick = onFocus,
+            modifier = Modifier.weight(1f),
+        )
+        Shortcut(
+            icon = Icons.Outlined.ChatBubbleOutline,
+            title = stringResource(R.string.library_messages),
+            count = messageCount,
+            countLabel = pluralStringResource(R.plurals.settings_message_count, messageCount, messageCount),
+            onClick = onMessages,
+            modifier = Modifier.weight(1f),
+        )
+    }
+}
+
+@Composable
+private fun Shortcut(
+    icon: ImageVector,
+    title: String,
+    count: Int,
+    countLabel: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        onClick = onClick,
+        modifier = modifier,
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.surfaceContainer,
+    ) {
+        Row(
+            Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(icon, null, tint = MaterialTheme.colorScheme.primary)
+            Column {
+                Text(title, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(
+                    if (count == 0) stringResource(R.string.library_not_set) else countLabel,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun LibraryScreen(
     onOpenSettings: () -> Unit,
     onChooseApps: () -> Unit,
     onOpenStats: () -> Unit,
+    onOpenFocus: () -> Unit,
+    onOpenMessages: () -> Unit,
     viewModel: LibraryViewModel = hiltViewModel(),
     captureViewModel: CaptureViewModel = hiltViewModel(),
 ) {
@@ -199,6 +263,7 @@ fun LibraryScreen(
                     }
                 }
             }
+            item { Shortcuts(state.scheduleCount, state.messageCount, onOpenFocus, onOpenMessages) }
             item {
                 ConnectedChoice(
                     options = LibraryTab.entries,
