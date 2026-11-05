@@ -8,11 +8,11 @@
     <group
         android:pivotX="54"
         android:pivotY="54"
-        android:scaleX="0.78"
-        android:scaleY="0.78">
+        android:scaleX="0.86"
+        android:scaleY="0.86">
         <path
             android:fillColor="#FFFFFF"
             android:fillType="evenOdd"
-            android:pathData="M12,54C26,28 42,20 54,20S82,28 96,54C82,80 66,88 54,88S26,80 12,54zM42.5,38A2.5,2.5 0,0 1,46.27 35.85L73.27,51.85A2.5,2.5 0,0 1,73.27 56.15L46.27,72.15A2.5,2.5 0,0 1,42.5 70z" />
+            android:pathData="M6,54Q54,-4 102,54Q54,112 6,54zM21,54Q54,18 87,54Q54,90 21,54zM54,37a17,17 0,1 0,0.01 0zM48,45.5L65,54L48,62.5z" />
     </group>
 </vector>
