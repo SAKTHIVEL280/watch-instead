@@ -2,6 +2,8 @@ package com.watchinstead.app.widget
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,6 +46,8 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import java.time.Instant
 import java.time.ZoneId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 
 @EntryPoint
@@ -60,20 +64,24 @@ class WatchInsteadWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Responsive(setOf(SMALL, WIDE))
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val data = load(context)
+        val data = data(context)
+        val initial = data.first()
+        // An update to a running session recomposes it without calling provideGlance again.
         provideContent {
-            GlanceTheme { WidgetContent(data) }
+            val current by data.collectAsState(initial)
+            GlanceTheme { WidgetContent(current) }
         }
     }
 
-    private suspend fun load(context: Context): WidgetData {
+    private fun data(context: Context): Flow<WidgetData> {
         val entry = EntryPointAccessors.fromApplication(context, WidgetEntryPoint::class.java)
-        val queue = entry.links().queue()
-        val zone = ZoneId.systemDefault()
-        val today = Instant.ofEpochMilli(entry.clock().now()).atZone(zone).toLocalDate()
-        val watched = entry.links().links.first().mapNotNull { it.watchedAt }
-        val stats = StatsCalculator.calculate(entry.stats().events.first(), watched, today, zone)
-        return WidgetData(queue.firstOrNull(), queue.size, stats.currentStreak)
+        return combine(entry.links().links, entry.stats().events) { links, events ->
+            val zone = ZoneId.systemDefault()
+            val today = Instant.ofEpochMilli(entry.clock().now()).atZone(zone).toLocalDate()
+            val stats = StatsCalculator.calculate(events, links.mapNotNull { it.watchedAt }, today, zone)
+            val queue = entry.links().queue()
+            WidgetData(queue.firstOrNull(), queue.size, stats.currentStreak)
+        }
     }
 
     companion object {
