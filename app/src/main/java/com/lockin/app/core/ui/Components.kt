@@ -69,6 +69,11 @@ val OpenReason.labelRes: Int
         OpenReason.BORED -> R.string.reason_bored
         OpenReason.HABIT -> R.string.reason_habit
         OpenReason.STRESSED -> R.string.reason_stressed
+        OpenReason.TIRED -> R.string.reason_tired
+        OpenReason.LONELY -> R.string.reason_lonely
+        OpenReason.AVOIDING_SOMETHING -> R.string.reason_avoiding
+        OpenReason.TAKING_A_BREAK -> R.string.reason_break
+        OpenReason.REPLYING_TO_SOMEONE -> R.string.reason_replying
         OpenReason.NEED_SOMETHING -> R.string.reason_need_something
     }
 

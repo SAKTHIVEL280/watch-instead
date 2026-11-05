@@ -29,6 +29,9 @@
 
     <!-- Library -->
     <string name="library_add">Add link</string>
+    <string name="library_focus">Focus hours</string>
+    <string name="library_messages">Messages</string>
+    <string name="library_not_set">Not set</string>
     <string name="library_settings">Settings</string>
     <string name="library_tab_queue">To watch</string>
     <string name="library_tab_watched">Watched</string>
@@ -104,8 +107,8 @@
     <string name="backup_import_failed">This file is not a Lockin backup</string>
     <string name="backup_imported">Added %1$d videos, skipped %2$d already saved or invalid</string>
     <string name="onboarding_restore">Restore from a backup</string>
-    <string name="settings_ask_why">Ask why I\'m here</string>
-    <string name="settings_ask_why_body">Show a one-tap question on the prompt</string>
+    <string name="settings_ask_why">Ask what brings me here</string>
+    <string name="settings_ask_why_body">Ask for a reason when I continue to an app</string>
     <plurals name="settings_schedule_count">
         <item quantity="one">%d schedule</item>
         <item quantity="other">%d schedules</item>
@@ -144,6 +147,11 @@
     <string name="reason_bored">Bored</string>
     <string name="reason_habit">Habit</string>
     <string name="reason_stressed">Stressed</string>
+    <string name="reason_tired">Tired</string>
+    <string name="reason_lonely">Lonely</string>
+    <string name="reason_avoiding">Avoiding something</string>
+    <string name="reason_break">Taking a break</string>
+    <string name="reason_replying">Replying to someone</string>
     <string name="reason_need_something">Need something</string>
 
     <!-- Focus schedules -->
@@ -213,7 +221,9 @@
     <string name="intervention_subtitle">You saved this for a reason.</string>
     <string name="intervention_watch">Watch now</string>
     <string name="intervention_next">Show another</string>
-    <string name="intervention_why">Why are you here?</string>
+    <string name="intervention_why">What brings you here?</string>
+    <string name="intervention_why_body">One tap, then you\'re in.</string>
+    <string name="intervention_why_skip">Skip</string>
     <string name="intervention_focus">Focus hours: %s</string>
     <string name="intervention_home">Go home</string>
     <string name="intervention_continue">Continue anyway</string>

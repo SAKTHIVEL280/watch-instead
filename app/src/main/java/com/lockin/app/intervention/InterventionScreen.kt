@@ -18,9 +18,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -32,17 +36,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SelfImprovement
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
+import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -73,6 +74,7 @@ fun InterventionScreen(
     onGoHome: () -> Unit,
     onContinue: () -> Unit,
     onSelectReason: (OpenReason) -> Unit = {},
+    onSkipReason: () -> Unit = {},
 ) {
     Surface(Modifier.fillMaxSize()) {
         if (state.isLoading) {
@@ -82,7 +84,14 @@ fun InterventionScreen(
         val entrance = remember { MutableTransitionState(false).apply { targetState = true } }
         BoxWithConstraints(Modifier.fillMaxSize().safeDrawingPadding()) {
             // Anchored to the bottom so that the choices sit within thumb reach.
-            InterventionContent(state, entrance, maxHeight, onWatch, onNext, onGoHome, onContinue, onSelectReason)
+            val minHeight = maxHeight
+            AnimatedContent(state.askingWhy, label = "prompt step") { asking ->
+                if (asking) {
+                    ReasonStep(minHeight, onSelectReason, onSkipReason)
+                } else {
+                    InterventionContent(state, entrance, minHeight, onWatch, onNext, onGoHome, onContinue)
+                }
+            }
         }
     }
 }
@@ -97,7 +106,6 @@ private fun InterventionContent(
     onNext: () -> Unit,
     onGoHome: () -> Unit,
     onContinue: () -> Unit,
-    onSelectReason: (OpenReason) -> Unit,
 ) {
     Box {
         Column(
@@ -129,9 +137,9 @@ private fun InterventionContent(
                 modifier = Modifier.semantics { heading() },
             )
             }
-            state.personalMessage?.let { PersonalMessage(it) }
             val current = state.current
             if (current == null) {
+                state.personalMessage?.let { Subtitle(it) }
                 EmptyState(
                     icon = Icons.Outlined.SelfImprovement,
                     title = stringResource(R.string.intervention_empty_title),
@@ -139,11 +147,7 @@ private fun InterventionContent(
                     modifier = Modifier.fillMaxWidth(),
                 )
             } else {
-                Text(
-                    stringResource(R.string.intervention_subtitle),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                Subtitle(state.personalMessage ?: stringResource(R.string.intervention_subtitle))
                 AnimatedContent(
                     targetState = current,
                     transitionSpec = {
@@ -151,7 +155,7 @@ private fun InterventionContent(
                             (scaleOut(targetScale = 1.04f) + fadeOut())
                     },
                     label = "saved video",
-                ) { link -> VideoPreview(link, compact = state.askWhy || state.personalMessage != null) }
+                ) { link -> VideoPreview(link, compact = minHeight < COMPACT_BELOW_HEIGHT) }
                 Button(
                     onClick = { onWatch(current) },
                     shapes = ButtonDefaults.shapes(),
@@ -160,19 +164,16 @@ private fun InterventionContent(
                 ) {
                     Text(stringResource(R.string.intervention_watch))
                 }
+            }
+            Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilledTonalButton(onClick = onGoHome, shapes = ButtonDefaults.shapes(), modifier = Modifier.weight(1f).fillMaxHeight()) {
+                    Text(stringResource(R.string.intervention_home))
+                }
                 if (state.queue.size > 1) {
-                    FilledTonalButton(
-                        onClick = onNext,
-                        shapes = ButtonDefaults.shapes(),
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
+                    FilledTonalButton(onClick = onNext, shapes = ButtonDefaults.shapes(), modifier = Modifier.weight(1f).fillMaxHeight()) {
                         Text(stringResource(R.string.intervention_next))
                     }
                 }
-            }
-            if (state.askWhy) ReasonPicker(state.reason, onSelectReason)
-            OutlinedButton(onClick = onGoHome, shapes = ButtonDefaults.shapes(), modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.intervention_home))
             }
             TextButton(
                 onClick = onContinue,
@@ -204,37 +205,42 @@ private fun InterventionContent(
 }
 
 private const val COMPACT_ASPECT_RATIO = 3f
+private val COMPACT_BELOW_HEIGHT = 640.dp
 
 @Composable
-private fun PersonalMessage(message: String) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        ),
-    ) {
-        Text(message, style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(16.dp))
-    }
+private fun Subtitle(text: String) {
+    Text(text, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
 }
 
 @Composable
-private fun ReasonPicker(selected: OpenReason?, onSelect: (OpenReason) -> Unit) {
-    Column {
+private fun ReasonStep(minHeight: Dp, onSelect: (OpenReason) -> Unit, onSkip: () -> Unit) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+            .heightIn(min = minHeight)
+            .wrapContentWidth()
+            .widthIn(max = 600.dp)
+            .padding(24.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Bottom),
+    ) {
         Text(
             stringResource(R.string.intervention_why),
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.displaySmallEmphasized,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.semantics { heading() },
         )
+        Subtitle(stringResource(R.string.intervention_why_body))
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OpenReason.entries.forEach { reason ->
-                FilterChip(
-                    selected = reason == selected,
+                SuggestionChip(
                     onClick = { onSelect(reason) },
                     label = { Text(stringResource(reason.labelRes)) },
                 )
             }
+        }
+        TextButton(onClick = onSkip, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.intervention_why_skip))
         }
     }
 }
@@ -246,16 +252,17 @@ private fun VideoPreview(link: SavedLink, compact: Boolean) {
         Text(
             link.title ?: link.url.removePrefix("https://").removePrefix("www."),
             style = MaterialTheme.typography.titleLarge,
-            maxLines = 3,
+            maxLines = 2,
             overflow = TextOverflow.Ellipsis,
         )
         if (link.note.isNotBlank()) {
-            Text(link.note, style = MaterialTheme.typography.bodyLarge)
+            Text(
+                link.note,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
         }
-        Text(
-            stringResource(link.category.labelRes),
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.primary,
-        )
     }
 }

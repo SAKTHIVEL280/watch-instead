@@ -38,8 +38,12 @@ class InterventionActivity : ComponentActivity() {
                 onWatch = ::watch,
                 onNext = viewModel::showNext,
                 onGoHome = ::goHome,
-                onContinue = ::continueToApp,
-                onSelectReason = viewModel::selectReason,
+                onContinue = { if (!viewModel.askWhyBeforeContinuing()) continueToApp() },
+                onSelectReason = {
+                    viewModel.selectReason(it)
+                    continueToApp()
+                },
+                onSkipReason = ::continueToApp,
             )
         }
     }

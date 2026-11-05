@@ -5,7 +5,17 @@ import kotlinx.serialization.Serializable
 enum class Category { MOTIVATION, EDUCATION, CONSISTENCY, PRODUCTIVITY, OTHER }
 
 /** Why the user says they opened a guarded app. Stored by name, so never rename a value. */
-enum class OpenReason { BORED, HABIT, STRESSED, NEED_SOMETHING }
+enum class OpenReason {
+    BORED,
+    HABIT,
+    STRESSED,
+    TIRED,
+    LONELY,
+    AVOIDING_SOMETHING,
+    TAKING_A_BREAK,
+    REPLYING_TO_SOMEONE,
+    NEED_SOMETHING,
+}
 
 /** How a prompt ended. Stored by name, so never rename a value. */
 enum class PromptOutcome { WATCHED, WENT_HOME, CONTINUED }

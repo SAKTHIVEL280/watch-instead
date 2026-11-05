@@ -100,7 +100,7 @@ class ScreenshotTest {
         seed()
         val viewModel = LibraryViewModel(links, settings)
         val capture = capture()
-        shot(name, appearance) { LibraryScreen({}, {}, {}, viewModel, capture) }
+        shot(name, appearance) { LibraryScreen({}, {}, {}, {}, {}, viewModel, capture) }
     }
 
     @Test fun library() = library("library", light)
@@ -108,7 +108,7 @@ class ScreenshotTest {
     @Test fun settingsLight() {
         val viewModel = SettingsViewModel(settings, links, stats)
         val backup = backup()
-        shot("settings", light.copy(accent = Accent.ROSE)) { SettingsScreen({}, {}, {}, {}, {}, {}, viewModel, backup) }
+        shot("settings", light.copy(accent = Accent.ROSE)) { SettingsScreen({}, {}, {}, {}, viewModel, backup) }
     }
     @Test fun onboardingWelcome() {
         val viewModel = OnboardingViewModel(links, settings)
@@ -135,14 +135,14 @@ class ScreenshotTest {
         val appearance = Appearance(ThemeMode.LIGHT, dynamicColor = false, accent = Accent.AMBER)
         settings.appearance.value = appearance
         val backup = backup()
-        shot("settings_amber", appearance) { SettingsScreen({}, {}, {}, {}, {}, {}, viewModel, backup) }
+        shot("settings_amber", appearance) { SettingsScreen({}, {}, {}, {}, viewModel, backup) }
     }
     @Test fun pureBlack() {
         val viewModel = SettingsViewModel(settings, links, stats)
         val appearance = Appearance(ThemeMode.DARK, dynamicColor = false, accent = Accent.ROSE, pureBlack = true)
         settings.appearance.value = appearance
         val backup = backup()
-        shot("settings_pure_black", appearance) { SettingsScreen({}, {}, {}, {}, {}, {}, viewModel, backup) }
+        shot("settings_pure_black", appearance) { SettingsScreen({}, {}, {}, {}, viewModel, backup) }
     }
     @Test fun interventionLargeFont() = shot("intervention_large_font", light) {
         val density = LocalDensity.current
@@ -161,10 +161,13 @@ class ScreenshotTest {
             InterventionState(
                 false, "Instagram", listOf(video, video.copy(id = 2)), secondsLeft = 28, totalSeconds = 30,
                 personalMessage = "Exams in 12 days. You've got this.", focusName = "Study",
-                askWhy = true, reason = OpenReason.BORED,
+                askWhy = true,
             ),
             {}, {}, {}, {},
         )
+    }
+    @Test fun interventionReason() = shot("intervention_reason", light) {
+        InterventionScreen(InterventionState(false, "Instagram", listOf(video), askingWhy = true), {}, {}, {}, {})
     }
     @Test fun statsScreen() {
         val now = System.currentTimeMillis()

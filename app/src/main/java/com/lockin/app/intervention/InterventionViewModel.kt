@@ -37,6 +37,7 @@ data class InterventionState(
     val personalMessage: String? = null,
     val focusName: String? = null,
     val askWhy: Boolean = false,
+    val askingWhy: Boolean = false,
     val reason: OpenReason? = null,
 ) {
     val current: SavedLink? get() = queue.getOrNull(index)
@@ -91,9 +92,15 @@ class InterventionViewModel @Inject constructor(
         }
     }
 
-    /** Tapping the selected reason again clears it. */
+    /** Returns true when the reason step has to come first, so the prompt itself stays uncluttered. */
+    fun askWhyBeforeContinuing(): Boolean {
+        val ask = _state.value.askWhy
+        if (ask) _state.update { it.copy(askingWhy = true) }
+        return ask
+    }
+
     fun selectReason(reason: OpenReason) {
-        _state.update { it.copy(reason = reason.takeIf { _ -> reason != it.reason }) }
+        _state.update { it.copy(reason = reason) }
     }
 
     /** Called once per prompt, however it ends. Outlives the activity, which is about to finish. */
