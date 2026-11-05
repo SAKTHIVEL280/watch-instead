@@ -1,11 +1,11 @@
-package com.lockin.app.feature.guardedapps
+package com.watchinstead.app.feature.guardedapps
 
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lockin.app.data.apps.InstalledApp
-import com.lockin.app.data.apps.InstalledAppsRepository
-import com.lockin.app.data.settings.SettingsRepository
+import com.watchinstead.app.data.apps.InstalledApp
+import com.watchinstead.app.data.apps.InstalledAppsRepository
+import com.watchinstead.app.data.settings.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

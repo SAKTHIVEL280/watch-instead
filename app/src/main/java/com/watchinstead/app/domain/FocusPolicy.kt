@@ -1,4 +1,4 @@
-package com.lockin.app.domain
+package com.watchinstead.app.domain
 
 import java.time.LocalDateTime
 

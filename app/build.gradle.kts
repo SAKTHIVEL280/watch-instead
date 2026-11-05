@@ -16,15 +16,15 @@ val keystoreProperties = Properties().apply {
 }
 
 android {
-    namespace = "com.lockin.app"
+    namespace = "com.watchinstead.app"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.lockin.app"
+        applicationId = "com.watchinstead.app"
         minSdk = 26
         targetSdk = 37
-        versionCode = 3
-        versionName = "1.2.0"
+        versionCode = 4
+        versionName = "2.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

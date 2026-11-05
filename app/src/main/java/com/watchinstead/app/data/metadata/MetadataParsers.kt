@@ -1,4 +1,4 @@
-package com.lockin.app.data.metadata
+package com.watchinstead.app.data.metadata
 
 data class LinkMetadata(val title: String?, val thumbnailUrl: String?)
 

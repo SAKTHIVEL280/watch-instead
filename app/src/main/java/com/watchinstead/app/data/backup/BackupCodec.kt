@@ -1,14 +1,14 @@
-package com.lockin.app.data.backup
+package com.watchinstead.app.data.backup
 
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.FocusPolicy
-import com.lockin.app.domain.FocusSchedule
-import com.lockin.app.domain.GuardSettings
-import com.lockin.app.domain.LinkParser
-import com.lockin.app.domain.OpenReason
-import com.lockin.app.domain.PromptEvent
-import com.lockin.app.domain.PromptOutcome
-import com.lockin.app.domain.SavedLink
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.FocusPolicy
+import com.watchinstead.app.domain.FocusSchedule
+import com.watchinstead.app.domain.GuardSettings
+import com.watchinstead.app.domain.LinkParser
+import com.watchinstead.app.domain.OpenReason
+import com.watchinstead.app.domain.PromptEvent
+import com.watchinstead.app.domain.PromptOutcome
+import com.watchinstead.app.domain.SavedLink
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
@@ -58,8 +58,9 @@ data class BackupFile(
 
 /** Backups are user-editable files from outside the app, so nothing in them is trusted on import. */
 object BackupCodec {
-    const val VERSION = 2
-    const val APP_ID = "lockin"
+    const val VERSION = 3
+    const val APP_ID = "watchinstead"
+    private const val FIRST_RENAMED_VERSION = 3
     private const val MAX_NOTE_LENGTH = 200
 
     private val json = Json {
@@ -79,7 +80,9 @@ object BackupCodec {
         } catch (_: IllegalArgumentException) {
             return null
         }
-        return file.takeIf { it.app == APP_ID && it.version in 1..VERSION }
+        // Files from before the rename carry the previous app id, so only current ones are matched on it.
+        val validApp = file.app == APP_ID || file.version < FIRST_RENAMED_VERSION
+        return file.takeIf { validApp && it.version in 1..VERSION }
     }
 
     fun toBackup(link: SavedLink) = BackupLink(

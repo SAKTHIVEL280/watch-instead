@@ -1,4 +1,4 @@
-package com.lockin.app.intervention
+package com.watchinstead.app.intervention
 
 import android.content.Context
 import android.content.Intent
@@ -10,13 +10,13 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.lockin.app.R
-import com.lockin.app.core.theme.setLockinContent
-import com.lockin.app.data.settings.SettingsRepository
+import com.watchinstead.app.R
+import com.watchinstead.app.core.theme.setWatchInsteadContent
+import com.watchinstead.app.data.settings.SettingsRepository
 import javax.inject.Inject
-import com.lockin.app.core.ui.openLink
-import com.lockin.app.domain.PromptOutcome
-import com.lockin.app.domain.SavedLink
+import com.watchinstead.app.core.ui.openLink
+import com.watchinstead.app.domain.PromptOutcome
+import com.watchinstead.app.domain.SavedLink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -29,7 +29,7 @@ class InterventionActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.start(intent.getStringExtra(EXTRA_PACKAGE))
-        setLockinContent(settings) {
+        setWatchInsteadContent(settings) {
             val state by viewModel.state.collectAsStateWithLifecycle()
             // Back must never drop the user straight into the app they were stopped from opening.
             BackHandler(onBack = ::goHome)

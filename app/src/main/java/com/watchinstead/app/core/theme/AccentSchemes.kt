@@ -1,11 +1,11 @@
-package com.lockin.app.core.theme
+package com.watchinstead.app.core.theme
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
-import com.lockin.app.domain.Accent
+import com.watchinstead.app.domain.Accent
 
 private class Tones(
     val lightPrimary: Long,

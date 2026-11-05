@@ -1,4 +1,4 @@
-package com.lockin.app.core.ui
+package com.watchinstead.app.core.ui
 
 import android.provider.Settings
 import androidx.compose.animation.core.LinearEasing

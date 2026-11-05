@@ -1,8 +1,8 @@
-package com.lockin.app
+package com.watchinstead.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lockin.app.data.settings.SettingsRepository
+import com.watchinstead.app.data.settings.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted

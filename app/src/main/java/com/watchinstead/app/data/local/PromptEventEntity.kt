@@ -1,4 +1,4 @@
-package com.lockin.app.data.local
+package com.watchinstead.app.data.local
 
 import androidx.room.Dao
 import androidx.room.Entity
@@ -7,9 +7,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
-import com.lockin.app.domain.OpenReason
-import com.lockin.app.domain.PromptEvent
-import com.lockin.app.domain.PromptOutcome
+import com.watchinstead.app.domain.OpenReason
+import com.watchinstead.app.domain.PromptEvent
+import com.watchinstead.app.domain.PromptOutcome
 import kotlinx.coroutines.flow.Flow
 
 /** The unique index is what stops a backup imported twice from doubling the stats. */

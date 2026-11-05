@@ -1,13 +1,13 @@
-package com.lockin.app.feature
+package com.watchinstead.app.feature
 
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.ParsedLink
-import com.lockin.app.domain.Platform
-import com.lockin.app.feature.onboarding.OnboardingStep
-import com.lockin.app.feature.onboarding.OnboardingViewModel
-import com.lockin.app.testing.FakeLinkRepository
-import com.lockin.app.testing.FakeSettingsRepository
-import com.lockin.app.testing.MainDispatcherRule
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.ParsedLink
+import com.watchinstead.app.domain.Platform
+import com.watchinstead.app.feature.onboarding.OnboardingStep
+import com.watchinstead.app.feature.onboarding.OnboardingViewModel
+import com.watchinstead.app.testing.FakeLinkRepository
+import com.watchinstead.app.testing.FakeSettingsRepository
+import com.watchinstead.app.testing.MainDispatcherRule
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

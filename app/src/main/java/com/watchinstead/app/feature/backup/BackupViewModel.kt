@@ -1,10 +1,10 @@
-package com.lockin.app.feature.backup
+package com.watchinstead.app.feature.backup
 
 import android.content.ContentResolver
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.lockin.app.data.backup.BackupRepository
-import com.lockin.app.data.backup.ImportResult
+import com.watchinstead.app.data.backup.BackupRepository
+import com.watchinstead.app.data.backup.ImportResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
 import javax.inject.Inject

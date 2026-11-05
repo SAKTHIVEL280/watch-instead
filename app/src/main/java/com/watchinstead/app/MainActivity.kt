@@ -1,4 +1,4 @@
-package com.lockin.app
+package com.watchinstead.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,10 +7,10 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lockin.app.core.theme.setLockinContent
-import com.lockin.app.data.settings.SettingsRepository
+import com.watchinstead.app.core.theme.setWatchInsteadContent
+import com.watchinstead.app.data.settings.SettingsRepository
 import javax.inject.Inject
-import com.lockin.app.feature.onboarding.OnboardingScreen
+import com.watchinstead.app.feature.onboarding.OnboardingScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,11 +23,11 @@ class MainActivity : ComponentActivity() {
         val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
         splash.setKeepOnScreenCondition { viewModel.onboardingComplete.value == null }
-        setLockinContent(settings) {
+        setWatchInsteadContent(settings) {
             val complete by viewModel.onboardingComplete.collectAsStateWithLifecycle()
             AnimatedContent(complete, label = "app entry") { state ->
                 when (state) {
-                    true -> LockinNavHost()
+                    true -> WatchInsteadNavHost()
                     false -> OnboardingScreen()
                     null -> Unit
                 }

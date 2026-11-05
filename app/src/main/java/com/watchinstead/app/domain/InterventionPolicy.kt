@@ -1,4 +1,4 @@
-package com.lockin.app.domain
+package com.watchinstead.app.domain
 
 /** Decides whether opening [packageName] should bring up the prompt. Free of Android types. */
 object InterventionPolicy {

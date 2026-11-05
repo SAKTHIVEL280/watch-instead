@@ -1,4 +1,4 @@
-package com.lockin.app.intervention
+package com.watchinstead.app.intervention
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -58,12 +58,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.lockin.app.R
-import com.lockin.app.core.ui.EmptyState
-import com.lockin.app.core.ui.LinkThumbnail
-import com.lockin.app.core.ui.labelRes
-import com.lockin.app.domain.OpenReason
-import com.lockin.app.domain.SavedLink
+import com.watchinstead.app.R
+import com.watchinstead.app.core.ui.EmptyState
+import com.watchinstead.app.core.ui.LinkThumbnail
+import com.watchinstead.app.core.ui.labelRes
+import com.watchinstead.app.domain.OpenReason
+import com.watchinstead.app.domain.SavedLink
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable

@@ -1,6 +1,6 @@
-package com.lockin.app.data
+package com.watchinstead.app.data
 
-import com.lockin.app.data.metadata.OpenGraphParser
+import com.watchinstead.app.data.metadata.OpenGraphParser
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test

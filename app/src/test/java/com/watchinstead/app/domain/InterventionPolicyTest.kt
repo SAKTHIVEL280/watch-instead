@@ -1,4 +1,4 @@
-package com.lockin.app.domain
+package com.watchinstead.app.domain
 
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -12,13 +12,13 @@ class InterventionPolicyTest {
         pkg: String = "insta",
         settings: GuardSettings = this.settings,
         lastPromptAt: Long = 0,
-    ) = InterventionPolicy.shouldIntervene(pkg, "lockin", settings, now, lastPromptAt)
+    ) = InterventionPolicy.shouldIntervene(pkg, "watchinstead", settings, now, lastPromptAt)
 
     @Test fun `guarded app with no pass is intercepted`() = assertTrue(decide())
 
     @Test fun `unguarded and own packages are ignored`() {
         assertFalse(decide(pkg = "calculator"))
-        assertFalse(decide(pkg = "lockin", settings = settings.copy(guardedPackages = setOf("lockin"))))
+        assertFalse(decide(pkg = "watchinstead", settings = settings.copy(guardedPackages = setOf("watchinstead"))))
     }
 
     @Test fun `disabled protection never intercepts`() =
@@ -43,20 +43,20 @@ class InterventionPolicyTest {
 
     @Test fun `focus hours prompt on a new open but keep an open session alive`() {
         val open = settings.copy(sessionOpen = true)
-        assertFalse(InterventionPolicy.shouldIntervene("insta", "lockin", open, now, 0, focusActive = true))
-        assertTrue(InterventionPolicy.shouldIntervene("insta", "lockin", settings, now, 0, focusActive = true))
+        assertFalse(InterventionPolicy.shouldIntervene("insta", "watchinstead", open, now, 0, focusActive = true))
+        assertTrue(InterventionPolicy.shouldIntervene("insta", "watchinstead", settings, now, 0, focusActive = true))
     }
 
     @Test fun `a cooldown from before focus hours or None cannot skip the prompt`() {
         val running = settings.copy(passUntil = now + 30 * 60_000)
         assertFalse(decide(settings = running))
-        assertTrue(InterventionPolicy.shouldIntervene("insta", "lockin", running, now, 0, focusActive = true))
+        assertTrue(InterventionPolicy.shouldIntervene("insta", "watchinstead", running, now, 0, focusActive = true))
         assertTrue(decide(settings = running.copy(cooldownMinutes = GuardSettings.NO_COOLDOWN)))
     }
 
     @Test fun `go home grace still works when every open prompts`() {
         val grace = settings.copy(passUntil = now + InterventionPolicy.GO_HOME_GRACE_MILLIS)
-        assertFalse(InterventionPolicy.shouldIntervene("insta", "lockin", grace, now, 0, focusActive = true))
+        assertFalse(InterventionPolicy.shouldIntervene("insta", "watchinstead", grace, now, 0, focusActive = true))
     }
 
     @Test fun `event bursts only prompt once`() {

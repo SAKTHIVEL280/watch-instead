@@ -1,4 +1,4 @@
-package com.lockin.app.feature.capture
+package com.watchinstead.app.feature.capture
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,9 +31,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lockin.app.R
-import com.lockin.app.core.ui.labelRes
-import com.lockin.app.domain.Category
+import com.watchinstead.app.R
+import com.watchinstead.app.core.ui.labelRes
+import com.watchinstead.app.domain.Category
 
 /** Bottom sheet used by the share target, the library and onboarding. */
 @OptIn(ExperimentalMaterial3Api::class)

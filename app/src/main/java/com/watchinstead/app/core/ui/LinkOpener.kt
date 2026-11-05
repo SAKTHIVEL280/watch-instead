@@ -1,4 +1,4 @@
-package com.lockin.app.core.ui
+package com.watchinstead.app.core.ui
 
 import android.content.ActivityNotFoundException
 import android.content.Context

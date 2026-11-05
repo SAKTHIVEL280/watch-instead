@@ -1,4 +1,4 @@
-package com.lockin.app.core.ui
+package com.watchinstead.app.core.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -48,10 +48,10 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import androidx.compose.ui.layout.ContentScale
-import com.lockin.app.R
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.OpenReason
-import com.lockin.app.domain.Platform
+import com.watchinstead.app.R
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.OpenReason
+import com.watchinstead.app.domain.Platform
 
 @get:StringRes
 val Category.labelRes: Int

@@ -1,4 +1,4 @@
-package com.lockin.app.intervention
+package com.watchinstead.app.intervention
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
@@ -8,11 +8,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.view.accessibility.AccessibilityEvent
 import androidx.core.content.ContextCompat
-import com.lockin.app.data.Clock
-import com.lockin.app.data.settings.SettingsRepository
-import com.lockin.app.domain.FocusPolicy
-import com.lockin.app.domain.GuardSettings
-import com.lockin.app.domain.InterventionPolicy
+import com.watchinstead.app.data.Clock
+import com.watchinstead.app.data.settings.SettingsRepository
+import com.watchinstead.app.domain.FocusPolicy
+import com.watchinstead.app.domain.GuardSettings
+import com.watchinstead.app.domain.InterventionPolicy
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Instant
 import java.time.ZoneId

@@ -1,4 +1,4 @@
-package com.lockin.app.widget
+package com.watchinstead.app.widget
 
 import android.content.Context
 import androidx.compose.runtime.Composable
@@ -31,13 +31,13 @@ import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import com.lockin.app.MainActivity
-import com.lockin.app.R
-import com.lockin.app.data.Clock
-import com.lockin.app.data.LinkRepository
-import com.lockin.app.data.StatsRepository
-import com.lockin.app.domain.SavedLink
-import com.lockin.app.domain.StatsCalculator
+import com.watchinstead.app.MainActivity
+import com.watchinstead.app.R
+import com.watchinstead.app.data.Clock
+import com.watchinstead.app.data.LinkRepository
+import com.watchinstead.app.data.StatsRepository
+import com.watchinstead.app.domain.SavedLink
+import com.watchinstead.app.domain.StatsCalculator
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -56,7 +56,7 @@ interface WidgetEntryPoint {
 
 internal data class WidgetData(val next: SavedLink?, val queued: Int, val streak: Int)
 
-class LockinWidget : GlanceAppWidget() {
+class WatchInsteadWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Responsive(setOf(SMALL, WIDE))
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
@@ -120,7 +120,7 @@ internal fun WidgetContent(data: WidgetData) {
                 Button(
                     text = resources.getString(R.string.intervention_watch),
                     onClick = actionStartActivity<WatchLinkActivity>(
-                        actionParametersOf(ActionParameters.Key<Long>(LockinWidget.LINK_ID_KEY) to next.id),
+                        actionParametersOf(ActionParameters.Key<Long>(WatchInsteadWidget.LINK_ID_KEY) to next.id),
                     ),
                     modifier = GlanceModifier.fillMaxWidth(),
                 )
@@ -135,6 +135,6 @@ internal fun WidgetContent(data: WidgetData) {
     }
 }
 
-class LockinWidgetReceiver : GlanceAppWidgetReceiver() {
-    override val glanceAppWidget: GlanceAppWidget = LockinWidget()
+class WatchInsteadWidgetReceiver : GlanceAppWidgetReceiver() {
+    override val glanceAppWidget: GlanceAppWidget = WatchInsteadWidget()
 }

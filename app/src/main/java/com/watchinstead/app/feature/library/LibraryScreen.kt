@@ -1,4 +1,4 @@
-package com.lockin.app.feature.library
+package com.watchinstead.app.feature.library
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -76,18 +76,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lockin.app.R
-import com.lockin.app.core.ui.ConnectedChoice
-import com.lockin.app.core.ui.EmptyState
-import com.lockin.app.core.ui.LinkThumbnail
-import com.lockin.app.core.ui.StatusBanner
-import com.lockin.app.core.ui.labelRes
-import com.lockin.app.core.ui.openLink
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.SavedLink
-import com.lockin.app.feature.capture.CaptureSheet
-import com.lockin.app.feature.capture.CaptureViewModel
-import com.lockin.app.intervention.GuardStatus
+import com.watchinstead.app.R
+import com.watchinstead.app.core.ui.ConnectedChoice
+import com.watchinstead.app.core.ui.EmptyState
+import com.watchinstead.app.core.ui.LinkThumbnail
+import com.watchinstead.app.core.ui.StatusBanner
+import com.watchinstead.app.core.ui.labelRes
+import com.watchinstead.app.core.ui.openLink
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.SavedLink
+import com.watchinstead.app.feature.capture.CaptureSheet
+import com.watchinstead.app.feature.capture.CaptureViewModel
+import com.watchinstead.app.intervention.GuardStatus
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 

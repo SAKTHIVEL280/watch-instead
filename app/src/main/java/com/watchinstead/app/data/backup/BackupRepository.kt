@@ -1,11 +1,11 @@
-package com.lockin.app.data.backup
+package com.watchinstead.app.data.backup
 
-import com.lockin.app.data.LinkRepository
-import com.lockin.app.data.StatsRepository
-import com.lockin.app.data.settings.SettingsRepository
-import com.lockin.app.domain.Accent
-import com.lockin.app.domain.GuardSettings
-import com.lockin.app.domain.ThemeMode
+import com.watchinstead.app.data.LinkRepository
+import com.watchinstead.app.data.StatsRepository
+import com.watchinstead.app.data.settings.SettingsRepository
+import com.watchinstead.app.domain.Accent
+import com.watchinstead.app.domain.GuardSettings
+import com.watchinstead.app.domain.ThemeMode
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.first

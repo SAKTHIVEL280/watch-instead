@@ -1,4 +1,4 @@
-package com.lockin.app.screenshots
+package com.watchinstead.app.screenshots
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -16,44 +16,44 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
 import com.github.takahirom.roborazzi.captureRoboImage
-import com.lockin.app.R
-import com.lockin.app.core.theme.LockinTheme
+import com.watchinstead.app.R
+import com.watchinstead.app.core.theme.WatchInsteadTheme
 import androidx.test.core.app.ApplicationProvider
-import com.lockin.app.data.apps.InstalledAppsRepository
-import com.lockin.app.domain.Accent
-import com.lockin.app.domain.FocusSchedule
-import com.lockin.app.domain.OpenReason
-import com.lockin.app.domain.PromptEvent
-import com.lockin.app.domain.PromptOutcome
-import com.lockin.app.feature.focus.FocusSchedulesScreen
-import com.lockin.app.feature.focus.FocusViewModel
-import com.lockin.app.feature.messages.MessagesScreen
-import com.lockin.app.feature.messages.MessagesViewModel
-import com.lockin.app.feature.stats.StatsScreen
-import com.lockin.app.feature.stats.StatsViewModel
-import com.lockin.app.domain.Appearance
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.ParsedLink
-import com.lockin.app.domain.Platform
-import com.lockin.app.domain.SavedLink
-import com.lockin.app.domain.ThemeMode
-import com.lockin.app.data.backup.BackupRepository
-import com.lockin.app.feature.backup.BackupViewModel
-import com.lockin.app.feature.capture.CaptureForm
-import com.lockin.app.feature.capture.CaptureState
-import com.lockin.app.feature.capture.CaptureViewModel
-import com.lockin.app.feature.library.LibraryScreen
-import com.lockin.app.feature.library.LibraryViewModel
-import com.lockin.app.feature.onboarding.OnboardingScreen
-import com.lockin.app.feature.onboarding.OnboardingViewModel
-import com.lockin.app.feature.settings.SettingsScreen
-import com.lockin.app.feature.settings.SettingsViewModel
-import com.lockin.app.intervention.InterventionScreen
-import com.lockin.app.intervention.InterventionState
-import com.lockin.app.testing.FakeLinkRepository
-import com.lockin.app.testing.FakeSettingsRepository
-import com.lockin.app.testing.FakeStatsRepository
-import com.lockin.app.testing.MainDispatcherRule
+import com.watchinstead.app.data.apps.InstalledAppsRepository
+import com.watchinstead.app.domain.Accent
+import com.watchinstead.app.domain.FocusSchedule
+import com.watchinstead.app.domain.OpenReason
+import com.watchinstead.app.domain.PromptEvent
+import com.watchinstead.app.domain.PromptOutcome
+import com.watchinstead.app.feature.focus.FocusSchedulesScreen
+import com.watchinstead.app.feature.focus.FocusViewModel
+import com.watchinstead.app.feature.messages.MessagesScreen
+import com.watchinstead.app.feature.messages.MessagesViewModel
+import com.watchinstead.app.feature.stats.StatsScreen
+import com.watchinstead.app.feature.stats.StatsViewModel
+import com.watchinstead.app.domain.Appearance
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.ParsedLink
+import com.watchinstead.app.domain.Platform
+import com.watchinstead.app.domain.SavedLink
+import com.watchinstead.app.domain.ThemeMode
+import com.watchinstead.app.data.backup.BackupRepository
+import com.watchinstead.app.feature.backup.BackupViewModel
+import com.watchinstead.app.feature.capture.CaptureForm
+import com.watchinstead.app.feature.capture.CaptureState
+import com.watchinstead.app.feature.capture.CaptureViewModel
+import com.watchinstead.app.feature.library.LibraryScreen
+import com.watchinstead.app.feature.library.LibraryViewModel
+import com.watchinstead.app.feature.onboarding.OnboardingScreen
+import com.watchinstead.app.feature.onboarding.OnboardingViewModel
+import com.watchinstead.app.feature.settings.SettingsScreen
+import com.watchinstead.app.feature.settings.SettingsViewModel
+import com.watchinstead.app.intervention.InterventionScreen
+import com.watchinstead.app.intervention.InterventionState
+import com.watchinstead.app.testing.FakeLinkRepository
+import com.watchinstead.app.testing.FakeSettingsRepository
+import com.watchinstead.app.testing.FakeStatsRepository
+import com.watchinstead.app.testing.MainDispatcherRule
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
@@ -88,7 +88,7 @@ class ScreenshotTest {
 
     private fun shot(name: String, appearance: Appearance, content: @Composable () -> Unit) {
         compose.mainClock.autoAdvance = false
-        compose.setContent { LockinTheme(appearance, content) }
+        compose.setContent { WatchInsteadTheme(appearance, content) }
         compose.mainClock.advanceTimeBy(2_000)
         compose.onRoot().captureRoboImage("build/screenshots/$name.png")
     }

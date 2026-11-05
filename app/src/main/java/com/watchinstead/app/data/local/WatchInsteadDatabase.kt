@@ -1,4 +1,4 @@
-package com.lockin.app.data.local
+package com.watchinstead.app.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -6,7 +6,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(entities = [SavedLinkEntity::class, PromptEventEntity::class], version = 2, exportSchema = true)
-abstract class LockinDatabase : RoomDatabase() {
+abstract class WatchInsteadDatabase : RoomDatabase() {
     abstract fun savedLinkDao(): SavedLinkDao
     abstract fun promptEventDao(): PromptEventDao
 }

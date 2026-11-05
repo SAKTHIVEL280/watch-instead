@@ -1,12 +1,12 @@
-package com.lockin.app.data.local
+package com.watchinstead.app.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.Platform
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.Platform
 import kotlinx.coroutines.flow.Flow
 
 @Dao

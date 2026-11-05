@@ -1,12 +1,12 @@
-package com.lockin.app.feature.library
+package com.watchinstead.app.feature.library
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lockin.app.data.LinkRepository
-import com.lockin.app.data.settings.SettingsRepository
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.QueueSelector
-import com.lockin.app.domain.SavedLink
+import com.watchinstead.app.data.LinkRepository
+import com.watchinstead.app.data.settings.SettingsRepository
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.QueueSelector
+import com.watchinstead.app.domain.SavedLink
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers

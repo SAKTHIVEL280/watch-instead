@@ -21,7 +21,7 @@
     </queries>
 
     <application
-        android:name=".LockinApplication"
+        android:name=".WatchInsteadApplication"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
@@ -30,13 +30,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Lockin"
+        android:theme="@style/Theme.WatchInstead"
         android:usesCleartextTraffic="false">
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Lockin.Splash"
+            android:theme="@style/Theme.WatchInstead.Splash"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +51,7 @@
             android:label="@string/share_target_label"
             android:noHistory="true"
             android:taskAffinity=""
-            android:theme="@style/Theme.Lockin.Translucent"
+            android:theme="@style/Theme.WatchInstead.Translucent"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -67,7 +67,7 @@
             android:exported="false"
             android:launchMode="singleInstance"
             android:noHistory="true"
-            android:taskAffinity="com.lockin.app.intervention" />
+            android:taskAffinity="com.watchinstead.app.intervention" />
 
         <activity
             android:name=".widget.WatchLinkActivity"
@@ -75,10 +75,10 @@
             android:exported="false"
             android:noHistory="true"
             android:taskAffinity=""
-            android:theme="@style/Theme.Lockin.Translucent" />
+            android:theme="@style/Theme.WatchInstead.Translucent" />
 
         <receiver
-            android:name=".widget.LockinWidgetReceiver"
+            android:name=".widget.WatchInsteadWidgetReceiver"
             android:exported="true"
             android:label="@string/widget_label">
             <intent-filter>
@@ -86,7 +86,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/lockin_widget_info" />
+                android:resource="@xml/watch_instead_widget_info" />
         </receiver>
 
         <service

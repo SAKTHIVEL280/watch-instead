@@ -1,4 +1,4 @@
-package com.lockin.app.feature.guardedapps
+package com.watchinstead.app.feature.guardedapps
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,8 +30,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lockin.app.R
-import com.lockin.app.core.ui.AppIcon
+import com.watchinstead.app.R
+import com.watchinstead.app.core.ui.AppIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

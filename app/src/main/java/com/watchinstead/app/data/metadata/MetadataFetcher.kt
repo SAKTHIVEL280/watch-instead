@@ -1,6 +1,6 @@
-package com.lockin.app.data.metadata
+package com.watchinstead.app.data.metadata
 
-import com.lockin.app.domain.Platform
+import com.watchinstead.app.domain.Platform
 import java.net.URLEncoder
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -46,7 +46,7 @@ class HttpMetadataFetcher @Inject constructor(private val client: OkHttpClient) 
         }
 
     private fun read(url: String): String {
-        val request = Request.Builder().url(url).header("User-Agent", "Lockin").build()
+        val request = Request.Builder().url(url).header("User-Agent", "WatchInstead").build()
         client.newCall(request).execute().use { response ->
             check(response.isSuccessful) { "HTTP ${response.code}" }
             return response.peekBody(MAX_BODY_BYTES).string()

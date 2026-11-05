@@ -1,4 +1,4 @@
-package com.lockin.app.testing
+package com.watchinstead.app.testing
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

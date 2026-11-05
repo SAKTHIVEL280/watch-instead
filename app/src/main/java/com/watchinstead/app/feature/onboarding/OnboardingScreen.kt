@@ -1,4 +1,4 @@
-package com.lockin.app.feature.onboarding
+package com.watchinstead.app.feature.onboarding
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -62,18 +62,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lockin.app.R
-import com.lockin.app.core.ui.LinkThumbnail
-import com.lockin.app.core.ui.MorphingBlob
-import com.lockin.app.domain.MIN_ONBOARDING_LINKS
-import com.lockin.app.domain.SUGGESTED_ONBOARDING_LINKS
-import com.lockin.app.domain.SavedLink
-import com.lockin.app.feature.backup.BackupViewModel
-import com.lockin.app.feature.backup.rememberBackupActions
-import com.lockin.app.feature.capture.CaptureSheet
-import com.lockin.app.feature.capture.CaptureViewModel
-import com.lockin.app.feature.guardedapps.GuardedAppsList
-import com.lockin.app.intervention.GuardStatus
+import com.watchinstead.app.R
+import com.watchinstead.app.core.ui.LinkThumbnail
+import com.watchinstead.app.core.ui.MorphingBlob
+import com.watchinstead.app.domain.MIN_ONBOARDING_LINKS
+import com.watchinstead.app.domain.SUGGESTED_ONBOARDING_LINKS
+import com.watchinstead.app.domain.SavedLink
+import com.watchinstead.app.feature.backup.BackupViewModel
+import com.watchinstead.app.feature.backup.rememberBackupActions
+import com.watchinstead.app.feature.capture.CaptureSheet
+import com.watchinstead.app.feature.capture.CaptureViewModel
+import com.watchinstead.app.feature.guardedapps.GuardedAppsList
+import com.watchinstead.app.intervention.GuardStatus
 
 @Composable
 fun OnboardingScreen(

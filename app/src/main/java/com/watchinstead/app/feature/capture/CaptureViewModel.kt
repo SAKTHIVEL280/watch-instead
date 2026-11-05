@@ -1,12 +1,12 @@
-package com.lockin.app.feature.capture
+package com.watchinstead.app.feature.capture
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lockin.app.data.LinkRepository
-import com.lockin.app.data.SaveResult
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.LinkParser
-import com.lockin.app.domain.SavedLink
+import com.watchinstead.app.data.LinkRepository
+import com.watchinstead.app.data.SaveResult
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.LinkParser
+import com.watchinstead.app.domain.SavedLink
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

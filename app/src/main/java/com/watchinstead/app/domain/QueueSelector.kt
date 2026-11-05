@@ -1,4 +1,4 @@
-package com.lockin.app.domain
+package com.watchinstead.app.domain
 
 /** Orders unwatched links so that the least recently shown comes first, oldest save breaking ties. */
 object QueueSelector {

@@ -1,4 +1,4 @@
-package com.lockin.app
+package com.watchinstead.app
 
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
@@ -10,14 +10,14 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.lockin.app.feature.focus.FocusSchedulesScreen
-import com.lockin.app.feature.guardedapps.GuardedAppsScreen
-import com.lockin.app.feature.library.LibraryScreen
-import com.lockin.app.feature.messages.MessagesScreen
-import com.lockin.app.feature.settings.LicensesScreen
-import com.lockin.app.feature.settings.PrivacyScreen
-import com.lockin.app.feature.settings.SettingsScreen
-import com.lockin.app.feature.stats.StatsScreen
+import com.watchinstead.app.feature.focus.FocusSchedulesScreen
+import com.watchinstead.app.feature.guardedapps.GuardedAppsScreen
+import com.watchinstead.app.feature.library.LibraryScreen
+import com.watchinstead.app.feature.messages.MessagesScreen
+import com.watchinstead.app.feature.settings.LicensesScreen
+import com.watchinstead.app.feature.settings.PrivacyScreen
+import com.watchinstead.app.feature.settings.SettingsScreen
+import com.watchinstead.app.feature.stats.StatsScreen
 import kotlinx.serialization.Serializable
 
 @Serializable private data object LibraryRoute
@@ -33,7 +33,7 @@ private val spatialSpring = spring<IntOffset>(dampingRatio = 0.8f, stiffness = 3
 private val fadeSpec = spring<Float>(stiffness = 700f)
 
 @Composable
-fun LockinNavHost() {
+fun WatchInsteadNavHost() {
     val navController = rememberNavController()
     val back: () -> Unit = { navController.popBackStack() }
     NavHost(

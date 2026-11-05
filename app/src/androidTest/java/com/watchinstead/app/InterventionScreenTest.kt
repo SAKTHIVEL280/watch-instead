@@ -1,14 +1,14 @@
-package com.lockin.app
+package com.watchinstead.app
 
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.Platform
-import com.lockin.app.domain.SavedLink
-import com.lockin.app.intervention.InterventionScreen
-import com.lockin.app.intervention.InterventionState
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.Platform
+import com.watchinstead.app.domain.SavedLink
+import com.watchinstead.app.intervention.InterventionScreen
+import com.watchinstead.app.intervention.InterventionState
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Lockin" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.WatchInstead" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <style name="Theme.Lockin.Splash" parent="Theme.SplashScreen">
+    <style name="Theme.WatchInstead.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/brand_primary</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_monochrome</item>
-        <item name="postSplashScreenTheme">@style/Theme.Lockin</item>
+        <item name="postSplashScreenTheme">@style/Theme.WatchInstead</item>
     </style>
 
-    <style name="Theme.Lockin.Translucent">
+    <style name="Theme.WatchInstead.Translucent">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@null</item>

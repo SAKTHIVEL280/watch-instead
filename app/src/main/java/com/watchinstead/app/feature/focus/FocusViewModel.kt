@@ -1,10 +1,10 @@
-package com.lockin.app.feature.focus
+package com.watchinstead.app.feature.focus
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lockin.app.data.settings.SettingsRepository
-import com.lockin.app.domain.FocusPolicy
-import com.lockin.app.domain.FocusSchedule
+import com.watchinstead.app.data.settings.SettingsRepository
+import com.watchinstead.app.domain.FocusPolicy
+import com.watchinstead.app.domain.FocusSchedule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted

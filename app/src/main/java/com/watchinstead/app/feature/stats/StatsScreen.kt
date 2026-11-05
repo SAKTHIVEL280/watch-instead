@@ -1,4 +1,4 @@
-package com.lockin.app.feature.stats
+package com.watchinstead.app.feature.stats
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -41,12 +41,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lockin.app.R
-import com.lockin.app.core.ui.EmptyState
-import com.lockin.app.core.ui.SubScreen
-import com.lockin.app.core.ui.labelRes
-import com.lockin.app.domain.DayStat
-import com.lockin.app.domain.Stats
+import com.watchinstead.app.R
+import com.watchinstead.app.core.ui.EmptyState
+import com.watchinstead.app.core.ui.SubScreen
+import com.watchinstead.app.core.ui.labelRes
+import com.watchinstead.app.domain.DayStat
+import com.watchinstead.app.domain.Stats
 import java.time.format.TextStyle
 import java.util.Locale
 

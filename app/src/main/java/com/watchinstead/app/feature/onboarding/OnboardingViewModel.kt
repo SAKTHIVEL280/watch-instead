@@ -1,11 +1,11 @@
-package com.lockin.app.feature.onboarding
+package com.watchinstead.app.feature.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lockin.app.data.LinkRepository
-import com.lockin.app.data.settings.SettingsRepository
-import com.lockin.app.domain.MIN_ONBOARDING_LINKS
-import com.lockin.app.domain.SavedLink
+import com.watchinstead.app.data.LinkRepository
+import com.watchinstead.app.data.settings.SettingsRepository
+import com.watchinstead.app.domain.MIN_ONBOARDING_LINKS
+import com.watchinstead.app.domain.SavedLink
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

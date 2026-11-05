@@ -1,4 +1,4 @@
-package com.lockin.app.domain
+package com.watchinstead.app.domain
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

@@ -1,14 +1,14 @@
-package com.lockin.app
+package com.watchinstead.app
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.lockin.app.data.local.LockinDatabase
-import com.lockin.app.data.local.SavedLinkDao
-import com.lockin.app.data.local.SavedLinkEntity
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.Platform
+import com.watchinstead.app.data.local.WatchInsteadDatabase
+import com.watchinstead.app.data.local.SavedLinkDao
+import com.watchinstead.app.data.local.SavedLinkEntity
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.Platform
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class SavedLinkDaoTest {
-    private lateinit var database: LockinDatabase
+    private lateinit var database: WatchInsteadDatabase
     private lateinit var dao: SavedLinkDao
 
     private fun entity(url: String) = SavedLinkEntity(
@@ -28,7 +28,7 @@ class SavedLinkDaoTest {
 
     @Before fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        database = Room.inMemoryDatabaseBuilder(context, LockinDatabase::class.java).build()
+        database = Room.inMemoryDatabaseBuilder(context, WatchInsteadDatabase::class.java).build()
         dao = database.savedLinkDao()
     }
 

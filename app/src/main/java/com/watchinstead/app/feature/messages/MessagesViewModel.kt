@@ -1,9 +1,9 @@
-package com.lockin.app.feature.messages
+package com.watchinstead.app.feature.messages
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lockin.app.data.settings.SettingsRepository
-import com.lockin.app.domain.GuardSettings
+import com.watchinstead.app.data.settings.SettingsRepository
+import com.watchinstead.app.domain.GuardSettings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted

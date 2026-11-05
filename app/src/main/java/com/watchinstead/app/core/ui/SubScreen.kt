@@ -1,4 +1,4 @@
-package com.lockin.app.core.ui
+package com.watchinstead.app.core.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.lockin.app.R
+import com.watchinstead.app.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

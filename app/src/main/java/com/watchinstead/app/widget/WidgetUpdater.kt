@@ -1,10 +1,10 @@
-package com.lockin.app.widget
+package com.watchinstead.app.widget
 
 import android.content.Context
 import androidx.glance.appwidget.updateAll
-import com.lockin.app.data.ApplicationScope
-import com.lockin.app.data.LinkRepository
-import com.lockin.app.data.StatsRepository
+import com.watchinstead.app.data.ApplicationScope
+import com.watchinstead.app.data.LinkRepository
+import com.watchinstead.app.data.StatsRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,7 +27,7 @@ class WidgetUpdater @Inject constructor(
         scope.launch {
             combine(links.links, stats.events) { _, _ -> }
                 .debounce(DEBOUNCE_MILLIS)
-                .collect { LockinWidget().updateAll(context) }
+                .collect { WatchInsteadWidget().updateAll(context) }
         }
     }
 

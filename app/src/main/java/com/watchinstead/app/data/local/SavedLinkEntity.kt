@@ -1,11 +1,11 @@
-package com.lockin.app.data.local
+package com.watchinstead.app.data.local
 
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.Platform
-import com.lockin.app.domain.SavedLink
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.Platform
+import com.watchinstead.app.domain.SavedLink
 
 @Entity(tableName = "saved_links", indices = [Index(value = ["url"], unique = true)])
 data class SavedLinkEntity(

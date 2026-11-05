@@ -1,4 +1,4 @@
-package com.lockin.app.feature.settings
+package com.watchinstead.app.feature.settings
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -51,20 +51,20 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lockin.app.BuildConfig
-import com.lockin.app.R
-import com.lockin.app.core.ui.SubScreen
-import com.lockin.app.core.ui.ConnectedChoice
-import com.lockin.app.core.theme.isDark
-import com.lockin.app.core.theme.supportsDynamicColor
-import com.lockin.app.core.theme.swatch
-import com.lockin.app.domain.Accent
-import com.lockin.app.feature.backup.BackupViewModel
-import com.lockin.app.feature.backup.rememberBackupActions
-import com.lockin.app.domain.Appearance
-import com.lockin.app.domain.GuardSettings
-import com.lockin.app.domain.ThemeMode
-import com.lockin.app.intervention.GuardStatus
+import com.watchinstead.app.BuildConfig
+import com.watchinstead.app.R
+import com.watchinstead.app.core.ui.SubScreen
+import com.watchinstead.app.core.ui.ConnectedChoice
+import com.watchinstead.app.core.theme.isDark
+import com.watchinstead.app.core.theme.supportsDynamicColor
+import com.watchinstead.app.core.theme.swatch
+import com.watchinstead.app.domain.Accent
+import com.watchinstead.app.feature.backup.BackupViewModel
+import com.watchinstead.app.feature.backup.rememberBackupActions
+import com.watchinstead.app.domain.Appearance
+import com.watchinstead.app.domain.GuardSettings
+import com.watchinstead.app.domain.ThemeMode
+import com.watchinstead.app.intervention.GuardStatus
 
 @Composable
 fun SettingsScreen(

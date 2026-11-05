@@ -1,4 +1,4 @@
-package com.lockin.app.feature.focus
+package com.watchinstead.app.feature.focus
 
 import android.text.format.DateFormat
 import androidx.compose.foundation.clickable
@@ -49,12 +49,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lockin.app.R
-import com.lockin.app.core.ui.EmptyState
-import com.lockin.app.core.ui.SubScreen
-import com.lockin.app.domain.FocusPolicy
-import com.lockin.app.domain.FocusSchedule
-import com.lockin.app.domain.GuardSettings
+import com.watchinstead.app.R
+import com.watchinstead.app.core.ui.EmptyState
+import com.watchinstead.app.core.ui.SubScreen
+import com.watchinstead.app.domain.FocusPolicy
+import com.watchinstead.app.domain.FocusSchedule
+import com.watchinstead.app.domain.GuardSettings
 import java.time.DayOfWeek
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter

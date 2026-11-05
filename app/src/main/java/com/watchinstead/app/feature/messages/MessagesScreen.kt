@@ -1,4 +1,4 @@
-package com.lockin.app.feature.messages
+package com.watchinstead.app.feature.messages
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,10 +27,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lockin.app.R
-import com.lockin.app.core.ui.EmptyState
-import com.lockin.app.core.ui.SubScreen
-import com.lockin.app.domain.GuardSettings
+import com.watchinstead.app.R
+import com.watchinstead.app.core.ui.EmptyState
+import com.watchinstead.app.core.ui.SubScreen
+import com.watchinstead.app.domain.GuardSettings
 
 @Composable
 fun MessagesScreen(onBack: () -> Unit, viewModel: MessagesViewModel = hiltViewModel()) {

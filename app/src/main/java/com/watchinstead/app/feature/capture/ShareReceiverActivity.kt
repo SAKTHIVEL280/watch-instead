@@ -1,13 +1,13 @@
-package com.lockin.app.feature.capture
+package com.watchinstead.app.feature.capture
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
-import com.lockin.app.R
-import com.lockin.app.core.theme.setLockinContent
-import com.lockin.app.data.settings.SettingsRepository
+import com.watchinstead.app.R
+import com.watchinstead.app.core.theme.setWatchInsteadContent
+import com.watchinstead.app.data.settings.SettingsRepository
 import javax.inject.Inject
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +23,7 @@ class ShareReceiverActivity : ComponentActivity() {
         if (savedInstanceState == null) {
             viewModel.onInputChange(intent.getStringExtra(Intent.EXTRA_TEXT).orEmpty())
         }
-        setLockinContent(settings) {
+        setWatchInsteadContent(settings) {
             CaptureSheet(
                 viewModel = viewModel,
                 onDismiss = ::finish,

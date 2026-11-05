@@ -1,14 +1,14 @@
-package com.lockin.app.widget
+package com.watchinstead.app.widget
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
-import com.lockin.app.R
-import com.lockin.app.core.ui.openLink
-import com.lockin.app.data.ApplicationScope
-import com.lockin.app.data.LinkRepository
-import com.lockin.app.data.settings.SettingsRepository
+import com.watchinstead.app.R
+import com.watchinstead.app.core.ui.openLink
+import com.watchinstead.app.data.ApplicationScope
+import com.watchinstead.app.data.LinkRepository
+import com.watchinstead.app.data.settings.SettingsRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +23,7 @@ class WatchLinkActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val id = intent.getLongExtra(LockinWidget.LINK_ID_KEY, -1)
+        val id = intent.getLongExtra(WatchInsteadWidget.LINK_ID_KEY, -1)
         lifecycleScope.launch {
             val link = links.find(id)
             if (link != null) {

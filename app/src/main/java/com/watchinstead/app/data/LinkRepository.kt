@@ -1,13 +1,13 @@
-package com.lockin.app.data
+package com.watchinstead.app.data
 
-import com.lockin.app.data.local.SavedLinkDao
-import com.lockin.app.data.local.toDomain
-import com.lockin.app.data.local.toEntity
-import com.lockin.app.data.metadata.MetadataFetcher
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.ParsedLink
-import com.lockin.app.domain.QueueSelector
-import com.lockin.app.domain.SavedLink
+import com.watchinstead.app.data.local.SavedLinkDao
+import com.watchinstead.app.data.local.toDomain
+import com.watchinstead.app.data.local.toEntity
+import com.watchinstead.app.data.metadata.MetadataFetcher
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.ParsedLink
+import com.watchinstead.app.domain.QueueSelector
+import com.watchinstead.app.domain.SavedLink
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope

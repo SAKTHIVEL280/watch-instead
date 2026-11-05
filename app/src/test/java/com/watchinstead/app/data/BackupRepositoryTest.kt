@@ -1,21 +1,21 @@
-package com.lockin.app.data
+package com.watchinstead.app.data
 
-import com.lockin.app.data.backup.BackupCodec
-import com.lockin.app.data.backup.BackupEvent
-import com.lockin.app.data.backup.BackupFile
-import com.lockin.app.data.backup.BackupLink
-import com.lockin.app.data.backup.BackupRepository
-import com.lockin.app.data.backup.BackupSettings
-import com.lockin.app.domain.Accent
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.FocusSchedule
-import com.lockin.app.domain.OpenReason
-import com.lockin.app.domain.ParsedLink
-import com.lockin.app.domain.Platform
-import com.lockin.app.domain.PromptOutcome
-import com.lockin.app.testing.FakeLinkRepository
-import com.lockin.app.testing.FakeSettingsRepository
-import com.lockin.app.testing.FakeStatsRepository
+import com.watchinstead.app.data.backup.BackupCodec
+import com.watchinstead.app.data.backup.BackupEvent
+import com.watchinstead.app.data.backup.BackupFile
+import com.watchinstead.app.data.backup.BackupLink
+import com.watchinstead.app.data.backup.BackupRepository
+import com.watchinstead.app.data.backup.BackupSettings
+import com.watchinstead.app.domain.Accent
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.FocusSchedule
+import com.watchinstead.app.domain.OpenReason
+import com.watchinstead.app.domain.ParsedLink
+import com.watchinstead.app.domain.Platform
+import com.watchinstead.app.domain.PromptOutcome
+import com.watchinstead.app.testing.FakeLinkRepository
+import com.watchinstead.app.testing.FakeSettingsRepository
+import com.watchinstead.app.testing.FakeStatsRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -64,8 +64,8 @@ class BackupRepositoryTest {
         assertEquals(listOf(schedule), freshSettings.settings.value.focusSchedules)
     }
 
-    @Test fun `version 1 backups from Lockin 1_0 still import`() = runTest {
-        val v1 = """{"version":1,"app":"lockin","links":[{"url":"https://example.com/a","category":"OTHER","createdAt":1}]}"""
+    @Test fun `version 1 backups made before the rename still import`() = runTest {
+        val v1 = """{"version":1,"app":"previous","links":[{"url":"https://example.com/a","category":"OTHER","createdAt":1}]}"""
         assertEquals(1, backups.import(v1)!!.added)
     }
 
@@ -112,6 +112,6 @@ class BackupRepositoryTest {
     @Test fun `files that are not backups are rejected`() = runTest {
         assertNull(backups.import("not json"))
         assertNull(backups.import("""{"app":"other"}"""))
-        assertNull(backups.import("""{"app":"lockin","version":99}"""))
+        assertNull(backups.import("""{"app":"watchinstead","version":99}"""))
     }
 }

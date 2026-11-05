@@ -1,13 +1,13 @@
-package com.lockin.app.feature.stats
+package com.watchinstead.app.feature.stats
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lockin.app.data.Clock
-import com.lockin.app.data.LinkRepository
-import com.lockin.app.data.StatsRepository
-import com.lockin.app.data.apps.InstalledAppsRepository
-import com.lockin.app.domain.Stats
-import com.lockin.app.domain.StatsCalculator
+import com.watchinstead.app.data.Clock
+import com.watchinstead.app.data.LinkRepository
+import com.watchinstead.app.data.StatsRepository
+import com.watchinstead.app.data.apps.InstalledAppsRepository
+import com.watchinstead.app.domain.Stats
+import com.watchinstead.app.domain.StatsCalculator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.Instant
 import java.time.ZoneId

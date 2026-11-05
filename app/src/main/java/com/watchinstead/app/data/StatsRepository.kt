@@ -1,11 +1,11 @@
-package com.lockin.app.data
+package com.watchinstead.app.data
 
-import com.lockin.app.data.local.PromptEventDao
-import com.lockin.app.data.local.toDomain
-import com.lockin.app.data.local.toEntity
-import com.lockin.app.domain.OpenReason
-import com.lockin.app.domain.PromptEvent
-import com.lockin.app.domain.PromptOutcome
+import com.watchinstead.app.data.local.PromptEventDao
+import com.watchinstead.app.data.local.toDomain
+import com.watchinstead.app.data.local.toEntity
+import com.watchinstead.app.domain.OpenReason
+import com.watchinstead.app.domain.PromptEvent
+import com.watchinstead.app.domain.PromptOutcome
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow

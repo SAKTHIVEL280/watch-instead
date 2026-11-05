@@ -1,4 +1,4 @@
-package com.lockin.app.data.apps
+package com.watchinstead.app.data.apps
 
 import android.content.Context
 import android.content.Intent

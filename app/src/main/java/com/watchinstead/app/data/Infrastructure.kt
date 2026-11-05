@@ -1,4 +1,4 @@
-package com.lockin.app.data
+package com.watchinstead.app.data
 
 import javax.inject.Qualifier
 

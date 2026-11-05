@@ -1,4 +1,4 @@
-package com.lockin.app.data.settings
+package com.watchinstead.app.data.settings
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -8,13 +8,13 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import com.lockin.app.data.Clock
-import com.lockin.app.domain.Accent
-import com.lockin.app.domain.Appearance
-import com.lockin.app.domain.FocusPolicy
-import com.lockin.app.domain.FocusSchedule
-import com.lockin.app.domain.GuardSettings
-import com.lockin.app.domain.ThemeMode
+import com.watchinstead.app.data.Clock
+import com.watchinstead.app.domain.Accent
+import com.watchinstead.app.domain.Appearance
+import com.watchinstead.app.domain.FocusPolicy
+import com.watchinstead.app.domain.FocusSchedule
+import com.watchinstead.app.domain.GuardSettings
+import com.watchinstead.app.domain.ThemeMode
 import java.time.Instant
 import java.time.ZoneId
 import javax.inject.Inject

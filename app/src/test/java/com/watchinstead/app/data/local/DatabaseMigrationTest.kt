@@ -1,4 +1,4 @@
-package com.lockin.app.data.local
+package com.watchinstead.app.data.local
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -22,8 +22,8 @@ import org.robolectric.annotation.Config
 @Config(sdk = [35], application = android.app.Application::class)
 class DatabaseMigrationTest {
     private val context = ApplicationProvider.getApplicationContext<Context>()
-    private val schemaFile = File("schemas/com.lockin.app.data.local.LockinDatabase/1.json")
-        .takeIf { it.exists() } ?: File("app/schemas/com.lockin.app.data.local.LockinDatabase/1.json")
+    private val schemaFile = File("schemas/com.watchinstead.app.data.local.WatchInsteadDatabase/1.json")
+        .takeIf { it.exists() } ?: File("app/schemas/com.watchinstead.app.data.local.WatchInsteadDatabase/1.json")
 
     private fun createVersion1(file: File) {
         val database = Json.parseToJsonElement(schemaFile.readText()).jsonObject["database"]!!.jsonObject
@@ -47,7 +47,7 @@ class DatabaseMigrationTest {
         val file = context.getDatabasePath("migration-test.db").apply { parentFile?.mkdirs() }
         createVersion1(file)
 
-        val room = Room.databaseBuilder(context, LockinDatabase::class.java, file.absolutePath)
+        val room = Room.databaseBuilder(context, WatchInsteadDatabase::class.java, file.absolutePath)
             .addMigrations(MIGRATION_1_2)
             .allowMainThreadQueries()
             .build()
@@ -57,7 +57,7 @@ class DatabaseMigrationTest {
         assertEquals("keep me", link.note)
 
         val event = PromptEventEntity(
-            timestamp = 1, packageName = "a", outcome = com.lockin.app.domain.PromptOutcome.WATCHED, reason = null,
+            timestamp = 1, packageName = "a", outcome = com.watchinstead.app.domain.PromptOutcome.WATCHED, reason = null,
         )
         room.promptEventDao().insert(event)
         assertEquals(-1L, room.promptEventDao().insert(event))

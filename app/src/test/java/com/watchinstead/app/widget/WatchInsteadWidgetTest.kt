@@ -1,4 +1,4 @@
-package com.lockin.app.widget
+package com.watchinstead.app.widget
 
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -6,9 +6,9 @@ import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.testing.unit.runGlanceAppWidgetUnitTest
 import androidx.glance.testing.unit.hasText
 import androidx.test.core.app.ApplicationProvider
-import com.lockin.app.domain.Category
-import com.lockin.app.domain.Platform
-import com.lockin.app.domain.SavedLink
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.domain.Platform
+import com.watchinstead.app.domain.SavedLink
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -16,7 +16,7 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [35], application = android.app.Application::class)
-class LockinWidgetTest {
+class WatchInsteadWidgetTest {
     private val link = SavedLink(
         id = 1, url = "https://example.com/a", platform = Platform.OTHER, category = Category.OTHER,
         title = "Great talk", createdAt = 1,

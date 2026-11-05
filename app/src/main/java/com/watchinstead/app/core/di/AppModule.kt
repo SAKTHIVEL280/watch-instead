@@ -1,4 +1,4 @@
-package com.lockin.app.core.di
+package com.watchinstead.app.core.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -6,20 +6,20 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
-import com.lockin.app.data.ApplicationScope
-import com.lockin.app.data.Clock
-import com.lockin.app.data.DefaultLinkRepository
-import com.lockin.app.data.DefaultStatsRepository
-import com.lockin.app.data.LinkRepository
-import com.lockin.app.data.StatsRepository
-import com.lockin.app.data.local.LockinDatabase
-import com.lockin.app.data.local.MIGRATION_1_2
-import com.lockin.app.data.local.PromptEventDao
-import com.lockin.app.data.local.SavedLinkDao
-import com.lockin.app.data.metadata.HttpMetadataFetcher
-import com.lockin.app.data.metadata.MetadataFetcher
-import com.lockin.app.data.settings.DataStoreSettingsRepository
-import com.lockin.app.data.settings.SettingsRepository
+import com.watchinstead.app.data.ApplicationScope
+import com.watchinstead.app.data.Clock
+import com.watchinstead.app.data.DefaultLinkRepository
+import com.watchinstead.app.data.DefaultStatsRepository
+import com.watchinstead.app.data.LinkRepository
+import com.watchinstead.app.data.StatsRepository
+import com.watchinstead.app.data.local.WatchInsteadDatabase
+import com.watchinstead.app.data.local.MIGRATION_1_2
+import com.watchinstead.app.data.local.PromptEventDao
+import com.watchinstead.app.data.local.SavedLinkDao
+import com.watchinstead.app.data.metadata.HttpMetadataFetcher
+import com.watchinstead.app.data.metadata.MetadataFetcher
+import com.watchinstead.app.data.settings.DataStoreSettingsRepository
+import com.watchinstead.app.data.settings.SettingsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -46,16 +46,16 @@ abstract class BindingsModule {
 @InstallIn(SingletonComponent::class)
 object AppModule {
     @Provides @Singleton
-    fun database(@ApplicationContext context: Context): LockinDatabase =
-        Room.databaseBuilder(context, LockinDatabase::class.java, "lockin.db")
+    fun database(@ApplicationContext context: Context): WatchInsteadDatabase =
+        Room.databaseBuilder(context, WatchInsteadDatabase::class.java, "watch_instead.db")
             .addMigrations(MIGRATION_1_2)
             .build()
 
     @Provides
-    fun savedLinkDao(database: LockinDatabase): SavedLinkDao = database.savedLinkDao()
+    fun savedLinkDao(database: WatchInsteadDatabase): SavedLinkDao = database.savedLinkDao()
 
     @Provides
-    fun promptEventDao(database: LockinDatabase): PromptEventDao = database.promptEventDao()
+    fun promptEventDao(database: WatchInsteadDatabase): PromptEventDao = database.promptEventDao()
 
     @Provides @Singleton
     fun dataStore(@ApplicationContext context: Context): DataStore<Preferences> =

@@ -1,4 +1,4 @@
-package com.lockin.app.core.theme
+package com.watchinstead.app.core.theme
 
 import android.graphics.Color as AndroidColor
 import android.os.Build
@@ -24,11 +24,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.lockin.app.data.settings.SettingsRepository
-import com.lockin.app.domain.Appearance
-import com.lockin.app.domain.ThemeMode
+import com.watchinstead.app.data.settings.SettingsRepository
+import com.watchinstead.app.domain.Appearance
+import com.watchinstead.app.domain.ThemeMode
 
-private val LockinShapes = Shapes(
+private val WatchInsteadShapes = Shapes(
     extraSmall = RoundedCornerShape(8.dp),
     small = RoundedCornerShape(12.dp),
     medium = RoundedCornerShape(20.dp),
@@ -47,7 +47,7 @@ fun Appearance.isDark(): Boolean = when (themeMode) {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun LockinTheme(appearance: Appearance = Appearance(), content: @Composable () -> Unit) {
+fun WatchInsteadTheme(appearance: Appearance = Appearance(), content: @Composable () -> Unit) {
     val context = LocalContext.current
     val dark = appearance.isDark()
     val scheme = when {
@@ -58,7 +58,7 @@ fun LockinTheme(appearance: Appearance = Appearance(), content: @Composable () -
     MaterialExpressiveTheme(
         colorScheme = scheme.animated(),
         motionScheme = MotionScheme.expressive(),
-        shapes = LockinShapes,
+        shapes = WatchInsteadShapes,
         content = content,
     )
 }
@@ -102,7 +102,7 @@ private const val THEME_FADE_MILLIS = 350
  * Sets content under the user's chosen appearance. Nothing is drawn until it has loaded, so a
  * screen never flashes the wrong theme; every activity must go through here to stay consistent.
  */
-fun ComponentActivity.setLockinContent(settings: SettingsRepository, content: @Composable () -> Unit) {
+fun ComponentActivity.setWatchInsteadContent(settings: SettingsRepository, content: @Composable () -> Unit) {
     setContent {
         val appearance by settings.appearance.collectAsState(null as Appearance?)
         appearance?.let { current ->
@@ -112,7 +112,7 @@ fun ComponentActivity.setLockinContent(settings: SettingsRepository, content: @C
                 enableEdgeToEdge(style, style)
                 onDispose { }
             }
-            LockinTheme(current, content)
+            WatchInsteadTheme(current, content)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.lockin.app.feature.backup
+package com.watchinstead.app.feature.backup
 
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -8,13 +8,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
-import com.lockin.app.R
+import com.watchinstead.app.R
 import java.time.LocalDate
 import kotlinx.coroutines.launch
 
 class BackupActions(val export: () -> Unit, val import: () -> Unit)
 
-/** Uses the system file picker, so Lockin needs no storage permission and the user picks the location. */
+/** Uses the system file picker, so Watch Instead needs no storage permission and the user picks the location. */
 @Composable
 fun rememberBackupActions(viewModel: BackupViewModel): BackupActions {
     val context = LocalContext.current
@@ -47,7 +47,7 @@ fun rememberBackupActions(viewModel: BackupViewModel): BackupActions {
     }
     return remember(exporter, importer) {
         BackupActions(
-            export = { exporter.launch("lockin-backup-${LocalDate.now()}.json") },
+            export = { exporter.launch("watch-instead-backup-${LocalDate.now()}.json") },
             // Cloud providers often report .json files as a generic type.
             import = { importer.launch(arrayOf("application/json", "application/octet-stream", "text/plain")) },
         )

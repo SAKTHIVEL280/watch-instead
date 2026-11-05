@@ -1,9 +1,9 @@
-package com.lockin.app.feature
+package com.watchinstead.app.feature
 
-import com.lockin.app.domain.Category
-import com.lockin.app.feature.capture.CaptureViewModel
-import com.lockin.app.testing.FakeLinkRepository
-import com.lockin.app.testing.MainDispatcherRule
+import com.watchinstead.app.domain.Category
+import com.watchinstead.app.feature.capture.CaptureViewModel
+import com.watchinstead.app.testing.FakeLinkRepository
+import com.watchinstead.app.testing.MainDispatcherRule
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue

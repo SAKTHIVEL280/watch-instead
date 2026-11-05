@@ -1,4 +1,4 @@
-package com.lockin.app.intervention
+package com.watchinstead.app.intervention
 
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.ComponentName
