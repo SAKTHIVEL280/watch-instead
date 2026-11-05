@@ -8,9 +8,9 @@ No account, no ads, no analytics. Your data stays on your phone.
 
 **[Download the latest APK](https://github.com/SAKTHIVEL280/lockin/releases/latest)**
 
-| Onboarding | Library | The prompt | Settings |
+| Home | The prompt | What brings you here? | Settings |
 | --- | --- | --- | --- |
-| ![Welcome](docs/screenshots/onboarding_welcome.png) | ![Library](docs/screenshots/library_dark.png) | ![Prompt](docs/screenshots/intervention.png) | ![Settings](docs/screenshots/settings.png) |
+| ![Home](docs/screenshots/library_dark.png) | ![Prompt](docs/screenshots/intervention_full.png) | ![Reason](docs/screenshots/intervention_reason.png) | ![Settings](docs/screenshots/settings.png) |
 
 ## Features
 - Share a video to Lockin from any app, or paste a link
@@ -21,9 +21,9 @@ No account, no ads, no analytics. Your data stays on your phone.
 - Material You design with dynamic colour, light and dark themes, accents and pure black
 - Edit saved videos, including notes, links and categories
 - Your stats: streaks, times you stopped and why you open apps
-- A "Why are you here?" question on the prompt
-- Personal messages in your own words
-- Focus schedules that get stricter during study or work hours
+- A one-tap "What brings you here?" question when you continue to an app
+- Personal messages in your own words, one tap from the home screen
+- Focus hours that get stricter during study or work, also on the home screen
 - A home screen widget with your streak and next video
 - Export and import backups
 
@@ -38,7 +38,7 @@ screen, messages or passwords. See the [privacy policy](docs/privacy-policy.md).
 
 ## Stack
 Kotlin, Jetpack Compose, Material 3 Expressive with dynamic colour, Hilt, Room, DataStore,
-Navigation Compose, Coil, OkHttp. Material 3 is pinned to a 1.5 release candidate because the Expressive APIs
+Navigation Compose, Glance, Coil, OkHttp. Material 3 is pinned to a 1.5 release candidate because the Expressive APIs
 are not public in stable 1.4. Move to stable 1.5 when it ships.
 
 ## Layout
@@ -46,9 +46,10 @@ are not public in stable 1.4. Move to stable 1.5 when it ships.
 
 | Package | Purpose |
 | --- | --- |
-| `domain` | Pure Kotlin rules: link parsing, intervention policy, queue order |
-| `data` | Room, DataStore, metadata fetching, installed apps |
-| `feature` | Onboarding, library, capture, guarded apps, settings |
+| `domain` | Pure Kotlin rules: link parsing, intervention policy, queue order, focus hours, stats |
+| `data` | Room, DataStore, backups, metadata fetching, installed apps |
+| `feature` | Onboarding, library, capture, guarded apps, stats, focus hours, messages, backup, settings |
+| `widget` | Home screen widget |
 | `intervention` | Accessibility service and the full-screen prompt |
 | `core` | Theme, shared components, dependency injection |
 
