@@ -29,7 +29,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.PlayCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -148,7 +148,7 @@ private fun PrimaryButton(text: String, enabled: Boolean = true, onClick: () -> 
 private fun WelcomeStep(onNext: () -> Unit) {
     Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-            MorphingBlob(Icons.Outlined.Lock, size = 200.dp)
+            MorphingBlob(Icons.Outlined.PlayCircle, size = 200.dp)
         }
         Text(
             stringResource(R.string.onboarding_welcome_title),
