@@ -1,19 +1,19 @@
-# Lockin: stop doomscrolling, watch what you saved
+# Watch Instead: stop doomscrolling, watch what you saved
 
-Lockin is a free Android app that helps you stop doomscrolling. Save motivational and educational
-videos from Instagram, TikTok or YouTube, and when you open a distracting app, Lockin shows you one
+Watch Instead is a free Android app that helps you stop doomscrolling. Save motivational and educational
+videos from Instagram, TikTok or YouTube, and when you open a distracting app, Watch Instead shows you one
 of those videos first.
 
 No account, no ads, no analytics. Your data stays on your phone.
 
-**[Download the latest APK](https://github.com/SAKTHIVEL280/lockin/releases/latest)**
+**[Download the latest APK](https://github.com/SAKTHIVEL280/watch-instead/releases/latest)**
 
 | Home | The prompt | What brings you here? | Settings |
 | --- | --- | --- | --- |
 | ![Home](docs/screenshots/library_dark.png) | ![Prompt](docs/screenshots/intervention_full.png) | ![Reason](docs/screenshots/intervention_reason.png) | ![Settings](docs/screenshots/settings.png) |
 
 ## Features
-- Share a video to Lockin from any app, or paste a link
+- Share a video to Watch Instead from any app, or paste a link
 - Choose which apps to guard, such as Instagram, TikTok and YouTube
 - A full-screen prompt when you open one, with a saved video to watch instead
 - Cooldown from 5 to 60 minutes, or none at all
@@ -28,12 +28,12 @@ No account, no ads, no analytics. Your data stays on your phone.
 - Export and import backups
 
 ## Install
-1. Download the APK from [Releases](https://github.com/SAKTHIVEL280/lockin/releases/latest) and open it.
-2. Follow the setup in the app and turn on the Lockin accessibility service.
-3. If Android says the setting is restricted, open Settings, then Apps, then Lockin, tap the menu
+1. Download the APK from [Releases](https://github.com/SAKTHIVEL280/watch-instead/releases/latest) and open it.
+2. Follow the setup in the app and turn on the Watch Instead accessibility service.
+3. If Android says the setting is restricted, open Settings, then Apps, then Watch Instead, tap the menu
    and choose **Allow restricted settings**.
 
-Lockin uses Android's Accessibility API only to detect when a guarded app opens. It never reads your
+Watch Instead uses Android's Accessibility API only to detect when a guarded app opens. It never reads your
 screen, messages or passwords. See the [privacy policy](docs/privacy-policy.md).
 
 ## Stack
@@ -42,7 +42,7 @@ Navigation Compose, Glance, Coil, OkHttp. Material 3 is pinned to a 1.5 release 
 are not public in stable 1.4. Move to stable 1.5 when it ships.
 
 ## Layout
-`app/src/main/java/com/lockin/app/`
+`app/src/main/java/com/watchinstead/app/`
 
 | Package | Purpose |
 | --- | --- |
@@ -78,4 +78,4 @@ Without `keystore.properties`, `assembleRelease` produces an unsigned APK.
 changes can be reviewed without a device.
 
 ## License
-Lockin is released under the [GNU General Public License v3.0](LICENSE).
+Watch Instead is released under the [GNU General Public License v3.0](LICENSE).
