@@ -1,0 +1,20 @@
+Watch Instead helps you stop doomscrolling. Save motivational and educational videos from Instagram, TikTok or YouTube. When you open an app you chose to guard, Watch Instead shows you one of those videos first.
+
+<b>Features</b>
+<ul>
+<li>Share a video to Watch Instead from any app, or paste a link</li>
+<li>Choose which apps to guard</li>
+<li>A full-screen prompt with a saved video to watch instead</li>
+<li>Cooldowns from 5 to 60 minutes, or none at all</li>
+<li>Focus hours that get stricter during study or work</li>
+<li>Your stats: streaks, times you stopped and why you open apps</li>
+<li>Personal messages in your own words</li>
+<li>A home screen widget, and backup export and import</li>
+<li>Material You design with light and dark themes</li>
+</ul>
+
+<b>Privacy</b>
+No account, no ads and no analytics. Your data stays on your phone. Saving a link requests its title and thumbnail from that service.
+
+<b>Permissions</b>
+This build uses Usage access to see which app is in front, and Display over other apps to show the prompt on top. It ignores every app except the ones you guard and your home screen, and it keeps no record of them. It can't read your screen, messages or passwords. It runs a foreground service, which Android may show as an active app.

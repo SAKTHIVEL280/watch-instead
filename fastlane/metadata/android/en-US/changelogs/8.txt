@@ -1,0 +1,1 @@
+Choose between the Usage access and Accessibility versions. The Usage access version is designed to avoid payment and banking apps refusing to open.

@@ -23,8 +23,8 @@ android {
         applicationId = "com.watchinstead.app"
         minSdk = 26
         targetSdk = 37
-        versionCode = 7
-        versionName = "2.1.0"
+        versionCode = 8
+        versionName = "2.1.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -60,6 +60,12 @@ android {
     productFlavors {
         create("usage") { dimension = "guard" }
         create("accessibility") { dimension = "guard" }
+    }
+
+    // F-Droid and IzzyOnDroid reject the encrypted dependency metadata Google adds for Play.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
     }
 
     compileOptions {
