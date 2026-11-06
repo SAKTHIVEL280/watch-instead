@@ -2,7 +2,7 @@ package com.watchinstead.app.domain
 
 /** Decides whether opening [packageName] should bring up the prompt. Free of Android types. */
 object InterventionPolicy {
-    /** Accessibility events arrive in bursts; a single open must only produce one prompt. */
+    /** Foreground events can repeat as an app opens; a single open must only produce one prompt. */
     const val DEBOUNCE_MILLIS = 1_500L
 
     /** Covers the guarded app resurfacing while the launcher animates in after "go home". */

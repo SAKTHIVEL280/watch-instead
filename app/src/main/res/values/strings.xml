@@ -2,8 +2,9 @@
 <resources>
     <string name="app_name">Watch Instead</string>
     <string name="share_target_label">Save to Watch Instead</string>
-    <string name="accessibility_service_label">Watch Instead app guard</string>
-    <string name="accessibility_service_description">Detects when you open an app you chose to guard, so Watch Instead can show one of your saved videos. Watch Instead only sees which guarded app opened and, if you set no cooldown or a focus schedule, when you return to your home screen. It never reads your screen, messages or passwords.</string>
+    <string name="guard_notification_channel">App guard</string>
+    <string name="guard_notification_title">Watch Instead is on</string>
+    <string name="guard_notification_body">It steps in when you open a guarded app.</string>
 
     <!-- Common -->
     <string name="action_back">Back</string>
@@ -50,7 +51,7 @@
     <string name="library_edit">Edit</string>
     <string name="library_more_actions">More actions</string>
     <string name="banner_service_off_title">Protection is off</string>
-    <string name="banner_service_off_body">Turn on the Watch Instead app guard so your videos can appear.</string>
+    <string name="banner_service_off_body">Give Watch Instead the permissions it needs so your videos can appear.</string>
     <string name="banner_turn_on">Turn on</string>
     <string name="banner_no_apps_title">No apps are guarded</string>
     <string name="banner_no_apps_body">Choose the apps you want Watch Instead to step in front of.</string>
@@ -82,7 +83,7 @@
     <string name="settings_pure_black_body">Use true black backgrounds in dark theme</string>
     <string name="settings_protection">Protect guarded apps</string>
     <string name="settings_protection_body">Show a saved video when you open a guarded app</string>
-    <string name="settings_guard_status">App guard permission</string>
+    <string name="settings_guard_status">App guard permissions</string>
     <string name="settings_guard_on">On</string>
     <string name="settings_guard_off">Off. Tap to turn on.</string>
     <string name="settings_guarded_apps">Guarded apps</string>
@@ -127,7 +128,7 @@
     <string name="settings_version">Version %s</string>
 
     <!-- Privacy -->
-    <string name="privacy_body">Watch Instead has no accounts, ads or analytics, and we run no servers.\n\nYour saved links, notes and settings stay on this device and are not included in cloud backups. Uninstalling Watch Instead deletes them. If you export a backup, you choose where the file goes, and it is not encrypted, so keep it somewhere you trust.\n\nThe accessibility service detects when an app on your guarded list comes to the foreground, so Watch Instead can show a saved video. If you set the cooldown to None or add a focus schedule, it also detects when you return to your home screen, so it knows when to prompt again. It does not read screen content, typed text, messages or passwords. Watch Instead keeps a history of its prompts on your device (which guarded app, when, what you chose and any reason you tapped) to show your stats. This history is used only on your device and is never collected or shared. You can clear it in Settings, and it is included in backups you export.\n\nWhen you save a link, Watch Instead requests its title and thumbnail. For YouTube and TikTok links the request goes to that service\'s public embed endpoint, and for other links it goes to the linked website. Thumbnails are then loaded from the address that service provides. These services receive the link and your IP address, as with any web request.\n\nOpening a saved video hands it to the matching app or your browser, whose own privacy terms apply.</string>
+    <string name="privacy_body">Watch Instead has no accounts, ads or analytics, and we run no servers.\n\nYour saved links, notes and settings stay on this device and are not included in cloud backups. Uninstalling Watch Instead deletes them. If you export a backup, you choose where the file goes, and it is not encrypted, so keep it somewhere you trust.\n\nUsage access lets Watch Instead see which app is in front, so it can show a saved video when an app on your guarded list opens. It also uses this to notice when you return to your home screen. It ignores every other app and keeps no record of them. Display over other apps lets the video prompt appear on top. Neither permission can read screen content, typed text, messages or passwords. Watch Instead keeps a history of its prompts on your device (which guarded app, when, what you chose and any reason you tapped) to show your stats. This history is used only on your device and is never collected or shared. You can clear it in Settings, and it is included in backups you export.\n\nWhen you save a link, Watch Instead requests its title and thumbnail. For YouTube and TikTok links the request goes to that service\'s public embed endpoint, and for other links it goes to the linked website. Thumbnails are then loaded from the address that service provides. These services receive the link and your IP address, as with any web request.\n\nOpening a saved video hands it to the matching app or your browser, whose own privacy terms apply.</string>
 
     <!-- Stats -->
     <string name="stats_title">Your stats</string>
@@ -201,10 +202,10 @@
     <string name="onboarding_apps_title">Which apps pull you in?</string>
     <string name="onboarding_apps_body">Watch Instead will step in when you open these. You can change them later.</string>
     <string name="onboarding_apps_needed">Choose at least one app to continue</string>
-    <string name="onboarding_permission_title">How Watch Instead uses Accessibility</string>
-    <string name="onboarding_permission_body">Android needs you to turn on Watch Instead\'s accessibility service.</string>
-    <string name="onboarding_disclosure_what">What it accesses: only which app is opening, and only for the apps you chose. If you set no cooldown or a focus schedule, it also notices when you return to your home screen.</string>
-    <string name="onboarding_disclosure_why">Why: so Watch Instead can show a saved video the moment you open one.</string>
+    <string name="onboarding_permission_title">How Watch Instead spots an app</string>
+    <string name="onboarding_permission_body">Android needs you to turn on Usage access and Display over other apps for Watch Instead. Settings opens for one, then the other.</string>
+    <string name="onboarding_disclosure_what">What it accesses: which app is in front. Watch Instead only acts on the apps you chose and your home screen. It ignores every other app and keeps no record of them.</string>
+    <string name="onboarding_disclosure_why">Why: so Watch Instead can show a saved video on top the moment you open one.</string>
     <string name="onboarding_disclosure_never">What it never does: read your screen, messages, typing or passwords.</string>
     <string name="onboarding_disclosure_local">Your data: this stays on your device and is never collected or shared.</string>
     <string name="onboarding_agree">Agree and open settings</string>
@@ -212,7 +213,7 @@
     <string name="onboarding_permission_granted">Protection is on. You\'re all set.</string>
     <string name="onboarding_finish">Finish</string>
     <string name="onboarding_help_title">Can\'t turn it on?</string>
-    <string name="onboarding_help_body">If Android says the setting is restricted (common for apps not installed from Play): open Settings, then Apps, then Watch Instead, tap the ⋮ menu, choose Allow restricted settings, and try again.\n\nIf protection keeps switching off, set Watch Instead\'s battery usage to Unrestricted in its app settings. Some phone brands stop background services aggressively.</string>
+    <string name="onboarding_help_body">If Android says the setting is restricted: open Settings, then Apps, then Watch Instead, tap the ⋮ menu, choose Allow restricted settings, and try again. You only need to do this once.\n\nOn Xiaomi, Redmi and POCO phones, also allow Display pop-up windows while running in the background in Other permissions.\n\nIf protection keeps switching off, set Watch Instead\'s battery usage to Unrestricted in its app settings. Some phone brands stop background services aggressively.</string>
     <string name="onboarding_step">Step %1$d of %2$d</string>
 
     <!-- Intervention -->
