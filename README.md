@@ -29,12 +29,14 @@ No account, no ads, no analytics. Your data stays on your phone.
 
 ## Install
 1. Download the APK from [Releases](https://github.com/SAKTHIVEL280/watch-instead/releases/latest) and open it.
-2. Follow the setup in the app and turn on the Watch Instead accessibility service.
-3. If Android says the setting is restricted, open Settings, then Apps, then Watch Instead, tap the menu
-   and choose **Allow restricted settings**.
+2. Follow the setup in the app and turn on **Usage access** and **Display over other apps**.
+3. On Android 15 and later, if Android says the setting is restricted, open Settings, then Apps, then
+   Watch Instead, tap the menu and choose **Allow restricted settings**. You only need to do this once.
+   Installing through [Obtainium](https://github.com/ImranR98/Obtainium) or `adb install` usually avoids this step.
 
-Watch Instead uses Android's Accessibility API only to detect when a guarded app opens. It never reads your
-screen, messages or passwords. See the [privacy policy](docs/privacy-policy.md).
+Watch Instead does not use Accessibility, so payment and banking apps that refuse to run beside an
+Accessibility service are not affected by it. It uses Usage access only to detect when a guarded app opens,
+and it can't read your screen, messages or passwords. See the [privacy policy](docs/privacy-policy.md).
 
 ## Stack
 Kotlin, Jetpack Compose, Material 3 Expressive with dynamic colour, Hilt, Room, DataStore,
@@ -50,7 +52,7 @@ are not public in stable 1.4. Move to stable 1.5 when it ships.
 | `data` | Room, DataStore, backups, metadata fetching, installed apps |
 | `feature` | Onboarding, library, capture, guarded apps, stats, focus hours, messages, backup, settings |
 | `widget` | Home screen widget |
-| `intervention` | Accessibility service and the full-screen prompt |
+| `intervention` | Foreground app monitor and the full-screen prompt |
 | `core` | Theme, shared components, dependency injection |
 
 ## Build
@@ -60,16 +62,14 @@ Requires JDK 17 and the Android SDK (`compileSdk` 37).
 ./gradlew lint testDebugUnitTest assembleDebug   # checks and debug APK
 ./gradlew connectedDebugAndroidTest              # needs a device or emulator
 ./gradlew assemblePreview                        # optimised, installable test build
-./gradlew assembleRelease bundleRelease          # release build
+./gradlew assembleRelease                        # release build
 ```
 
 Judge performance on the `preview` build: debug builds run Compose far slower.
 
 ## Release
-1. Change `applicationId` and `namespace` to a package ID you own. This cannot change after publishing.
-2. Create a keystore and copy `keystore.properties.example` to `keystore.properties`.
-3. Host `docs/privacy-policy.md` at a public URL.
-4. Complete the Play Console steps in `docs/play-release.md`.
+1. Create a keystore and copy `keystore.properties.example` to `keystore.properties`.
+2. Run `./gradlew assembleRelease` and attach the APK to a GitHub release.
 
 Without `keystore.properties`, `assembleRelease` produces an unsigned APK.
 

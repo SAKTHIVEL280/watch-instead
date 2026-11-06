@@ -1,6 +1,6 @@
 # Watch Instead privacy policy
 
-**Effective date:** 5 November 2026  
+**Effective date:** 6 November 2026  
 **Contact:** [GitHub issues](https://github.com/SAKTHIVEL280/watch-instead/issues)
 
 Watch Instead has no accounts, ads or analytics, and we run no servers.
@@ -11,12 +11,13 @@ Uninstalling Watch Instead deletes them.
 If you export a backup, you choose where the file is saved. It is not encrypted, so keep it
 somewhere you trust.
 
-## Accessibility service
-Watch Instead uses Android's AccessibilityService API to detect when an app on your guarded list comes to
-the foreground, so it can show one of your saved videos. If you set the cooldown to None or add a focus schedule, it also detects when you
-return to your home screen, so it knows when to prompt again. It does not read screen content, typed
-text, messages or passwords. This information is used only on your device and is never collected
-or shared. The service is optional and can be turned off at any time in Android settings.
+## Usage access and display over other apps
+Watch Instead uses Android's Usage access to see which app is in front, so it can show one of your saved
+videos when an app on your guarded list opens. It also uses this to notice when you return to your home
+screen. It ignores every other app and keeps no record of them. Display over other apps lets the video
+prompt appear on top. Neither permission can read screen content, typed text, messages or passwords.
+This information is used only on your device and is never collected or shared. Both permissions are
+optional and can be turned off at any time in Android settings.
 
 ## Stats
 Watch Instead keeps a history of its prompts on your device: which guarded app, when, what you chose and
