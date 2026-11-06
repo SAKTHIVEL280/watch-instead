@@ -14,7 +14,7 @@ import com.watchinstead.app.core.theme.setWatchInsteadContent
 import com.watchinstead.app.data.settings.SettingsRepository
 import javax.inject.Inject
 import com.watchinstead.app.feature.onboarding.OnboardingScreen
-import com.watchinstead.app.intervention.GuardMonitorService
+import com.watchinstead.app.intervention.GuardStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
         // Resuming covers coming back from the permission screens, and is when a foreground service may start.
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                settings.settings.collect { GuardMonitorService.sync(this@MainActivity, it) }
+                settings.settings.collect { GuardStatus.sync(this@MainActivity, it) }
             }
         }
         setWatchInsteadContent(settings) {

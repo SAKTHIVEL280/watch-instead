@@ -21,7 +21,7 @@ class GuardBootReceiver : BroadcastReceiver() {
         val pending = goAsync()
         CoroutineScope(Dispatchers.Default).launch {
             try {
-                GuardMonitorService.sync(context, settings.settings.first())
+                GuardStatus.sync(context, settings.settings.first())
             } finally {
                 pending.finish()
             }

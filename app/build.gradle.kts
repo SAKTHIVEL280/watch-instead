@@ -23,8 +23,8 @@ android {
         applicationId = "com.watchinstead.app"
         minSdk = 26
         targetSdk = 37
-        versionCode = 6
-        versionName = "2.1.0-beta.1"
+        versionCode = 7
+        versionName = "2.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -53,6 +53,13 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += "release"
         }
+    }
+
+    // Same app ID and signature, so people can switch between them and keep their data.
+    flavorDimensions += "guard"
+    productFlavors {
+        create("usage") { dimension = "guard" }
+        create("accessibility") { dimension = "guard" }
     }
 
     compileOptions {

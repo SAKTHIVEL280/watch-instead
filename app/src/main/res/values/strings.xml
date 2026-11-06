@@ -2,9 +2,6 @@
 <resources>
     <string name="app_name">Watch Instead</string>
     <string name="share_target_label">Save to Watch Instead</string>
-    <string name="guard_notification_channel">App guard</string>
-    <string name="guard_notification_title">Watch Instead is on</string>
-    <string name="guard_notification_body">It steps in when you open a guarded app.</string>
 
     <!-- Common -->
     <string name="action_back">Back</string>

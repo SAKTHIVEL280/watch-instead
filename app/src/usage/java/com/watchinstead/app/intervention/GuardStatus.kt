@@ -8,7 +8,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Process
 import android.provider.Settings
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import com.watchinstead.app.domain.GuardSettings
 
 object GuardStatus {
     fun isEnabled(context: Context): Boolean = hasUsageAccess(context) && Settings.canDrawOverlays(context)
@@ -21,6 +23,13 @@ object GuardStatus {
             Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         }
         context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+    }
+
+    /** Starts or stops the monitor to match [settings] and the granted permissions. */
+    fun sync(context: Context, settings: GuardSettings) {
+        val intent = Intent(context, GuardMonitorService::class.java)
+        val wanted = settings.protectionEnabled && settings.guardedPackages.isNotEmpty() && isEnabled(context)
+        if (wanted) ContextCompat.startForegroundService(context, intent) else context.stopService(intent)
     }
 
     private fun hasUsageAccess(context: Context): Boolean {

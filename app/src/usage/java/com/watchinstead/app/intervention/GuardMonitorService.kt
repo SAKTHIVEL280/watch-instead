@@ -189,18 +189,10 @@ class GuardMonitorService : Service() {
         super.onDestroy()
     }
 
-    companion object {
+    private companion object {
         /** Slowest a prompt can lag behind opening an app. Polling stops while the screen is off. */
-        private const val POLL_MILLIS = 750L
-        private const val NOTIFICATION_ID = 1
-        private const val CHANNEL_ID = "app_guard"
-
-        /** Starts or stops the service to match [settings] and the granted permissions. */
-        fun sync(context: Context, settings: GuardSettings) {
-            val intent = Intent(context, GuardMonitorService::class.java)
-            val wanted = settings.protectionEnabled && settings.guardedPackages.isNotEmpty() &&
-                GuardStatus.isEnabled(context)
-            if (wanted) ContextCompat.startForegroundService(context, intent) else context.stopService(intent)
-        }
+        const val POLL_MILLIS = 750L
+        const val NOTIFICATION_ID = 1
+        const val CHANNEL_ID = "app_guard"
     }
 }
